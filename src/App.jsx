@@ -10,9 +10,9 @@ function App() {
 
   return (
     <div>
-      <Toaster position="top-center" reverseOrder={false} />
+      
       <Routes>
-        <Route path='/login' element={<Login/>}/>
+        <Route path='/' element={<Login/>}/>
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/otp' element={<OTP/>}/>
         <Route path='/forgot-password' element={<ForgotPassword/>}/>
