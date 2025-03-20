@@ -36,10 +36,10 @@ export default function OTP() {
               numInputs={6}
               shouldAutoFocus
               inputStyle={{
-                width: "3rem",
-                height: "3rem",
+                width: "2.5rem",
+                height: "2.5rem",
                 margin: "0 0.5rem",
-                fontSize: "1.5rem",
+                fontSize: "1rem",
                 borderRadius: "0.5rem",
                 border: "1px solid rgba(255, 255, 255, 0.3)",
                 backgroundColor: "rgba(255, 255, 255, 0.1)",

@@ -14,10 +14,10 @@ export default function Signup() {
 
   const handleSignup = (e) => {
     e.preventDefault();
-
+    setIsLoading(true)
     dispatch(sendOtp(email,navigate,{name,email,password}))
     // dispatch(signUp(name,email,password,otp))
-
+    setIsLoading(false)
     console.log("Signup Data:", { name, email, password, agreedToTerms });
   };
 

@@ -5,6 +5,7 @@ import Signup from './Pages/SIgnup'
 import ForgotPassword from './Pages/ForgotPassword'
 import UpdatePassword from './Pages/UpdatePassword'
 import OTP from './Pages/OTP'
+import AllBooks from './Pages/AllBooks'
 function App() {
   
 
@@ -16,6 +17,8 @@ function App() {
         <Route path='/otp' element={<OTP/>}/>
         <Route path='/forgot-password' element={<ForgotPassword/>}/>
         <Route path='/update-password/:id' element={<UpdatePassword/>}/>
+
+        <Route path='/allbooks' element={<AllBooks/>}/>
       </Routes>
     </div>
   )

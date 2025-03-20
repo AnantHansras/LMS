@@ -5,69 +5,69 @@ const otpTemplate = (otp) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTP Verification - Resume Builder</title>
+    <title>OTP Verification</title>
     <style>
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background-color: #f9faff;
-            color: #07142b;
+            background-color: #05080f;
+            color: #ffffff;
         }
 
         .email-container {
             max-width: 600px;
             margin: 20px auto;
-            background: #ffffff;
+            background: rgba(20, 25, 40, 0.9);
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
             overflow: hidden;
+            padding: 0px;
         }
 
         .header {
-            background-color: #ffc85e;
-            color: #07142b;
+            background-color: #0d1a35;
+            color: #a3bffa;
             text-align: center;
             padding: 20px;
-        }
-
-        .header h1 {
-            margin: 0;
             font-size: 24px;
+            font-weight: bold;
         }
 
         .content {
-            padding: 20px;
             text-align: center;
+            padding: 20px;
         }
 
         .content p {
             font-size: 16px;
             line-height: 1.5;
-            margin: 0 0 20px;
-            color: #46464e;
+            color: #cbd5e1;
         }
 
         .otp-code {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 12px 24px;
             font-size: 24px;
             color: #ffffff;
-            background-color: #07142b;
-            border-radius: 4px;
+            background-color: #1e40af;
+            border-radius: 6px;
             letter-spacing: 2px;
             margin: 20px 0;
+            font-weight: bold;
+            box-shadow: 0 0 8px rgba(30, 64, 175, 0.8);
         }
 
         .footer {
-            background-color: #f9faff;
-            color: #46464e;
+            background-color: rgba(20, 25, 40, 0.9);
+            color: #cbd5e1;
             text-align: center;
             padding: 10px;
             font-size: 12px;
         }
 
         .footer a {
-            color: #07142b;
+            color: #a3bffa;
             text-decoration: none;
         }
 
@@ -80,7 +80,7 @@ const otpTemplate = (otp) => {
 <body>
     <div class="email-container">
         <div class="header">
-            <h1>Welcome to Resume Builder</h1>
+            Welcome to Library Managmnet System
         </div>
         <div class="content">
             <p>Hi there!</p>
@@ -94,8 +94,8 @@ const otpTemplate = (otp) => {
         </div>
     </div>
 </body>
-
 </html>`;
 }
 
 module.exports = otpTemplate;
+
