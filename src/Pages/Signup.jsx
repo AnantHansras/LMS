@@ -1,26 +1,22 @@
 import React, { useState } from "react";
 import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
-
+import { sendOtp, signUp } from "../Services/userAPI";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const handleSignup = (e) => {
     e.preventDefault();
 
-    if (!name || !email || !password) {
-      alert("Please fill in all fields");
-      return;
-    }
-
-    if (!agreedToTerms) {
-      alert("You must agree to the terms and conditions");
-      return;
-    }
+    dispatch(sendOtp(email,navigate,{name,email,password}))
+    // dispatch(signUp(name,email,password,otp))
 
     console.log("Signup Data:", { name, email, password, agreedToTerms });
   };
@@ -85,7 +81,7 @@ export default function Signup() {
             type="submit"
             className="w-full p-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm"
           >
-            Sign Up
+            {isLoading ? <Loader2 /> : "Sign Up"}
           </button>
         </form>
 

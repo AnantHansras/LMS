@@ -1,25 +1,35 @@
 import React, { useState } from "react";
-import { Eye, EyeOff, Mail, Lock } from "lucide-react";
-
+import { Mail, Lock, Loader2 } from "lucide-react";
+import { login } from "../Services/userAPI";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 export default function Login() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [isLoading, setisloading] = useState(false);
   const handleLogin = (e) => {
     e.preventDefault();
-    console.log("Login Data:", { email, password });
+    setisloading(true);
+    dispatch(login(email, password, navigate));
+    setisloading(false);
   };
 
   return (
     <div className="bg-gradient-to-br from-[#0a0f1f] via-[#17233d] to-[#0a0f1f] min-h-screen flex justify-center items-center px-4">
       <div className="max-w-sm w-full p-8 rounded-2xl shadow-xl border border-[rgba(255,255,255,0.15)] backdrop-blur-xl bg-[rgba(255,255,255,0.08)] text-white">
-        <h2 className="text-3xl font-bold text-center tracking-wide text-blue-300">Welcome Back</h2>
+        <h2 className="text-3xl font-bold text-center tracking-wide text-blue-300">
+          Welcome Back
+        </h2>
         <p className="text-gray-400 text-center mt-1">Login to continue</p>
 
         <form className="space-y-4 mt-4" onSubmit={handleLogin}>
           {/* Email Field */}
           <div>
-            <label className="block text-xs font-medium text-gray-300">Email</label>
+            <label className="block text-xs font-medium text-gray-300">
+              Email
+            </label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <input
@@ -35,12 +45,17 @@ export default function Login() {
 
           {/* Password Field */}
           <div>
-            <label className="text-xs font-medium text-gray-300 flex">Password
-            <div className="ml-auto text-xs">
-            <a href="/forgot-password" className="text-blue-400 hover:underline">
-              Forgot Password?
-            </a>
-          </div></label>
+            <label className="text-xs font-medium text-gray-300 flex">
+              Password
+              <div className="ml-auto text-xs">
+                <a
+                  href="/forgot-password"
+                  className="text-blue-400 hover:underline"
+                >
+                  Forgot Password?
+                </a>
+              </div>
+            </label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <input
@@ -54,15 +69,13 @@ export default function Login() {
             </div>
           </div>
 
-          {/* Forgot Password */}
-          
-
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full p-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm"
+            className="w-full p-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm flex items-center justify-center"
+            disabled={isLoading} // Disable button while loading
           >
-            Login
+            {isLoading ? <Loader2 /> : "Login"}
           </button>
         </form>
 
@@ -77,4 +90,3 @@ export default function Login() {
     </div>
   );
 }
-

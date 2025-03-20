@@ -1,5 +1,4 @@
 import toast from "react-hot-toast";
-import {setLoading} from '../Slices/loading'
 import { apiConnector } from "./apiConnector"
 import { userEndpoints } from './apis'
 
@@ -11,7 +10,6 @@ const {
 
 export function sendOtp(email, navigate,signupData) {
   return async (dispatch) => {
-     dispatch(setLoading(true))
     try {
       const response = await apiConnector("POST", SENDOTP_API, {
         email,
@@ -32,14 +30,11 @@ export function sendOtp(email, navigate,signupData) {
       console.log("SENDOTP API ERROR............", error)
       toast.error("Could Not Send OTP")
     }
-    dispatch(setLoading(false))
   }
 }
 
 export function signUp(name,email,password,otp,navigate) {
   return async (dispatch) => {
-
-    dispatch(setLoading(true))
     try {
       const response = await apiConnector("POST", SIGNUP_API, {
         name,
@@ -60,13 +55,11 @@ export function signUp(name,email,password,otp,navigate) {
        toast.error("Signup Failed",{theme: "dark"})
       navigate("/signup")
     }
-     dispatch(setLoading(false))
   }
 }
 
 export function login(email, password, navigate) {
   return async (dispatch) => {
-     dispatch(setLoading(true))
     try {
       const response = await apiConnector("POST", LOGIN_API, {
         email,
@@ -90,7 +83,6 @@ export function login(email, password, navigate) {
       console.log("LOGIN API ERROR............", error)
        toast.error("Login Failed",{theme: "dark"})
     }
-     dispatch(setLoading(false))
   }
 }
 

@@ -4,13 +4,17 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "server": "cd server && npm run dev",
+    "dev": "concurrently -n \"FRONTEND,BACKEND\" -c \"bgBlue,bgYellow\" \"npm start\" \"npm run server\""
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.6.1",
+    "axios": "^1.8.4",
     "bcrypt": "^5.1.1",
+    "concurrently": "^9.1.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
@@ -18,10 +22,13 @@
     "lucide-react": "^0.483.0",
     "mailsender": "^1.1.2",
     "mongoose": "^8.12.1",
+    "nodemon": "^3.1.9",
     "otp-generator": "^4.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
+    "react-otp-input": "^3.1.1",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.3.0"
   },
   "devDependencies": {
