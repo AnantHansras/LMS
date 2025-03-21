@@ -1,7 +1,7 @@
 import {Route,Routes} from 'react-router-dom'
 import './App.css'
 import Login from './Pages/Login'
-import Signup from './Pages/SIgnup'
+import Signup from './Pages/Signup'
 import ForgotPassword from './Pages/ForgotPassword'
 import UpdatePassword from './Pages/UpdatePassword'
 import OTP from './Pages/OTP'

@@ -22,21 +22,21 @@ export default function Signup() {
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#0a0f1f] via-[#17233d] to-[#0a0f1f] min-h-screen flex justify-center items-center px-4">
-      <div className="max-w-sm w-full p-8 rounded-2xl shadow-xl border border-[rgba(255,255,255,0.15)] backdrop-blur-xl bg-[rgba(255,255,255,0.08)] text-white">
-        <h2 className="text-3xl font-bold text-center tracking-wide text-blue-300">Create an Account</h2>
-        <p className="text-gray-400 text-center mt-1">Sign up to get started</p>
+    <div className="bg-[hsla(240,10%,4%,1)] min-h-screen flex justify-center items-center px-4">
+      <div className="max-w-sm w-full p-8 rounded-2xl shadow-xl border border-[hsla(12,7%,15%,1)] backdrop-blur-xl bg-[#0c0A09] text-[#FAFAF9]">
+        <h2 className="text-3xl font-bold text-center tracking-wide text-[#FAFAF9]">Create an Account</h2>
+        <p className="text-[#A8A29E] text-center mt-1">Sign up to get started</p>
 
         <form className="space-y-4 mt-4" onSubmit={handleSignup}>
           {/* Name Field */}
           <div>
-            <label className="block text-xs font-medium text-gray-300">Full Name</label>
+            <label className="block text-xs font-medium ">Full Name</label>
             <div className="relative">
               <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
                 placeholder="John Doe"
-                className="w-full pl-9 p-2 border border-gray-500 rounded-lg bg-transparent text-white focus:ring-2 focus:ring-blue-400 outline-none text-sm"
+                className="w-full pl-9 p-2 border border-[hsla(12,7%,15%,1)] rounded-lg bg-transparent text-[#A8A29E] focus:ring-2 focus:ring-[hsla(21,90%,48%,1)] outline-none text-sm"
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -46,13 +46,13 @@ export default function Signup() {
 
           {/* Email Field */}
           <div>
-            <label className="block text-xs font-medium text-gray-300">Email</label>
+            <label className="block text-xs font-medium ">Email</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               <input
                 type="email"
                 placeholder="name@example.com"
-                className="w-full pl-9 p-2 border border-gray-500 rounded-lg bg-transparent text-white focus:ring-2 focus:ring-blue-400 outline-none text-sm"
+                className="w-full pl-9 p-2 border border-[hsla(12,7%,15%,1)] rounded-lg bg-transparent text-[#A8A29E] focus:ring-2 focus:ring-[hsla(21,90%,48%,1)] outline-none text-sm"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -62,13 +62,13 @@ export default function Signup() {
 
           {/* Password Field */}
           <div>
-            <label className="block text-xs font-medium text-gray-300">Password</label>
+            <label className="block text-xs font-medium ">Password</label>
             <div className="relative">
-              <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+              <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A8A29E]" />
               <input
                 type="password"
                 placeholder="••••••••"
-                className="w-full pl-9 pr-9 p-2 border border-gray-500 rounded-lg bg-transparent text-white focus:ring-2 focus:ring-blue-400 outline-none text-sm"
+                className="w-full pl-9 pr-9 p-2 border border-[hsla(12,7%,15%,1)] rounded-lg bg-transparent text-[#A8A29E] focus:ring-2 focus:ring-[hsla(21,90%,48%,1)] outline-none text-sm"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -79,7 +79,7 @@ export default function Signup() {
           {/* Signup Button */}
           <button
             type="submit"
-            className="w-full p-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm"
+            className="w-full p-2 rounded-lg bg-[hsla(21,90%,48%,1)] text-[#FAFAF9] font-semibold hover:bg-[hsla(21,90%,48%,0.9)] hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm"
           >
             {isLoading ? <Loader2 /> : "Sign Up"}
           </button>
@@ -88,7 +88,7 @@ export default function Signup() {
         {/* Already have an account? */}
         <div className="text-center text-sm text-gray-400 mt-4">
           Already have an account?{" "}
-          <a href="/" className="text-blue-400 hover:underline">
+          <a href="/" className="text-[hsla(21,90%,48%,1)] hover:underline">
             Login
           </a>
         </div>
