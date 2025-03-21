@@ -3,6 +3,7 @@ import OTPInput from "react-otp-input";
 import { signUp } from "../Services/userAPI";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Loader2 } from "lucide-react";
 
 export default function OTP() {
   const [otp, setOtp] = useState("");
@@ -10,7 +11,7 @@ export default function OTP() {
   const signupData = location.state?.signupData;
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     if (!signupData) {
       navigate("/signup");
@@ -20,7 +21,11 @@ export default function OTP() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, password } = signupData;
+    setIsLoading(true)
     dispatch(signUp(name, email, password, otp, navigate));
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); 
   };
 
   return (
@@ -53,7 +58,7 @@ export default function OTP() {
             type="submit"
             className="w-full p-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm"
           >
-            Verify OTP
+            {isLoading ? <span className="flex flex-row justify-center items-center"><Loader2 className="animate-spin"/><span>Loading...</span></span> : "Verify OTP"}
           </button>
         </form>
       </div>

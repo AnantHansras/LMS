@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
-import { sendOtp, signUp } from "../Services/userAPI";
+import { Mail, Lock, User,Loader2 } from "lucide-react";
+import { sendOtp} from "../Services/userAPI";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 export default function Signup() {
@@ -10,15 +10,14 @@ export default function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
 
   const handleSignup = (e) => {
     e.preventDefault();
     setIsLoading(true)
     dispatch(sendOtp(email,navigate,{name,email,password}))
-    // dispatch(signUp(name,email,password,otp))
-    setIsLoading(false)
-    console.log("Signup Data:", { name, email, password, agreedToTerms });
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);    
   };
 
   return (
@@ -81,7 +80,7 @@ export default function Signup() {
             type="submit"
             className="w-full p-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm"
           >
-            {isLoading ? <Loader2 /> : "Sign Up"}
+            {isLoading ? <span className="flex flex-row justify-center items-center"><Loader2 className="animate-spin"/><span>Loading...</span></span> : "Sign Up"}
           </button>
         </form>
 
@@ -96,5 +95,3 @@ export default function Signup() {
     </div>
   );
 }
-
-

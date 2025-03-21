@@ -13,7 +13,9 @@ export default function Login() {
     e.preventDefault();
     setisloading(true);
     dispatch(login(email, password, navigate));
-    setisloading(false);
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); 
   };
 
   return (
@@ -75,7 +77,7 @@ export default function Login() {
             className="w-full p-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm flex items-center justify-center"
             disabled={isLoading} // Disable button while loading
           >
-            {isLoading ? <Loader2 /> : "Login"}
+            {isLoading ? <span className="flex flex-row justify-center items-center"><Loader2 className="animate-spin"/><span>Loading...</span></span> : "Login"}
           </button>
         </form>
 
