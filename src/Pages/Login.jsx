@@ -14,7 +14,7 @@ export default function Login() {
     setisloading(true);
     dispatch(login(email, password, navigate));
     const timer = setTimeout(() => {
-      setIsLoading(false);
+      setisloading(false);
     }, 2000); 
   };
 

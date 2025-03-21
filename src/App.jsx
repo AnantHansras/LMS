@@ -19,6 +19,10 @@ function App() {
         <Route path='/update-password/:id' element={<UpdatePassword/>}/>
 
         <Route path='/allbooks' element={<AllBooks/>}/>
+
+        {/* <Route path='/issuedbooks' element={<AllBooks/>}/>
+        <Route path='/admin/allbooks' element={<AllBooks/>}/>
+        <Route path='/admin/issuedbooks' element={<AllBooks/>}/> */}
       </Routes>
     </div>
   )

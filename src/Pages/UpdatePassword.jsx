@@ -2,24 +2,12 @@ import React, { useState } from "react";
 import { Lock } from "lucide-react";
 
 export default function UpdatePassword() {
-  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const handleUpdate = (e) => {
     e.preventDefault();
 
-    if (!currentPassword || !newPassword || !confirmPassword) {
-      alert("Please fill out all fields");
-      return;
-    }
-
-    if (newPassword !== confirmPassword) {
-      alert("New password and confirm password do not match");
-      return;
-    }
-
-    console.log("Password Updated Successfully");
   };
 
   return (
@@ -29,22 +17,6 @@ export default function UpdatePassword() {
         <p className="text-gray-400 text-center mt-1">Change your current password</p>
 
         <form className="space-y-4 mt-4" onSubmit={handleUpdate}>
-          {/* Current Password Field */}
-          <div>
-            <label className="block text-xs font-medium text-gray-300">Current Password</label>
-            <div className="relative">
-              <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-              <input
-                type="password"
-                placeholder="Enter current password"
-                className="w-full pl-9 p-2 border border-gray-500 rounded-lg bg-transparent text-white focus:ring-2 focus:ring-blue-400 outline-none text-sm"
-                required
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-              />
-            </div>
-          </div>
-
           {/* New Password Field */}
           <div>
             <label className="block text-xs font-medium text-gray-300">New Password</label>
@@ -85,13 +57,6 @@ export default function UpdatePassword() {
             Update Password
           </button>
         </form>
-
-        {/* Back to Profile */}
-        <div className="text-center text-sm text-gray-400 mt-4">
-          <a href="/profile" className="text-blue-400 hover:underline">
-            Back to Profile
-          </a>
-        </div>
       </div>
     </div>
   );

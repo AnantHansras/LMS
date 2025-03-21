@@ -5,3 +5,8 @@ export const userEndpoints = {
     SIGNUP_API : BASE_URL+"/user/signup",
     LOGIN_API : BASE_URL+"/user/login"
 }
+
+export const passwordEndpoints = {
+    PASSWORDTOKEN_API : BASE_URL + '/password/passwordtoken',
+    RESETPASSWORD_API : BASE_URL + '/password/resetpassword'
+}
