@@ -1,13 +1,24 @@
 import React, { useState } from "react";
+import { useDispatch} from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Lock } from "lucide-react";
-
+import { resetPassword } from "../Services/passwordAPI";
+import { Loader2 } from "lucide-react";
 export default function UpdatePassword() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const [isLoading, setisloading] = useState(false);
   const handleUpdate = (e) => {
     e.preventDefault();
-
+    const token = location.pathname.split("/").at(-1);
+    setisloading(true);
+    dispatch(resetPassword(newPassword, confirmPassword, token, navigate));
+    const timer = setTimeout(() => {
+      setisloading(false);
+    }, 2000); 
   };
 
   return (
@@ -54,7 +65,7 @@ export default function UpdatePassword() {
             type="submit"
             className="w-full p-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm"
           >
-            Update Password
+            {isLoading ? <span className="flex flex-row justify-center items-center"><Loader2 className="animate-spin mr-1"/><span>Loading...</span></span> : "Update Password"}
           </button>
         </form>
       </div>

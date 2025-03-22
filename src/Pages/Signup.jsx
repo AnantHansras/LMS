@@ -81,7 +81,7 @@ export default function Signup() {
             type="submit"
             className="w-full p-2 rounded-lg bg-[hsla(21,90%,48%,1)] text-[#FAFAF9] font-semibold hover:bg-[hsla(21,90%,48%,0.9)] hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm"
           >
-            {isLoading ? <Loader2 /> : "Sign Up"}
+            {isLoading ? <span className="flex flex-row justify-center items-center"><Loader2 className="animate-spin mr-1"/><span>Loading...</span></span> : "Sign Up"}
           </button>
         </form>
 

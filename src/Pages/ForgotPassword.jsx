@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Mail } from "lucide-react";
+import { Mail,Loader2 } from "lucide-react";
 import { tokenPassword } from "../Services/passwordAPI";
 
 export default function ForgotPassword() {

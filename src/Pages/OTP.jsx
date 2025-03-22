@@ -58,7 +58,7 @@ export default function OTP() {
             type="submit"
             className="w-full p-2 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm"
           >
-            {isLoading ? <span className="flex flex-row justify-center items-center"><Loader2 className="animate-spin"/><span>Loading...</span></span> : "Verify OTP"}
+            {isLoading ? <span className="flex flex-row justify-center items-center"><Loader2 className="animate-spin mr-1"/><span>Loading...</span></span> : "Verify OTP"}
           </button>
         </form>
       </div>
