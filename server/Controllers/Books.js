@@ -76,7 +76,9 @@ const returnBook = async (req, res) => {
 
         // Update the transaction status to 'returned'
         transaction.status = 'returned';
+        transaction.returnedDate = new Date();
         await transaction.save();
+    
 
         return res.status(200).json({
             success: true,
@@ -94,7 +96,30 @@ const returnBook = async (req, res) => {
 const issueBook = async (req, res) => {
     try {
         const userId = req.user.id;
-        const { bookId } = req.body; // Extract bookId and userId from request
+        const { bookId } = req.body; // Extract bookId from request
+
+        // Validate bookId
+        if (!bookId) {
+            return res.status(400).json({
+                success: false,
+                message: 'Book ID is required',
+            });
+        }
+
+        // Check if the book exists and is available
+        const book = await Book.findById(bookId);
+        if (!book) {
+            return res.status(404).json({
+                success: false,
+                message: 'Book not found',
+            });
+        }
+        if (book.isAvailable === 'no') {
+            return res.status(400).json({
+                success: false,
+                message: 'Book is currently not available',
+            });
+        }
 
         // Check if the book is already issued to the user
         const existingTransaction = await Transaction.findOne({ bookId, userId, status: 'issued' });
@@ -106,18 +131,30 @@ const issueBook = async (req, res) => {
             });
         }
 
+        // Set issueDate as today and returnDate as 21 days later
+        const issueDate = new Date();
+        const returnDate = new Date();
+        returnDate.setDate(issueDate.getDate() + 21); // 21 days from issue date
+
         // Create a new transaction for issuing the book
         const newTransaction = new Transaction({
             bookId,
             userId,
             status: 'issued',
+            issueDate,
+            returnDate,
         });
 
         await newTransaction.save();
 
+        // Update book availability to 'no'
+        book.isAvailable = 'no';
+        await book.save();
+
         return res.status(201).json({
             success: true,
             message: 'Book issued successfully',
+            transaction: newTransaction,
         });
 
     } catch (error) {
@@ -131,10 +168,10 @@ const issueBook = async (req, res) => {
 
 const addBook = async (req, res) => {
     try {
-        const { title, author, genre, publishedYear, isAvailable } = req.body;
+        const { title, author, genre, publishedYear } = req.body;
 
         // Validate input fields
-        if (!title || !author || !genre || !publishedYear || !isAvailable) {
+        if (!title || !author || !genre || !publishedYear ) {
             return res.status(400).json({
                 success: false,
                 message: 'All fields are required',
@@ -157,7 +194,7 @@ const addBook = async (req, res) => {
             author,
             genre,
             publishedYear,
-            isAvailable
+            isAvailable: 'yes',
         });
 
         await newBook.save();
@@ -176,10 +213,48 @@ const addBook = async (req, res) => {
     }
 };
 
+// const removeBook = async (req, res) => {
+//     try {
+//         const { bookId } = req.body;
+
+//         // Validate bookId
+//         if (!bookId) {
+//             return res.status(400).json({
+//                 success: false,
+//                 message: 'Book ID is required',
+//             });
+//         }
+
+//         // Find the book by ID
+//         const book = await Book.findById(bookId);
+
+//         if (!book) {
+//             return res.status(404).json({
+//                 success: false,
+//                 message: 'Book not found',
+//             });
+//         }
+
+//         // Remove the book
+//         await Book.findByIdAndDelete(bookId);
+
+//         return res.status(200).json({
+//             success: true,
+//             message: 'Book removed successfully',
+//         });
+//     } catch (error) {
+//         return res.status(500).json({
+//             success: false,
+//             message: 'Server error',
+//             error: error.message,
+//         });
+//     }
+// };
+
 const removeBook = async (req, res) => {
     try {
         const { bookId } = req.body;
-
+        const userId = req.user.id;
         // Validate bookId
         if (!bookId) {
             return res.status(400).json({
@@ -198,12 +273,15 @@ const removeBook = async (req, res) => {
             });
         }
 
+        // Remove all transactions related to this book
+        await Transaction.deleteMany({ bookId: bookId, userId: userId });
+
         // Remove the book
         await Book.findByIdAndDelete(bookId);
 
         return res.status(200).json({
             success: true,
-            message: 'Book removed successfully',
+            message: 'Book and related transactions removed successfully',
         });
     } catch (error) {
         return res.status(500).json({
@@ -214,4 +292,43 @@ const removeBook = async (req, res) => {
     }
 };
 
-module.exports = { fetchAllBooks,fetchIssuedBooksToUser,returnBook,issueBook,addBook,removeBook};
+const toggleBookAvailability = async (req, res) => {
+    try {
+        const { bookId } = req.body;
+
+        // Validate input
+        if (!bookId) {
+            return res.status(400).json({
+                success: false,
+                message: 'Book ID is required',
+            });
+        }
+
+        // Find the book by ID
+        const book = await Book.findById(bookId);
+        if (!book) {
+            return res.status(404).json({
+                success: false,
+                message: 'Book not found',
+            });
+        }
+
+        // Toggle availability status
+        book.isAvailable = book.isAvailable === 'yes' ? 'no' : 'yes';
+        await book.save();
+
+        return res.status(200).json({
+            success: true,
+            message: 'Book availability status updated successfully',
+            book,
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message,
+        });
+    }
+};
+
+module.exports = { fetchAllBooks,fetchIssuedBooksToUser,returnBook,issueBook,addBook,removeBook,toggleBookAvailability};
