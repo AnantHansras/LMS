@@ -3,6 +3,7 @@ const connect = require('./utils/dbConnect');
 const app = express()
 const userRoutes = require('./Routes/User')
 const passwordRoutes = require('./Routes/Password')
+const booksRoutes = require('./Routes/Books')
 const cors = require('cors')
 const dotenv = require('dotenv')
 dotenv.config();
@@ -17,6 +18,7 @@ app.use(
 
 app.use('/user',userRoutes)
 app.use('/password',passwordRoutes)
+app.use('/books',booksRoutes)
 
 const port = process.env.PORT || 6000;
 app.listen(port, () => {
