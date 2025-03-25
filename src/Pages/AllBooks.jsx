@@ -1,10 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import List from '../Components/List';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
-
+import { getallbooks } from '../Services/booksAPI';
+import { useDispatch } from 'react-redux';
+import ADDbook from '../Components/ADDbook';
 function AllBooks() {
-  const [books] = useState([
+  const dispatch = useDispatch();
+  const [books, setBooks] = useState([]); // Initially empty
+  const token = localStorage.getItem("token");
+const parsedToken = token ? JSON.parse(token) : null;
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const data = await dispatch(getallbooks(parsedToken)); // Fetch books from API
+        setBooks(data.books);
+        console.log(data) // Update state with fetched books
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    fetchBooks();
+  }); // Runs only once when component mounts
+  const [book] = useState([
     { _id: 1, title: "Machine Learning", author: "J.K. Rowling", genre: "Fantasy" },
     { _id: 2, title: "A Textbook of Engineering Mechanics", author: "D.S. Kumar", genre: "Engineering" },
     { _id: 3, title: "Software Engineering", author: "Niranjli Singh, Rakesh Kumar", genre: "Engineering" },
@@ -23,6 +43,7 @@ function AllBooks() {
     <>
       <Header/>
       <List books={books} />
+      <ADDbook/>
       <Footer />
     </>
   );

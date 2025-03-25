@@ -18,7 +18,7 @@ app.use(
 
 app.use('/user',userRoutes)
 app.use('/password',passwordRoutes)
-app.use('/books',booksRoutes)
+app.use('/book',booksRoutes)
 
 const port = process.env.PORT || 6000;
 app.listen(port, () => {

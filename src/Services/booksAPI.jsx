@@ -2,12 +2,12 @@ import { title } from 'framer-motion/client';
 import { apiConnector } from './apiConnector'
 import { bookEndpoints } from './apis'
 import {toast} from 'react-hot-toast'
-const {GETBOOKS_API,ADDBOOK_API,REMOVEBOOK_API} = bookEndpoints;
+const {GETBOOKS_API,ADDBOOK_API,REMOVEBOOK_API,GETISSUEDBOOKS_API,ISSUEBOOK_API,RETURNBOOK_API,CHANGEAVAILABLE_API} = bookEndpoints;
 
 export function getallbooks(token) {
     return async (dispatch) => {
         try{
-        const response = await apiConnector("POST", PASSWORDTOKEN_API, {})
+        const response = await apiConnector("POST", GETBOOKS_API, {},{ Authorization: `Bearer ${token}` })
         console.log("GETBOOKS API RESPONSE............", response)
         
         console.log(response.data.success)
@@ -31,7 +31,7 @@ export function addbook(title,author,genre,publishedYear,token) {
     try{
     const response = await apiConnector("POST", ADDBOOK_API, {
       title,author,genre,publishedYear
-    })
+    },{ Authorization: `Bearer ${token}` })
     console.log("ADDBOOK API RESPONSE............", response)
     
     console.log(response.data.success)

@@ -5,12 +5,12 @@ const BookList = ({ books }) => {
   const [searchQuery, setSearchQuery] = useState("");
 
   // Filter books based on the title, author, or genre
-  const filteredBooks = books.filter(
-    (book) =>
-      book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      book.genre.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // const filteredBooks = books.filter(
+  //   (book) =>
+  //     book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+  //     book.genre.toLowerCase().includes(searchQuery.toLowerCase())
+  // );
 
   return (
     <div className="min-h-screen bg-[hsla(240,10%,4%,1)] p-6">
@@ -30,7 +30,7 @@ const BookList = ({ books }) => {
 
       {/* Book List */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {filteredBooks.length > 0 ? (
+        {books.length > 0 ? (
           filteredBooks.map((book) => (
             <motion.div
               key={book._id}
