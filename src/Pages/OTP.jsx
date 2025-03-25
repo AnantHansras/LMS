@@ -22,6 +22,7 @@ export default function OTP() {
     e.preventDefault();
     const { name, email, password } = signupData;
     setIsLoading(true)
+    
     dispatch(signUp(name, email, password, otp, navigate));
     const timer = setTimeout(() => {
       setIsLoading(false);
