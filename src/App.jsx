@@ -6,6 +6,8 @@ import ForgotPassword from './Pages/ForgotPassword'
 import UpdatePassword from './Pages/UpdatePassword'
 import OTP from './Pages/OTP'
 import AllBooks from './Pages/AllBooks'
+import IssuedBooks from './Pages/IssuedBooks'
+import DashboardLayout from './Pages/DashboardLayout'
 function App() {
   
 
@@ -18,11 +20,17 @@ function App() {
         <Route path='/forgot-password' element={<ForgotPassword/>}/>
         <Route path='/update-password/:id' element={<UpdatePassword/>}/>
 
-        <Route path='/allbooks' element={<AllBooks/>}/>
+        {/* <Route path='/allbooks' element={<AllBooks/>}/> */}
 
         {/* <Route path='/issuedbooks' element={<AllBooks/>}/>
         <Route path='/admin/allbooks' element={<AllBooks/>}/>
         <Route path='/admin/issuedbooks' element={<AllBooks/>}/> */}
+        <Route path="/" element={<DashboardLayout />}>
+          <Route path="/allbooks" element={<AllBooks />} />
+          <Route path="/issuedbooks" element={<IssuedBooks />} />
+          <Route path="/admin/allbooks" element={<AllBooks />} />
+          <Route path="/admin/issuedbooks" element={<IssuedBooks />} />
+        </Route>
       </Routes>
     </div>
   )
