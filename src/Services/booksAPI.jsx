@@ -1,4 +1,3 @@
-import { title } from 'framer-motion/client';
 import { apiConnector } from './apiConnector'
 import { bookEndpoints } from './apis'
 import {toast} from 'react-hot-toast'
@@ -9,8 +8,7 @@ export function getallbooks(token) {
         try{
         const response = await apiConnector("POST", GETBOOKS_API, {},{ Authorization: `Bearer ${token}` })
         console.log("GETBOOKS API RESPONSE............", response)
-        
-        console.log(response.data.success)
+
         if (!response.data.success) {
           throw new Error(response.data.message)
         }
@@ -34,7 +32,6 @@ export function addbook(title,author,genre,publishedYear,token) {
     },{ Authorization: `Bearer ${token}` })
     console.log("ADDBOOK API RESPONSE............", response)
     
-    console.log(response.data.success)
     if (!response.data.success) {
       throw new Error(response.data.message)
     }
@@ -55,10 +52,9 @@ export function removebook(bookId,token) {
     try{
     const response = await apiConnector("POST", REMOVEBOOK_API, {
       bookId
-    })
+    },{ Authorization: `Bearer ${token}` })
     console.log("REMOVEBOOK API RESPONSE............", response)
     
-    console.log(response.data.success)
     if (!response.data.success) {
       throw new Error(response.data.message)
     }
@@ -77,13 +73,14 @@ export function removebook(bookId,token) {
     toast.error(error.response.data.message,{theme: "dark"})
   }
   } 
-  } 
+} 
+
 export function returnbook(bookId,token) {
   return async (dispatch) => {
     try{
     const response = await apiConnector("POST", RETURNBOOK_API, {
       bookId
-    })
+    },{ Authorization: `Bearer ${token}` })
     console.log("RETURNBOOK API RESPONSE............", response)
     
     console.log(response.data.success)
@@ -106,11 +103,12 @@ export function returnbook(bookId,token) {
     toast.error(error.response.data.message,{theme: "dark"})
   }
   } 
-  }
+}
+
 export function issueBook(bookId,token) {
   return async (dispatch) => {
     try{
-    const response = await apiConnector("POST", GETISSUEDBOOKS_API, {bookId})
+    const response = await apiConnector("POST", GETISSUEDBOOKS_API, {bookId},{ Authorization: `Bearer ${token}` })
     console.log("GETISSUEDBOOKS API RESPONSE............", response)
     
     console.log(response.data.success)
@@ -133,10 +131,11 @@ export function issueBook(bookId,token) {
   }
 }
 }
+
 export function togglebookAvailability(bookId,token) {
   return async (dispatch) => {
     try{
-    const response = await apiConnector("POST", TOGGLEBOOKAVAILABILITY_API, {bookId})
+    const response = await apiConnector("POST", TOGGLEBOOKAVAILABILITY_API, {bookId},{ Authorization: `Bearer ${token}` })
     console.log("TOGGLEBOOKAVAILABILITY API RESPONSE............", response)
     
     console.log(response.data.success)
@@ -160,15 +159,11 @@ export function togglebookAvailability(bookId,token) {
   }
 }
 }
+
 export function fetchIssuedBooksToUser(token) {
   return async (dispatch) => {
     try {
-      const response = await apiConnector("GET", GETISSUEDBOOKS_API, null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await apiConnector("GET", GETISSUEDBOOKS_API, {},{ Authorization: `Bearer ${token}` });
 
       console.log("FETCH ISSUED BOOKS API RESPONSE:", response);
 

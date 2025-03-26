@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-
+import { Trash2 } from "lucide-react";
+import { removebook } from "../Services/booksAPI";
+import { useDispatch } from 'react-redux';
 const BookList = ({ books }) => {
+  const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
-
-  // Filter books based on the title, author, or genre
-  // const filteredBooks = books.filter(
-  //   (book) =>
-  //     book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-  //     book.genre.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
+  const token = localStorage.getItem("token");
+  const parsedToken = token ? JSON.parse(token) : null;
+  const onDelete = (bookId) => {
+    dispatch(removebook(bookId,parsedToken));
+  };
 
   return (
     <div className="min-h-screen bg-[hsla(240,10%,4%,1)] p-6">
@@ -31,13 +31,21 @@ const BookList = ({ books }) => {
       {/* Book List */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
         {books.length > 0 ? (
-          filteredBooks.map((book) => (
+          books.map((book) => (
             <motion.div
               key={book._id}
               className="relative bg-[#0c0A09] border border-[hsla(12,7%,15%,1)] backdrop-blur-2xl rounded-xl p-4 shadow-lg hover:shadow-2xl w-[250px] h-[400px] mx-auto flex flex-col"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
             >
+              {/* Delete Icon */}
+              <button
+                className="absolute top-2 right-2 text-[#A8A29E] hover:text-red-500 transition"
+                onClick={() => onDelete(book._id)}
+              >
+                <Trash2 size={18} />
+              </button>
+
               {/* Book Title & Author */}
               <motion.div className="mb-2">
                 <h2 className="text-lg font-bold text-[hsla(21,90%,48%,1)]">

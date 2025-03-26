@@ -2,6 +2,7 @@ const User = require('../Models/User')
 const Book = require('../Models/Books')
 const Transaction = require('../Models/Transaction')
 
+//done
 const fetchAllBooks = async (req,res) =>{
     try{
         const books = await Book.find({}); // Fetch all books from DB
@@ -17,6 +18,7 @@ const fetchAllBooks = async (req,res) =>{
         });
     }
 };
+
 
 const fetchIssuedBooksToUser = async (req, res) => {
     try {
@@ -166,6 +168,8 @@ const issueBook = async (req, res) => {
     }
 };
 
+
+//done
 const addBook = async (req, res) => {
     try {
         const { title, author, genre, publishedYear } = req.body;
@@ -212,45 +216,7 @@ const addBook = async (req, res) => {
         });
     }
 };
-
-// const removeBook = async (req, res) => {
-//     try {
-//         const { bookId } = req.body;
-
-//         // Validate bookId
-//         if (!bookId) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: 'Book ID is required',
-//             });
-//         }
-
-//         // Find the book by ID
-//         const book = await Book.findById(bookId);
-
-//         if (!book) {
-//             return res.status(404).json({
-//                 success: false,
-//                 message: 'Book not found',
-//             });
-//         }
-
-//         // Remove the book
-//         await Book.findByIdAndDelete(bookId);
-
-//         return res.status(200).json({
-//             success: true,
-//             message: 'Book removed successfully',
-//         });
-//     } catch (error) {
-//         return res.status(500).json({
-//             success: false,
-//             message: 'Server error',
-//             error: error.message,
-//         });
-//     }
-// };
-
+//done
 const removeBook = async (req, res) => {
     try {
         const { bookId } = req.body;
@@ -428,6 +394,162 @@ const searchBookByAuthor = async (req, res) => {
             message: 'Books retrieved successfully',
             books,
         });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message,
+        });
+    }
+};
+
+const requestIssueBook = async (req, res) => {
+    try {
+        const userId = req.user.id;
+        const { bookId } = req.body;
+
+        if (!bookId) {
+            return res.status(400).json({
+                success: false,
+                message: 'Book ID is required',
+            });
+        }
+
+        const book = await Book.findById(bookId);
+        if (!book) {
+            return res.status(404).json({
+                success: false,
+                message: 'Book not found',
+            });
+        }
+
+        if (book.isAvailable === 'no') {
+            return res.status(400).json({
+                success: false,
+                message: 'Book is currently not available',
+            });
+        }
+
+        const existingRequest = await Transaction.findOne({ bookId, userId, status: 'pending' });
+
+        if (existingRequest) {
+            return res.status(400).json({
+                success: false,
+                message: 'Request already exists for this book',
+            });
+        }
+
+        const newRequest = new Transaction({
+            bookId,
+            userId,
+            status: 'pending',
+            requestDate: new Date(),
+        });
+
+        await newRequest.save();
+
+        return res.status(201).json({
+            success: true,
+            message: 'Book request submitted successfully',
+            request: newRequest,
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message,
+        });
+    }
+};
+
+const approveIssueRequest = async (req, res) => {
+    try {
+        const { requestId } = req.body;
+
+        if (!requestId) {
+            return res.status(400).json({
+                success: false,
+                message: 'Request ID is required',
+            });
+        }
+
+        const transaction = await Transaction.findById(requestId);
+
+        if (!transaction || transaction.status !== 'pending') {
+            return res.status(404).json({
+                success: false,
+                message: 'Pending request not found',
+            });
+        }
+
+        const book = await Book.findById(transaction.bookId);
+
+        if (!book || book.isAvailable === 'no') {
+            return res.status(400).json({
+                success: false,
+                message: 'Book is not available',
+            });
+        }
+
+        transaction.status = 'issued';
+        transaction.issueDate = new Date();
+        transaction.returnDate = new Date();
+        transaction.returnDate.setDate(transaction.issueDate.getDate() + 21);
+
+        await transaction.save();
+
+        book.isAvailable = 'no';
+        await book.save();
+
+        return res.status(200).json({
+            success: true,
+            message: 'Book issued successfully',
+            transaction,
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message,
+        });
+    }
+};
+
+const getAllRequests = async (req, res) => {
+    try {
+        const requests = await Transaction.find({ status: 'pending' })
+            .populate('bookId', 'title author')  // Fetch book details
+            .populate('userId', 'name email');  // Fetch user details
+
+        return res.status(200).json({
+            success: true,
+            requests,
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message,
+        });
+    }
+};
+
+const getUserTransactions = async (req, res) => {
+    try {
+        const userId = req.user.id; // Get user ID from authenticated request
+
+        const transactions = await Transaction.find({ userId })
+            .populate('bookId', 'title author') // Fetch book details
+            .sort({ issueDate: -1 }); // Sort by latest issued first
+
+        return res.status(200).json({
+            success: true,
+            transactions,
+        });
+
     } catch (error) {
         return res.status(500).json({
             success: false,

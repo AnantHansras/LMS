@@ -15,7 +15,6 @@ const resetPasswordToken = async (req,res) =>{
                 message:"User not registered"
             });
         }
-        console.log("check1")
         const token = crypto.randomBytes(20).toString("hex");
         
         const updatedUser = await User.findOneAndUpdate({email},{token:token,resetPasswordExpires: Date.now() + 5*60*1000},{new:true});

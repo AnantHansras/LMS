@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Menu as MenuIcon,
+import { Home as HomeIcon, 
   Close as CloseIcon,
-  Home as HomeIcon,
-  LibraryBooks as LibraryBooksIcon,
-  AdminPanelSettings as AdminIcon,
+  Menu as MenuIcon,
   ExitToApp as ExitIcon,
-} from "@mui/icons-material";
+  LibraryBooks as LibraryBooksIcon, 
+  Settings as SettingsIcon, 
+  Book as BookIcon, 
+  AssignmentTurnedIn as RequestIcon } from "@mui/icons-material";
+  import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Tooltip } from "@mui/material";
 
 export default function Sidebar() {
@@ -17,10 +18,16 @@ export default function Sidebar() {
   const toggleSidebar = () => setIsOpen(!isOpen);
 
   const menuItems = [
-    { name: "Dashboard", path: "/allbooks", icon: <HomeIcon /> },
-    { name: "Issued Books", path: "/issuedbooks", icon: <LibraryBooksIcon /> },
-    { name: "Admin Books", path: "/admin/allbooks", icon: <AdminIcon /> },
-  ];
+    { name: "Home", path: "/home", icon: <HomeIcon /> },
+    { name: "All Books", path: "/allbooks", icon: <LibraryBooksIcon /> },
+    { name: "Issued Books", path: "/issuedbooks", icon: <BookIcon /> },
+    { name: "Add Books", path: "/addbooks", icon: <AddCircleIcon /> }, // New tab for adding books
+    { name: "Settings", path: "/settings", icon: <SettingsIcon /> },
+    { name: "Pending Requests", path: "/pending-req", icon: <RequestIcon /> },
+    { name: "Transactions", path: "/transactions", icon: <RequestIcon /> },
+];
+
+
 
   return (
     <div
