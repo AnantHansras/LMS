@@ -19,7 +19,7 @@ const fetchAllBooks = async (req,res) =>{
     }
 };
 
-
+//almost
 const fetchIssuedBooksToUser = async (req, res) => {
     try {
         const userId = req.user.id; // Get authenticated user's ID
@@ -31,10 +31,8 @@ const fetchIssuedBooksToUser = async (req, res) => {
             });
         }
 
-        const issuedTransactions = await Transaction.find({ userId, status: 'issued' }).populate({
-            path: 'bookId',
-            model: 'Book'
-        });
+        const issuedTransactions = await Transaction.find({ userId, status: 'issued' }).populate('bookId', 'title author') // Fetch title and author from Book model
+        .populate('userId', 'name');;
 
         // if (issuedTransactions.length === 0) {
         //     return res.status(404).json({
@@ -59,6 +57,7 @@ const fetchIssuedBooksToUser = async (req, res) => {
     }
 };
 
+//almost
 const returnBook = async (req, res) => {
     try {
         const userId = req.user.id;
@@ -168,7 +167,6 @@ const issueBook = async (req, res) => {
     }
 };
 
-
 //done
 const addBook = async (req, res) => {
     try {
@@ -216,6 +214,7 @@ const addBook = async (req, res) => {
         });
     }
 };
+
 //done
 const removeBook = async (req, res) => {
     try {
@@ -465,16 +464,16 @@ const requestIssueBook = async (req, res) => {
 
 const approveIssueRequest = async (req, res) => {
     try {
-        const { requestId } = req.body;
+        const { transactionID } = req.body;
 
-        if (!requestId) {
+        if (!transactionID) {
             return res.status(400).json({
                 success: false,
                 message: 'Request ID is required',
             });
         }
 
-        const transaction = await Transaction.findById(requestId);
+        const transaction = await Transaction.findById(transactionID);
 
         if (!transaction || transaction.status !== 'pending') {
             return res.status(404).json({
@@ -498,9 +497,6 @@ const approveIssueRequest = async (req, res) => {
         transaction.returnDate.setDate(transaction.issueDate.getDate() + 21);
 
         await transaction.save();
-
-        book.isAvailable = 'no';
-        await book.save();
 
         return res.status(200).json({
             success: true,
@@ -559,5 +555,4 @@ const getUserTransactions = async (req, res) => {
     }
 };
 
-module.exports = { fetchAllBooks,fetchIssuedBooksToUser,returnBook,issueBook,addBook,removeBook,toggleBookAvailability,searchBookByAuthor,searchBookByGenre,searchBookByName}
-
+module.exports = {requestIssueBook,approveIssueRequest,getAllRequests,getUserTransactions, fetchAllBooks,fetchIssuedBooksToUser,returnBook,issueBook,addBook,removeBook,toggleBookAvailability,searchBookByAuthor,searchBookByGenre,searchBookByName}

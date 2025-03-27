@@ -9,6 +9,8 @@ import AllBooks from './Pages/AllBooks'
 import IssuedBooks from './Pages/IssuedBooks'
 import DashboardLayout from './Pages/DashboardLayout'
 import AddBooks from './Pages/AddBooks'
+import AllTransactions from './Pages/AllTransactions'
+import Pending from './Pages/Pending'
 function App() {
   
 
@@ -32,6 +34,8 @@ function App() {
           <Route path="/issuedbooks" element={<IssuedBooks />} />
           <Route path="/admin/allbooks" element={<AllBooks />} />
           <Route path="/admin/issuedbooks" element={<IssuedBooks />} />
+          <Route path="/transactions" element={<AllTransactions />} />
+          <Route path="/pending-req" element={<Pending />} />
         </Route>
       </Routes>
     </div>

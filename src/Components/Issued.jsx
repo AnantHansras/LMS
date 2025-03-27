@@ -1,31 +1,15 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
-import { removebook, requestBook } from "../Services/booksAPI";
+import { returnbook } from "../Services/booksAPI";
 import { useDispatch } from 'react-redux';
-
-const BookList = ({ books }) => {
+const Issued = ({ books }) => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedBook, setSelectedBook] = useState(null);
   const token = localStorage.getItem("token");
   const parsedToken = token ? JSON.parse(token) : null;
-
   const onDelete = (bookId) => {
-    dispatch(removebook(bookId, parsedToken));
-  };
-
-  const openModal = (book) => {
-    setSelectedBook(book);
-  };
-
-  const closeModal = () => {
-    setSelectedBook(null);
-  };
-
-  const issueBook = (bookId) => {
-    dispatch(requestBook(bookId,parsedToken))
-    closeModal();
+    dispatch(returnbook(bookId,parsedToken));
   };
 
   return (
@@ -50,15 +34,14 @@ const BookList = ({ books }) => {
           books.map((book) => (
             <motion.div
               key={book._id}
-              className="relative bg-[#0c0A09] border border-[hsla(12,7%,15%,1)] backdrop-blur-2xl rounded-xl p-4 shadow-lg hover:shadow-2xl w-[250px] h-[400px] mx-auto flex flex-col cursor-pointer"
+              className="relative bg-[#0c0A09] border border-[hsla(12,7%,15%,1)] backdrop-blur-2xl rounded-xl p-4 shadow-lg hover:shadow-2xl w-[250px] h-[400px] mx-auto flex flex-col"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
-              onClick={() => openModal(book)}
             >
               {/* Delete Icon */}
               <button
                 className="absolute top-2 right-2 text-[#A8A29E] hover:text-red-500 transition"
-                onClick={(e) => { e.stopPropagation(); onDelete(book._id); }}
+                onClick={() => onDelete(book._id)}
               >
                 <Trash2 size={18} />
               </button>
@@ -81,7 +64,9 @@ const BookList = ({ books }) => {
                   src={`/book_${book._id}.jpeg`}
                   alt={book.title}
                   className="w-full h-full object-cover rounded-lg"
-                  onError={(e) => { e.target.src = "/fallback-book.jpg"; }}
+                  onError={(e) => {
+                    e.target.src = "/fallback-book.jpg"; // Fallback image if not found
+                  }}
                 />
               </motion.div>
             </motion.div>
@@ -93,27 +78,29 @@ const BookList = ({ books }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-12 h-12 text-[#A8A29E] mb-2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M3 5h18M3 12h18m-9 7h9"
+              />
+            </svg>
             <p className="text-lg font-semibold">No books found</p>
-            <p className="text-sm text-[#A8A29E]">Try searching for something else.</p>
+            <p className="text-sm text-[#A8A29E]">
+              Try searching for something else.
+            </p>
           </motion.div>
         )}
       </div>
-
-      {/* Modal */}
-      {selectedBook && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
-          <div className="bg-[#0c0A09] p-6 rounded-lg shadow-xl text-[#FAFAF9] max-w-sm w-full">
-            <h2 className="text-lg font-semibold">Issue Book</h2>
-            <p>Do you want to issue "{selectedBook.title}"?</p>
-            <div className="flex justify-end mt-4 space-x-4">
-              <button className="px-4 py-2 bg-gray-700 rounded-md" onClick={closeModal}>Cancel</button>
-              <button className="px-4 py-2 bg-[hsla(21,90%,48%,1)] text-white rounded-md" onClick={() => issueBook(selectedBook._id)}>Confirm</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
 
-export default BookList;
+export default Issued;

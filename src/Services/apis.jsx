@@ -15,7 +15,11 @@ export const bookEndpoints = {
     ADDBOOK_API : BASE_URL+"/book/addbook",
     REMOVEBOOK_API : BASE_URL+"/book/removebook",
     GETISSUEDBOOKS_API : BASE_URL+"/book/getissuedbooks",
-    ISSUEBOOK_API : BASE_URL+"/book/issuebook",
+    // ISSUEBOOK_API : BASE_URL+"/book/issuebook",
     RETURNBOOK_API : BASE_URL+"/book/returnbook",
-    CHANGEAVAILABLE_API : BASE_URL+"/book/changeavailable"
+    CHANGEAVAILABLE_API : BASE_URL+"/book/changeavailable",
+    REQUEST_BOOK_API: BASE_URL + "/book/request-book",
+    APPROVE_BOOK_REQUEST_API: BASE_URL + "/book/approve-book-request",
+    GET_ALL_BOOK_REQUESTS_API: BASE_URL + "/book/get-all-book-requests",
+    GET_USER_TRANSACTIONS_API: BASE_URL + "/book/get-user-transactions"
 }
