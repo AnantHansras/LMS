@@ -6,6 +6,10 @@ const passwordRoutes = require('./Routes/Password')
 const booksRoutes = require('./Routes/Books')
 const cors = require('cors')
 const dotenv = require('dotenv')
+
+const cron = require('node-cron');
+const { sendDueDateReminders,checkAndNotifyOverdueUsers } = require('./Controllers/Notification');
+
 dotenv.config();
 connect();
 app.use(express.json());
@@ -24,3 +28,9 @@ const port = process.env.PORT || 6000;
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+cron.schedule('0 0 * * *', async () => {
+    console.log('Running scheduled task: Sending due date reminders...');
+    await sendDueDateReminders();
+    await checkAndNotifyOverdueUsers();
+});
