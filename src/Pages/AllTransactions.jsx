@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { allTransactions } from "../Services/booksAPI";
+
 const AllTransactions = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [transactions, setTransactions] = useState([]);
   const token = localStorage.getItem("token");
   const parsedToken = token ? JSON.parse(token) : null;
+
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
@@ -15,9 +17,17 @@ const AllTransactions = () => {
         console.error("Error fetching transactions:", error);
       }
     };
-  
+
     fetchTransactions();
   }, []);
+
+  const formatDate = (dateString) => {
+    return dateString ? new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    }) : "N/A";
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -27,7 +37,10 @@ const AllTransactions = () => {
           <thead>
             <tr className="bg-gray-100">
               <th className="py-2 px-4 border">Book Title</th>
-              <th className="py-2 px-4 border">User ID</th>
+              <th className="py-2 px-4 border">Issue Date</th>
+              <th className="py-2 px-4 border">Due Date</th>
+              <th className="py-2 px-4 border">Return Date</th>
+              <th className="py-2 px-4 border">Request Date</th>
               <th className="py-2 px-4 border">Status</th>
             </tr>
           </thead>
@@ -35,8 +48,17 @@ const AllTransactions = () => {
             {transactions && transactions.map((transaction) => (
               <tr key={transaction._id} className="border-t">
                 <td className="py-2 px-4 border">{transaction.bookId?.title || "N/A"}</td>
-                <td className="py-2 px-4 border">{transaction.userId || "N/A"}</td>
-                <td className={`py-2 px-4 border ${transaction.status === 'returned' ? 'text-green-600' : 'text-red-600'}`}>{transaction.status}</td>
+                <td className="py-2 px-4 border">{formatDate(transaction.issueDate)}</td>
+                <td className="py-2 px-4 border">{formatDate(transaction.returnDate)}</td>
+                <td className="py-2 px-4 border">{formatDate(transaction.returnedDate)}</td>
+                <td className="py-2 px-4 border">{formatDate(transaction.requestDate)}</td>
+                <td
+                  className={`py-2 px-4 border text-white rounded-full text-center 
+                    ${transaction.status === "issued" ? "text-red-500" : "text-green-500"}
+                  `}
+                >
+                  {transaction.status}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -47,3 +69,5 @@ const AllTransactions = () => {
 };
 
 export default AllTransactions;
+
+

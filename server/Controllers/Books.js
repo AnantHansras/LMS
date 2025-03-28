@@ -430,14 +430,21 @@ const requestIssueBook = async (req, res) => {
         }
 
         const existingRequest = await Transaction.findOne({ bookId, userId, status: 'pending' });
-
+        
         if (existingRequest) {
             return res.status(400).json({
                 success: false,
                 message: 'Request already exists for this book',
             });
         }
-
+        const existingRequest2 = await Transaction.findOne({ bookId, userId, status: 'issued' });
+        if (existingRequest2) {
+            return res.status(400).json({
+                success: false,
+                message: 'Book already issued',
+            });
+        }
+        
         const newRequest = new Transaction({
             bookId,
             userId,
@@ -539,7 +546,7 @@ const getUserTransactions = async (req, res) => {
 
         const transactions = await Transaction.find({ userId })
             .populate('bookId', 'title author') // Fetch book details
-            .sort({ issueDate: -1 }); // Sort by latest issued first
+            .sort({ requestDate: -1 }); // Sort by latest issued first
 
         return res.status(200).json({
             success: true,
