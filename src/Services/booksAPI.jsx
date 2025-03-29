@@ -102,11 +102,11 @@ export function getallbooks(token) {
     }
 }
 
-export function addbook(title,author,genre,publishedYear,token) {
+export function addbook(title,author,genre,publishedYear,keywords,token) {
   return async (dispatch) => {
     try{
     const response = await apiConnector("POST", ADDBOOK_API, {
-      title,author,genre,publishedYear
+      title,author,genre,publishedYear,keywords
     },{ Authorization: `Bearer ${token}` })
     console.log("ADDBOOK API RESPONSE............", response)
     

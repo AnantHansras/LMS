@@ -6,7 +6,7 @@ const booksSchema = new mongoose.Schema({
   author: { type: String, required: true},
   genre: { type: String, required: true},
   publishedYear: {type:Number,required: true},
-  // keyword:[{type: String,required:true}],
+  keywords: [{ type: String, required: true }],
   isAvailable: {
     type: String,
     enum: ['yes', 'no'], 

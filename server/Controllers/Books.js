@@ -170,10 +170,10 @@ const issueBook = async (req, res) => {
 //done
 const addBook = async (req, res) => {
     try {
-        const { title, author, genre, publishedYear } = req.body;
+        const { title, author, genre, publishedYear,keywords  } = req.body;
 
         // Validate input fields
-        if (!title || !author || !genre || !publishedYear ) {
+        if (!title || !author || !genre || !publishedYear || !keywords || !Array.isArray(keywords) || keywords.length === 0) {
             return res.status(400).json({
                 success: false,
                 message: 'All fields are required',
@@ -196,6 +196,7 @@ const addBook = async (req, res) => {
             author,
             genre,
             publishedYear,
+            keywords,
             isAvailable: 'yes',
         });
 
