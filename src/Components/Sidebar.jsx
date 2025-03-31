@@ -244,7 +244,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
   ];
 
   return (
-    <div className={`h-screen bg-[hsla(240,10%,4%,1)] text-[#FAFAF9] transition-all duration-300 flex flex-col shadow-lg ${isOpen ? "w-64" : "w-16"}`}>
+    <div className={`h-screen bg-[hsla(240,10%,4%,1)] text-[#FAFAF9] transition-all duration-300 flex flex-col shadow-lg ${isOpen ? "w-64" : "w-16"} border-r border-[hsla(12,7%,15%,1)]`}>
       {/* Header */}
       <div className="p-4 flex justify-between items-center border-b border-[hsla(12,7%,15%,1)]">
         {isOpen && <h2 className="text-lg font-semibold">Library</h2>}
