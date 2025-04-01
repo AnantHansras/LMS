@@ -11,6 +11,7 @@ import DashboardLayout from './Pages/DashboardLayout'
 import AddBooks from './Pages/AddBooks'
 import AllTransactions from './Pages/AllTransactions'
 import Pending from './Pages/Pending'
+import Home from './Pages/Home'
 function App() {
   
 
@@ -29,6 +30,7 @@ function App() {
         <Route path='/admin/allbooks' element={<AllBooks/>}/>
         <Route path='/admin/issuedbooks' element={<AllBooks/>}/> */}
         <Route path="/" element={<DashboardLayout />}>
+          <Route path="/home" element={<Home />} />
           <Route path="/allbooks" element={<AllBooks />} />
           <Route path="/addbooks" element={<AddBooks />} />
           <Route path="/issuedbooks" element={<IssuedBooks />} />

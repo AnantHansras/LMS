@@ -235,6 +235,7 @@ export default function Sidebar({ isOpen, toggleSidebar }) {
   const location = useLocation();
 
   const menuItems = [
+    { name: "Home", path: "/home", icon: <HomeIcon /> },
     { name: "All Books", path: "/allbooks", icon: <LibraryBooksIcon /> },
     { name: "Issued Books", path: "/issuedbooks", icon: <BookIcon /> },
     { name: "Add Books", path: "/addbooks", icon: <AddCircleIcon /> },
