@@ -101,28 +101,34 @@ export function getallbooks(token) {
       }
     }
 }
-
-export function addbook(title,author,genre,publishedYear,keywords,token) {
+export function addbook(title, author, genre, publishedYear, keywords, attachment, token) {
   return async (dispatch) => {
-    try{
-    const response = await apiConnector("POST", ADDBOOK_API, {
-      title,author,genre,publishedYear,keywords
-    },{ Authorization: `Bearer ${token}` })
-    console.log("ADDBOOK API RESPONSE............", response)
-    
-    if (!response.data.success) {
-      throw new Error(response.data.message)
+    try {
+
+      const response = await apiConnector("POST", ADDBOOK_API, {title,author,genre,publishedYear,keywords,attachment}, {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      });
+
+      console.log("ADDBOOK API RESPONSE:", response);
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      toast.success("📚 Book Added Successfully!", {
+        position: "top-center",
+        theme: "dark",
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("ADDBOOK API ERROR:", error);
+      toast.error(error.response?.data?.message || "An error occurred", { theme: "dark" });
+
+      return null; // Prevent undefined behavior
     }
-    toast.success("📚 Book Added Successfully!", {
-      position: "top-center",
-      theme: "dark",
-    });
-    return response.data;
-  } catch (error) {
-    console.log("ADDBOOK API ERROR............", error)
-    toast.error(error.response.data.message,{theme: "dark"})
-  }
-}
+  };
 }
   
 export function removebook(bookId,token) {

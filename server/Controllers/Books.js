@@ -1,7 +1,7 @@
 const User = require('../Models/User')
 const Book = require('../Models/Books')
 const Transaction = require('../Models/Transaction')
-
+const {uploadImageToCloudinary} = require('../utils/imageUploader')
 //done
 const fetchAllBooks = async (req,res) =>{
     try{
@@ -170,24 +170,38 @@ const issueBook = async (req, res) => {
 //done
 const addBook = async (req, res) => {
     try {
-        const { title, author, genre, publishedYear,keywords  } = req.body;
-
-        // Validate input fields
-        if (!title || !author || !genre || !publishedYear || !keywords || !Array.isArray(keywords) || keywords.length === 0) {
+        const { title, author, genre, publishedYear,keywords } = req.body;
+        const attachment = req.file;
+        
+        if (!title || !author || !genre || !publishedYear ||!keywords) {
             return res.status(400).json({
                 success: false,
-                message: 'All fields are required',
+                message: "All fields are required",
             });
         }
 
-        // Check if the book already exists based on title and author
-        const existingBook = await Book.findOne({ title, author ,publishedYear});
+        // Ensure keywords is an array
+        const parsedKeywords = Array.isArray(keywords) ? keywords : JSON.parse(keywords);
+
+        // Check if the book already exists based on title, author, and published year
+        const existingBook = await Book.findOne({ title, author, publishedYear });
 
         if (existingBook) {
             return res.status(400).json({
                 success: false,
-                message: 'Book already exists',
+                message: "Book already exists",
             });
+        }
+
+        let imageUrl = null;
+        if (attachment) {
+            const uploadedImage = await uploadImageToCloudinary(
+                attachment.path,
+                process.env.FOLDER_NAME,
+                1000,
+                1000
+            );
+            imageUrl = uploadedImage.secure_url;
         }
 
         // Create a new book entry
@@ -196,21 +210,23 @@ const addBook = async (req, res) => {
             author,
             genre,
             publishedYear,
-            keywords,
-            isAvailable: 'yes',
+            keywords: parsedKeywords,
+            isAvailable: "yes",
+            imageUrl,
         });
 
         await newBook.save();
 
         return res.status(201).json({
             success: true,
-            message: 'Book added successfully',
+            message: "Book added successfully",
             book: newBook,
         });
     } catch (error) {
+        console.error("Error in addBook:", error);
         return res.status(500).json({
             success: false,
-            message: 'Server error',
+            message: "Server error",
             error: error.message,
         });
     }

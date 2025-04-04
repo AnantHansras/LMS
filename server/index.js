@@ -7,7 +7,8 @@ const booksRoutes = require('./Routes/Books')
 const recommendRoutes = require('./Routes/recommend')
 const cors = require('cors')
 const dotenv = require('dotenv')
-
+const {cloudinaryConnect } = require("./utils/clodinary");
+cloudinaryConnect();
 const cron = require('node-cron');
 const { sendDueDateReminders,checkAndNotifyOverdueUsers } = require('./Controllers/Notification');
 

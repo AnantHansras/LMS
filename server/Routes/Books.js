@@ -4,12 +4,13 @@ const {searchBookByGenre,searchBookByName,searchBookByAuthor,
     fetchAllBooks,fetchIssuedBooksToUser,returnBook,addBook,removeBook
 ,requestIssueBook,approveIssueRequest,getAllRequests,getUserTransactions} = require('../Controllers/Books')
 const {auth} = require('../Middlewares/auth')
-
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 router.post('/getbooks', auth,fetchAllBooks);
 router.post('/getissuedbooks', auth,fetchIssuedBooksToUser);
 router.post('/returnbook', auth,returnBook);
 //router.post('/issuebook', auth,issueBook);
-router.post('/addbook', auth,addBook);
+router.post('/addbook', auth,upload.single('attachment'),addBook);
 router.post('/removebook', auth,removeBook);
 router.post('/search/name', auth,searchBookByName);
 router.post('/search/genre', auth,searchBookByGenre);

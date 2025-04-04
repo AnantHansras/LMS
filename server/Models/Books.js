@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-
 const booksSchema = new mongoose.Schema({
   title: { type: String, required: true },
   author: { type: String, required: true},
@@ -11,6 +10,10 @@ const booksSchema = new mongoose.Schema({
     type: String,
     enum: ['yes', 'no'], 
     required: true
+  },
+  imageUrl: {
+        type: String, // Field to store the image URL
+        required: false // Optional field
   }
 },{timestamps:true});
 
