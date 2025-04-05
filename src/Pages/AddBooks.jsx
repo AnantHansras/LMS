@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addbook } from "../Services/booksAPI";
-import Illustration from "../assets/undraw_add-tasks_4qsy.svg";
+import Illustration from "../assets/undraw_notebook_8ihb.svg";
 
 export default function AddBookPage() {
   const dispatch = useDispatch();
@@ -29,7 +29,7 @@ export default function AddBookPage() {
 
   const isStepValid = () => {
     if (step === 1) {
-      return book.title.trim() && book.author.trim() && book.genre.trim();
+      return book.title && book.author && book.genre;
     } else if (step === 2) {
       return book.coverPhoto !== null;
     } else if (step === 3) {
@@ -39,12 +39,12 @@ export default function AddBookPage() {
   };
 
   const addKeyword = (e) => {
-    if (e.key === "Enter" && keyword.trim()) {
+    if (e.key === "Enter" && keyword) {
       e.preventDefault();
-      if (!book.keywords.includes(keyword.trim())) {
+      if (!book.keywords.includes(keyword)) {
         setBook((prev) => ({
           ...prev,
-          keywords: [...prev.keywords, keyword.trim()],
+          keywords: [...prev.keywords, keyword],
         }));
       }
       setKeyword("");
@@ -95,12 +95,12 @@ export default function AddBookPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-black p-4">
-      <div className="w-full max-w-4xl rounded-lg bg-neutral-900 p-6 text-white shadow-lg flex flex-col md:flex-row gap-6">
+    <div className="bg-[hsla(240,10%,4%,1)] min-h-screen flex justify-center items-center px-4">
+      <div className="w-full max-w-4xl rounded-2xl border border-[hsla(12,7%,15%,1)] backdrop-blur-xl bg-[#0c0A09] text-[#FAFAF9] shadow-xl flex flex-col md:flex-row gap-6 p-6">
         {/* SVG Illustration */}
         <div className="w-full md:w-1/2 flex flex-col items-center justify-center">
           <img src={Illustration} alt="Add Book" className="w-full max-w-xs" />
-          <p className="text-neutral-400 text-sm max-w-sm mt-2 text-center">
+          <p className="text-[#A8A29E] text-sm max-w-sm mt-2 text-center">
             This form helps you add a new book to your library. Follow the
             3-step process, provide accurate details, upload a cover, and
             complete all fields.
@@ -113,48 +113,42 @@ export default function AddBookPage() {
             onSubmit={handleSubmit}
             className="flex flex-col justify-between h-full space-y-4"
           >
-            <div className="space-y-3">
+            <div className="space-y-4">
               {step === 1 && (
                 <>
                   <div>
-                    <label className="block text-sm text-neutral-400">
-                      Title
-                    </label>
+                    <label className="block text-sm text-[#FAFAF9]">Title</label>
                     <input
                       type="text"
                       name="title"
                       value={book.title}
                       onChange={handleChange}
                       required
-                      className="mt-0.5 w-full rounded-md border border-neutral-700 bg-neutral-800 text-sm p-[0.4rem] text-white focus:ring focus:ring-neutral-600"
+                      className="mt-0.5 w-full rounded-md border outline-none border-[hsla(12,7%,15%,1)] bg-transparent text-sm p-[0.4rem] text-[#A8A29E] focus:ring-2 focus:ring-[hsla(21,90%,48%,1)]"
                       placeholder="Enter book title"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-neutral-400">
-                      Author
-                    </label>
+                    <label className="block text-sm text-[#FAFAF9]">Author</label>
                     <input
                       type="text"
                       name="author"
                       value={book.author}
                       onChange={handleChange}
                       required
-                      className="mt-0.5 w-full rounded-md border border-neutral-700 bg-neutral-800 text-sm p-[0.4rem] text-white focus:ring focus:ring-neutral-600"
+                      className="mt-0.5 w-full rounded-md border outline-none border-[hsla(12,7%,15%,1)] bg-transparent text-sm p-[0.4rem] text-[#A8A29E] focus:ring-2 focus:ring-[hsla(21,90%,48%,1)]"
                       placeholder="Enter author name"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm text-neutral-400">
-                      Genre
-                    </label>
+                    <label className="block text-sm text-[#FAFAF9]">Genre</label>
                     <input
                       type="text"
                       name="genre"
                       value={book.genre}
                       onChange={handleChange}
                       required
-                      className="mt-0.5 w-full rounded-md border border-neutral-700 bg-neutral-800 text-sm p-[0.4rem] text-white focus:ring focus:ring-neutral-600"
+                      className="mt-0.5 w-full rounded-md border outline-none border-[hsla(12,7%,15%,1)] bg-transparent text-sm p-[0.4rem] text-[#A8A29E] focus:ring-2 focus:ring-[hsla(21,90%,48%,1)]"
                       placeholder="e.g. Science Fiction, Romance"
                     />
                   </div>
@@ -163,10 +157,10 @@ export default function AddBookPage() {
 
               {step === 2 && (
                 <div>
-                  <label className="block text-sm text-neutral-400 mb-1">
+                  <label className="block text-sm text-[#FAFAF9] mb-1">
                     Cover Photo
                   </label>
-                  <div className="relative border-2 border-dashed border-neutral-700 rounded-md h-48 flex items-center justify-center text-center cursor-pointer hover:border-neutral-500 transition overflow-hidden">
+                  <div className="relative border-2 border-dashed border-[hsla(12,7%,15%,1)] rounded-md h-48 flex items-center justify-center text-center cursor-pointer hover:border-[hsla(21,90%,48%,1)] transition overflow-hidden">
                     <input
                       type="file"
                       accept="image/*"
@@ -180,7 +174,7 @@ export default function AddBookPage() {
                         className="object-contain h-full w-full"
                       />
                     ) : (
-                      <div className="flex flex-col items-center justify-center text-neutral-400 z-0">
+                      <div className="flex flex-col items-center justify-center text-[#A8A29E] z-0">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="h-10 w-10 mb-2"
@@ -205,15 +199,13 @@ export default function AddBookPage() {
               {step === 3 && (
                 <>
                   <div>
-                    <label className="block text-sm text-neutral-400">
-                      Keywords
-                    </label>
+                    <label className="block text-sm text-[#FAFAF9]">Keywords</label>
                     <input
                       type="text"
                       value={keyword}
                       onChange={handleKeywordChange}
                       onKeyDown={addKeyword}
-                      className="mt-0.5 w-full rounded-md border border-neutral-700 bg-neutral-800 text-sm p-[0.4rem] text-white focus:ring focus:ring-neutral-600"
+                      className="mt-0.5 w-full outline-none rounded-md border border-[hsla(12,7%,15%,1)] bg-transparent text-sm p-[0.4rem] text-[#A8A29E] focus:ring-2 focus:ring-[hsla(21,90%,48%,1)]"
                       placeholder="Type and press Enter"
                     />
                     {book.keywords.length > 0 && (
@@ -221,13 +213,13 @@ export default function AddBookPage() {
                         {book.keywords.map((kw, index) => (
                           <span
                             key={index}
-                            className="flex items-center rounded-full bg-neutral-800 px-2.5 py-1 text-xs text-neutral-300 ring-1 ring-neutral-700"
+                            className="flex items-center rounded-full bg-[#1C1917] px-2.5 py-1 text-xs text-[#FAFAF9] ring-1 ring-[#3F3F46]"
                           >
                             {kw}
                             <button
                               type="button"
                               onClick={() => removeKeyword(kw)}
-                              className="ml-2 text-neutral-400 hover:text-red-500"
+                              className="ml-2 text-[#A8A29E] hover:text-red-500"
                             >
                               ✕
                             </button>
@@ -237,28 +229,26 @@ export default function AddBookPage() {
                     )}
                   </div>
                   <div>
-                    <label className="block text-sm text-neutral-400">
-                      Published Year
-                    </label>
+                    <label className="block text-sm text-[#FAFAF9]">Published Year</label>
                     <select
                       name="publishedYear"
                       value={book.publishedYear}
                       onChange={handleChange}
-                      className="mt-0.5 w-full max-h-60 overflow-y-auto rounded-md border border-neutral-700 bg-neutral-800 text-sm p-[0.4rem] text-white focus:ring focus:ring-neutral-600"
+                      className="mt-0.5 w-full max-h-60 overflow-y-auto rounded-md border border-[hsla(12,7%,15%,1)] bg-transparent text-sm p-[0.4rem] text-[#A8A29E] focus:ring-2 focus:ring-[hsla(21,90%,48%,1)]"
                       required
                     >
                       <option value="">Select year</option>
                       {Array.from({ length: 100 }, (_, i) => {
                         const year = new Date().getFullYear() - i;
                         return (
-                          <option key={year} value={year}>
+                          <option key={year} value={year} className="bg-[#0c0A09]">
                             {year}
                           </option>
                         );
                       })}
                     </select>
                   </div>
-                  <div className="mt-2 w-full rounded-md p-2 text-sm text-neutral-400">
+                  <div className="mt-2 w-full rounded-md p-2 text-sm text-[#A8A29E]">
                     <label
                       htmlFor="terms"
                       className="flex items-center gap-3 cursor-pointer select-none"
@@ -268,9 +258,9 @@ export default function AddBookPage() {
                         type="checkbox"
                         checked={termsAccepted}
                         onChange={(e) => setTermsAccepted(e.target.checked)}
-                        className="h-5 w-5 accent-green-500 border border-neutral-600 rounded-sm transition-all duration-200"
+                        className="h-5 w-5 accent-[hsla(21,90%,48%,1)] border border-neutral-600 rounded-sm transition-all duration-200"
                       />
-                      <span className="text-neutral-400 text-xs">
+                      <span className="text-xs">
                         I confirm that all the information provided is accurate
                         and complete.
                       </span>
@@ -280,13 +270,13 @@ export default function AddBookPage() {
               )}
             </div>
 
-            {/* Buttons fixed position */}
+            {/* Buttons */}
             <div className="flex justify-between pt-4">
               {step > 1 ? (
                 <button
                   type="button"
                   onClick={() => setStep((prev) => prev - 1)}
-                  className="rounded-md bg-neutral-700 px-4 py-2 text-sm hover:bg-neutral-600"
+                  className="rounded-md bg-[#27272A] px-4 py-2 text-sm hover:bg-[#3F3F46]"
                 >
                   Back
                 </button>
@@ -300,8 +290,8 @@ export default function AddBookPage() {
                   onClick={() => setStep((prev) => prev + 1)}
                   className={`ml-auto rounded-md px-4 py-2 text-sm transition-colors duration-200 ${
                     isStepValid()
-                      ? "bg-white text-black hover:bg-neutral-200"
-                      : "bg-neutral-400 text-black cursor-not-allowed"
+                      ? "bg-[hsla(21,90%,48%,1)] text-[#FAFAF9] hover:bg-[hsla(21,90%,48%,0.9)]"
+                      : "bg-[hsla(12,7%,15%,1)] text-black cursor-not-allowed"
                   }`}
                 >
                   Next
@@ -312,12 +302,11 @@ export default function AddBookPage() {
                   disabled={!isStepValid() || isSubmitting}
                   className={`ml-auto rounded-md px-4 py-2 text-sm transition-colors duration-200 ${
                     isStepValid()
-                      ? "bg-white text-black hover:bg-neutral-200"
-                      : "bg-neutral-400 text-black cursor-not-allowed"
+                      ? "bg-[hsla(21,90%,48%,1)] text-[#FAFAF9] hover:bg-[hsla(21,90%,48%,0.9)]"
+                      : "bg-[hsla(12,7%,15%,1)] text-black cursor-not-allowed"
                   }`}
                 >
                   {isSubmitting ? "Adding..." : "Add Book"}
-
                 </button>
               )}
             </div>
