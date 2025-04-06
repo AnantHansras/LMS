@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Eye, EyeOff, Mail, Lock, User } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User ,Loader2} from "lucide-react";
 import { sendOtp, signUp } from "../Services/userAPI";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -11,21 +11,23 @@ export default function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [agreedToTerms, setAgreedToTerms] = useState(false);
-
-  const handleSignup = (e) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const handleSignup = async (e) => {
     e.preventDefault();
-    setIsLoading(true)
-    dispatch(sendOtp(email,navigate,{name,email,password}))
-    // dispatch(signUp(name,email,password,otp))
-    setIsLoading(false)
-    console.log("Signup Data:", { name, email, password, agreedToTerms });
+    setIsLoading(true);
+    await dispatch(sendOtp(email, navigate, { name, email, password }));
+    setIsLoading(false);
   };
 
   return (
     <div className="bg-[hsla(240,10%,4%,1)] min-h-screen flex justify-center items-center px-4">
       <div className="max-w-sm w-full p-8 rounded-2xl shadow-xl border border-[hsla(12,7%,15%,1)] backdrop-blur-xl bg-[#0c0A09] text-[#FAFAF9]">
-        <h2 className="text-3xl font-bold text-center tracking-wide text-[#FAFAF9]">Create an Account</h2>
-        <p className="text-[#A8A29E] text-center mt-1">Sign up to get started</p>
+        <h2 className="text-3xl font-bold text-center tracking-wide text-[#FAFAF9]">
+          Create an Account
+        </h2>
+        <p className="text-[#A8A29E] text-center mt-1">
+          Sign up to get started
+        </p>
 
         <form className="space-y-4 mt-4" onSubmit={handleSignup}>
           {/* Name Field */}
@@ -57,6 +59,7 @@ export default function Signup() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
+              
             </div>
           </div>
 
@@ -73,13 +76,25 @@ export default function Signup() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A8A29E]"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
             </div>
           </div>
 
           {/* Signup Button */}
           <button
             type="submit"
-            className="w-full p-2 rounded-lg bg-[hsla(21,90%,48%,1)] text-[#FAFAF9] font-semibold hover:bg-[hsla(21,90%,48%,0.9)] hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm"
+            disabled={isLoading}
+            className=" active:scale-90 w-full p-2 rounded-lg bg-[hsla(21,90%,48%,1)] text-[#FAFAF9] font-semibold hover:bg-[hsla(21,90%,48%,0.7)] hover:shadow-sm  transition duration-300 text-sm"
           >
             {isLoading ? <span className="flex flex-row justify-center items-center"><Loader2 className="animate-spin mr-1"/><span>Loading...</span></span> : "Sign Up"}
           </button>

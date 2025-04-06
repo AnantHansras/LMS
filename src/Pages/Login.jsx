@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Mail, Lock, Loader2 } from "lucide-react";
+import { Mail, Lock, Loader2,Eye, EyeOff } from "lucide-react";
 import { login } from "../Services/userAPI";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -10,14 +10,15 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setisloading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setisloading(true);
-    dispatch(login(email, password, navigate));
-    const timer = setTimeout(() => {
-      setisloading(false);
-    }, 2000); 
+    await dispatch(login(email, password, navigate));
+    
+    setisloading(false);
+     
   };
 
   return (
@@ -59,20 +60,27 @@ export default function Login() {
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#A8A29E]" />
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
                 className="w-full pl-9 pr-9 p-2 border border-[hsla(12,7%,15%,1)] rounded-lg bg-transparent text-[#A8A29E] focus:ring-2 focus:ring-[hsla(21,90%,48%,1)] outline-none text-sm"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
+              <button
+                type="button"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#A8A29E]"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+              </button>
             </div>
           </div>
 
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full p-2 rounded-lg bg-[hsla(21,90%,48%,1)] text-[#FAFAF9] font-semibold hover:bg-[hsla(21,90%,48%,0.9)] hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm flex items-center justify-center"
+            className="active:scale-90 w-full p-2 rounded-lg bg-[hsla(21,90%,48%,1)] text-[#FAFAF9] font-semibold hover:bg-[hsla(21,90%,48%,0.7)] hover:shadow-sm hover:shadow-blue-500/50 transition duration-300 text-sm flex items-center justify-center"
             disabled={isLoading} // Disable button while loading
           >
             {isLoading ? <span className="flex flex-row justify-center items-center"><Loader2 className="animate-spin mr-1"/><span>Loading...</span></span> : "Login"}
