@@ -100,7 +100,7 @@ export default function Home() {
                 <path d="M8 11h8" />
                 <path d="M8 15h6" />
               </svg>
-              <h1 className="text-2xl font-bold text-[#FAFAF9] flex"><span className="bg-transparent rounded-md ">Library</span><span className="bg-[hsla(21,90%,48%,1)] text-black rounded-md ">Hub</span></h1>
+              <h1 className="text-2xl font-bold text-[#FAFAF9] flex"><span className="bg-transparent rounded-md p-1 pl-0">Library</span><span className="bg-[hsla(21,90%,48%,1)] text-black rounded-md p-1">Hub</span></h1>
             </div>
             <h2 className="text-4xl sm:text-5xl font-bold tracking-tight">
               Discover Your <span className="text-[hsla(21,90%,48%,1)]">Next</span> Great  <span className="text-[hsla(21,90%,48%,1)]">Read</span>
@@ -128,15 +128,32 @@ export default function Home() {
   />
 
   {/* Top Badge */}
-  <div className="absolute top-4 right-4 bg-[#1C1917]/90 backdrop-blur-md p-3 py-2 rounded-2xl shadow-lg flex items-center gap-2 animate-pulse text-[#FAFAF9] ring-1 ring-[hsla(21,90%,48%,0.4)]">
+  <div className="absolute top-4 right-4 bg-[#1C1917]/90 backdrop-blur-md p-3 py-2 rounded-2xl shadow-lg flex items-center gap-2 animate-bouncee2 text-[#FAFAF9] ring-1 ring-[hsla(21,90%,48%,0.4)]">
     <svg className="h-3 w-3 text-[hsla(21,90%,48%,1)]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
       <path d="M4 19.5v-15A2.5 2.5 0 016.5 2H20v20H6.5a2.5 2.5 0 010-5H20" />
     </svg>
-    <span className="font-medium text-xs">10,000+ Books</span>
+    <span className="font-medium text-xs">500+ Books</span>
   </div>
-
+  <style>
+  {`
+      @keyframes bouncee2 {
+    0%, 100% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+.animate-bouncee2 {
+  animation: bounce 2s infinite;
+}
+  `}
+</style>
   {/* Bottom Badge */}
-  <div className="absolute bottom-4 left-4 bg-[#1C1917]/90 backdrop-blur-md p-3 py-2 rounded-2xl shadow-lg flex items-center gap-2 animate-[fadePulse_2s_ease-in-out_infinite] text-[#FAFAF9] ring-1 ring-[hsla(21,90%,48%,0.4)]">
+  <div className="absolute bottom-4 left-4 bg-[#1C1917]/90 backdrop-blur-md p-3 py-2 rounded-2xl shadow-lg flex items-center gap-2 animate-bouncee text-[#FAFAF9] ring-1 ring-[hsla(21,90%,48%,0.4)]">
     <svg className="h-3 w-3 text-[hsla(21,90%,48%,1)]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="10" />
       <polyline points="12 6 12 12 16 14" />
@@ -146,11 +163,19 @@ export default function Home() {
 </div>
 <style>
   {`
-    @keyframes fadePulse {
-      50% {
-        opacity: 0;
-      }
-    }
+      @keyframes bouncee {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+.animate-bouncee {
+  animation: bounce 2s infinite;
+}
   `}
 </style>
         </div>
