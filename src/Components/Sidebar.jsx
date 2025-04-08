@@ -42,7 +42,7 @@ export default function Sidebar() {
         '& .MuiDrawer-paper': {
           width: collapsed ? 64 : 270,
           boxSizing: 'border-box',
-          transition: 'width 0.5s',
+          transition: 'width',
           backgroundColor: '#0c0A09', // Dark background like login
           color: '#FAFAF9',           // Light text
           borderRight: '1px solid hsla(12,7%,15%,1)',

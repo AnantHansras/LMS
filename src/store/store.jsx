@@ -3,5 +3,6 @@ import themeReducer from "../slices/ThemeSlice";
 export const store = configureStore({
     reducer: {
         darkMode: themeReducer, 
+        lastSearch: searchReducer,
     },
 });

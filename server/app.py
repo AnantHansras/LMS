@@ -81,14 +81,13 @@ def recommend_books():
     if not index_list:
         return jsonify({"message": "Matched book not found in dataset"}), 404
 
-    index = index_list[0]  # Get first index if multiple matches exist
+    index = index_list[0]  
 
-    # Get similarity scores and sort
     distances = sorted(enumerate(similarity[index]), key=lambda x: x[1], reverse=True)
 
-    # Prepare recommendations (excluding the queried book)
+    
     recommendations = []
-    for i in distances[0:5]:  # Skip the first one as it's the matched book itself
+    for i in distances[0:4]:  
         recommendations.append({
             "title": df.iloc[i[0]].title,
             "author": df.iloc[i[0]].author,
