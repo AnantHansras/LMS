@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "concurrently \"nodemon index.js\" \"python app.py\""
+    "dev": "concurrently \"nodemon index.js\" \"python3 app.py\""
   },
   "author": "",
   "license": "ISC",

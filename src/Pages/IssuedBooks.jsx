@@ -3,7 +3,7 @@ import List from '../Components/List';
 import Footer from '../Components/Footer';
 import { fetchIssuedBooksToUser} from '../Services/booksAPI';
 import { useDispatch } from 'react-redux';
-import Issued from '../Components/issued';
+import Issued from '../Components/Issued.jsx';
 function IssuedBooks() {
   const dispatch = useDispatch();
   const [books, setBooks] = useState([]); 

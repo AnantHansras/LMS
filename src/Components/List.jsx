@@ -472,7 +472,7 @@ const BookList = ({ books }) => {
               <input
                 type="text"
                 placeholder="Search by title, author or genre..."
-                className="pl-10 pr-4 py-3 w-full border border-[#1F1F1F] bg-[#1C1C1C] text-[#E0E0E0] rounded-full focus:outline-none focus:ring-2 focus:ring-[#007ACC] transition-all duration-300"
+                className="pl-10 pr-4 py-3 w-full border border-[#1F1F1F] bg-[#1C1C1C] text-[#E0E0E0] rounded-full focus:outline-none focus:ring-2 focus:ring-[#EA580c] transition-all duration-300"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -493,14 +493,14 @@ const BookList = ({ books }) => {
             <div className="flex items-center">
               <button 
                 onClick={() => setShowFilters(!showFilters)} 
-                className="flex items-center gap-2 text-[#888888] hover:text-[#007ACC] transition-colors"
+                className="flex items-center gap-2 text-[#888888] hover:text-[#EA580c] transition-colors"
                 aria-label="Toggle filters"
               >
                 <Filter size={18} />
                 <span className="text-sm font-medium">Filters</span>
               </button>
               {activeGenre !== "All" && (
-                <div className="ml-4 flex items-center gap-1 bg-[#1F1F1F] text-[#007ACC] px-3 py-1 rounded-full">
+                <div className="ml-4 flex items-center gap-1 bg-[#1F1F1F] text-[#EA580c] px-3 py-1 rounded-full">
                   <span className="text-xs font-medium">{activeGenre}</span>
                   <button onClick={() => setActiveGenre("All")} aria-label="Clear genre filter">
                     <X size={14} />
@@ -530,7 +530,7 @@ const BookList = ({ books }) => {
                       onClick={() => setActiveGenre(genre)} 
                       className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                         activeGenre === genre 
-                          ? "bg-[#007ACC] text-white" 
+                          ? "bg-[#EA580c] text-white" 
                           : "bg-[#1F1F1F] text-[#888888] hover:bg-[#2C2C2C]"
                       }`}
                     >
@@ -555,7 +555,7 @@ const BookList = ({ books }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <BookOpen size={48} className="mb-4 text-[#007ACC]" />
+                <BookOpen size={48} className="mb-4 text-[#EA580c]" />
                 <p className="text-lg font-semibold">No books found</p>
                 <p className="text-sm text-[#A8A29E]">
                   {searchQuery || activeGenre !== "All" 
@@ -592,7 +592,7 @@ const BookList = ({ books }) => {
                 </button>
               </div>
               <p className="text-[#A8A29E] mb-2">by {selectedBook.author}</p>
-              <p className="text-[#007ACC] text-sm font-medium mb-4">{selectedBook.genre}</p>
+              <p className="text-[#EA580c] text-sm font-medium mb-4">{selectedBook.genre}</p>
               <div className="flex justify-center mb-6">
                 <img
                   src={`/book_${books.indexOf(selectedBook) + 1}.jpeg`}
@@ -604,7 +604,10 @@ const BookList = ({ books }) => {
                   }}
                 />
               </div>
-              <p className="text-[#E0E0E0] mb-6">{selectedBook.description || "No description available."}</p>
+              <p className="text-[#E0E0E0] mb-6">
+                Published Year: {selectedBook?.publishedYear ?? "Not available"}
+              </p>
+
               <div className="flex justify-end gap-3">
                 <button
                   onClick={closeModal}
@@ -614,7 +617,7 @@ const BookList = ({ books }) => {
                 </button>
                 <button
                   onClick={() => issueBook(selectedBook._id)}
-                  className="px-4 py-2 bg-[#007ACC] text-white rounded-lg hover:bg-[#0062A3] transition-colors"
+                  className="px-4 py-2 bg-[#EA580c] text-white rounded-lg hover:bg-[#da601e] transition-colors"
                 >
                   Request Book
                 </button>
