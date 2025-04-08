@@ -1,7 +1,8 @@
 import {Route,Routes} from 'react-router-dom'
 import './App.css'
 import Login from './Pages/Login'
-import Signup from './Pages/SIgnup'
+import Signup from './Pages/Signup'
+import AdminDashboard from './Pages/AdminDashboard'
 import ForgotPassword from './Pages/ForgotPassword'
 import UpdatePassword from './Pages/UpdatePassword'
 import OTP from './Pages/OTP'
@@ -34,11 +35,17 @@ function App() {
           <Route path="/allbooks" element={<AllBooks />} />
           <Route path="/addbooks" element={<AddBooks />} />
           <Route path="/issuedbooks" element={<IssuedBooks />} />
-          <Route path="/admin/allbooks" element={<AllBooks />} />
-          <Route path="/admin/issuedbooks" element={<IssuedBooks />} />
           <Route path="/transactions" element={<AllTransactions />} />
-          <Route path="/pending-req" element={<Pending />} />
+          <Route path="pending-req" element={<Pending />} />
         </Route>
+        {/* <Route path="/AdminDashboard" element={<AdminDashboard/>}>
+          <Route path='admin' element={<AllBooks />} />
+          <Route path="allbooks" element={<AllBooks />} />
+          <Route path="addbooks" element={<AddBooks />} />
+          <Route path="transactions" element={<AllTransactions />} />
+          <Route path="pending-req" element={<Pending />} />
+        </Route> */}
+
       </Routes>
     </div>
   )

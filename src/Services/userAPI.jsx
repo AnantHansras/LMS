@@ -77,7 +77,15 @@ export function login(email, password, navigate) {
       
       localStorage.setItem("token", JSON.stringify(response.data.token))
       localStorage.setItem("user", JSON.stringify(response.data.user))
+      // if (response.data.user.email === "2023ucp1619@mnit.ac.in")
+      //   {
+      //   navigate("/AdminDashboard/admin")
+      // }
+      // else{
+      //   navigate("/allbooks")
+      // }
       navigate("/allbooks")
+
 
     } catch (error) {
       console.log("LOGIN API ERROR............", error)
