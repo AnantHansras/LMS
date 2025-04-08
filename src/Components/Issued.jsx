@@ -1,23 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Trash2 } from "lucide-react";
 import { returnbook } from "../Services/booksAPI";
 import { useDispatch } from 'react-redux';
+
 const Issued = ({ books }) => {
   const dispatch = useDispatch();
   const [searchQuery, setSearchQuery] = useState("");
+  const [filteredBooks, setFilteredBooks] = useState(books);
+
   const token = localStorage.getItem("token");
   const parsedToken = token ? JSON.parse(token) : null;
+
   const onDelete = (bookId) => {
-    dispatch(returnbook(bookId,parsedToken));
+    dispatch(returnbook(bookId, parsedToken));
   };
+
+  useEffect(() => {
+    const query = searchQuery.toLowerCase().trim();
+    
+    if (query === "") {
+      setFilteredBooks(books);
+    } else {
+      const results = books.filter(
+        (book) =>
+          book.title.toLowerCase().includes(query) ||
+          book.author.toLowerCase().includes(query) 
+      );
+      setFilteredBooks(results);
+    }
+  }, [searchQuery, books]);
+  
 
   return (
     <div className="min-h-screen bg-[hsla(240,10%,4%,1)] p-6">
       {/* Search Bar */}
       <div className="flex flex-col sm:flex-row justify-center items-center mb-6 space-y-4 sm:space-y-0 sm:space-x-6">
         <h2 className="text-[#FAFAF9] text-2xl font-semibold text-center sm:text-left">
-          Shop Your Next Book
+          SEARCH YOUR NEXT BOOK
         </h2>
         <input
           type="text"
@@ -29,9 +49,9 @@ const Issued = ({ books }) => {
       </div>
 
       {/* Book List */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {books.length > 0 ? (
-          books.map((book) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-8">
+        {filteredBooks.length > 0 ? (
+          filteredBooks.map((book) => (
             <motion.div
               key={book._id}
               className="relative bg-[#0c0A09] border border-[hsla(12,7%,15%,1)] backdrop-blur-2xl rounded-xl p-4 shadow-lg hover:shadow-2xl w-[250px] h-[400px] mx-auto flex flex-col"
@@ -65,7 +85,7 @@ const Issued = ({ books }) => {
                   alt={book.title}
                   className="w-full h-full object-cover rounded-lg"
                   onError={(e) => {
-                    e.target.src = "/fallback-book.jpg"; // Fallback image if not found
+                    e.target.src = "/fallback-book.jpg";
                   }}
                 />
               </motion.div>
