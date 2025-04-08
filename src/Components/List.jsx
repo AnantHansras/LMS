@@ -404,11 +404,6 @@ const BookList = ({ books }) => {
     return results
   }, [searchQuery, books, activeGenre])
 
-  const onDelete = (bookId, e) => {
-    e.stopPropagation()
-    dispatch(removebook(bookId, parsedToken))
-  }
-
   const openModal = (book) => {
     setSelectedBook(book)
   }
@@ -431,12 +426,6 @@ const BookList = ({ books }) => {
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.98 }}
     >
-      <button
-        className="absolute top-3 right-3 text-[#A8A29E] hover:text-red-500 transition"
-        onClick={(e) => { e.stopPropagation(); onDelete(book._id, e); }}
-      >
-        <Trash2 size={18} />
-      </button>
 
       <div className="mb-3 text-center">
         <h2 className="text-lg font-bold text-[hsla(21,90%,48%,1)] truncate">

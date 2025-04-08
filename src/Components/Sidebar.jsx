@@ -23,9 +23,6 @@ const navItems = [
   { name: "Home", path: "/home", icon: <HomeIcon /> },
   { name: "All Books", path: "/allbooks", icon: <LibraryBooksIcon /> },
   { name: "Issued Books", path: "/issuedbooks", icon: <BookIcon /> },
-  { name: "Add Books", path: "/addbooks", icon: <AddCircleIcon /> },
-  { name: "Pending Requests", path: "/pending-req", icon: <RequestIcon /> },
-  { name: "Transactions", path: "/transactions", icon: <RequestIcon /> },
   { name: "Settings", path: "/settings", icon: <SettingsIcon /> },
 ];
 

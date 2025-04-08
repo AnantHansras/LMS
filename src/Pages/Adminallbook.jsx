@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import List from '../Components/List';
+import List2 from '../Components/List2';
 import Footer from '../Components/Footer';
 import { getallbooks } from '../Services/booksAPI';
 import { useDispatch } from 'react-redux';
@@ -24,7 +24,7 @@ function AllBooks() {
   },[]); // Runs only once when component mounts
   return (
     <>
-      <List books={books} />
+      <List2 books={books} />
       <Footer />
     </>
   );

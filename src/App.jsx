@@ -7,6 +7,7 @@ import ForgotPassword from './Pages/ForgotPassword'
 import UpdatePassword from './Pages/UpdatePassword'
 import OTP from './Pages/OTP'
 import AllBooks from './Pages/AllBooks'
+import Adminallbook from './Pages/Adminallbook';
 import IssuedBooks from './Pages/IssuedBooks'
 import DashboardLayout from './Pages/DashboardLayout'
 import AddBooks from './Pages/AddBooks'
@@ -33,18 +34,15 @@ function App() {
         <Route path="/" element={<DashboardLayout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/allbooks" element={<AllBooks />} />
-          <Route path="/addbooks" element={<AddBooks />} />
           <Route path="/issuedbooks" element={<IssuedBooks />} />
-          <Route path="/transactions" element={<AllTransactions />} />
-          <Route path="pending-req" element={<Pending />} />
         </Route>
-        {/* <Route path="/AdminDashboard" element={<AdminDashboard/>}>
-          <Route path='admin' element={<AllBooks />} />
-          <Route path="allbooks" element={<AllBooks />} />
+        <Route path="/AdminDashboard" element={<AdminDashboard/>}>
+          <Route path='admin' element={<Adminallbook />} />
+          <Route path="Adminallbook" element={<Adminallbook />} />
           <Route path="addbooks" element={<AddBooks />} />
           <Route path="transactions" element={<AllTransactions />} />
           <Route path="pending-req" element={<Pending />} />
-        </Route> */}
+        </Route>
 
       </Routes>
     </div>

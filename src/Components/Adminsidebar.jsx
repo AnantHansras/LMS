@@ -20,11 +20,11 @@ import {
 } from "@mui/icons-material";
 
 const navItems = [
-  { name: "All Books", path: "/allbooks", icon: <LibraryBooksIcon /> },
-  { name: "Add Books", path: "/addbooks", icon: <AddCircleIcon /> },
-  { name: "Pending Requests", path: "/pending-req", icon: <RequestIcon /> },
-  { name: "Transactions", path: "/transactions", icon: <RequestIcon /> },
-  { name: "Settings", path: "/settings", icon: <SettingsIcon /> },
+  { name: "All Books", path: "/AdminDashboard/admin", icon: <LibraryBooksIcon /> },
+  { name: "Add Books", path: "/AdminDashboard/addbooks", icon: <AddCircleIcon /> },
+  { name: "Pending Requests", path: "/AdminDashboard/pending-req", icon: <RequestIcon /> },
+  { name: "Transactions", path: "/AdminDashboard/transactions", icon: <RequestIcon /> },
+  { name: "Settings", path: "/AdminDashboard/settings", icon: <SettingsIcon /> },
 ];
 
 export default function Sidebar() {
