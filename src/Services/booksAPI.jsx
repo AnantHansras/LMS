@@ -2,7 +2,7 @@ import { apiConnector } from './apiConnector'
 import { bookEndpoints } from './apis'
 import {toast} from 'react-hot-toast'
 const {GETBOOKS_API,ADDBOOK_API,REMOVEBOOK_API,GETISSUEDBOOKS_API,RETURNBOOK_API,CHANGEAVAILABLE_API,
-  REQUEST_BOOK_API,APPROVE_BOOK_REQUEST_API,GET_ALL_BOOK_REQUESTS_API,GET_USER_TRANSACTIONS_API
+  REQUEST_BOOK_API,APPROVE_BOOK_REQUEST_API,GET_ALL_BOOK_REQUESTS_API,GET_USER_ALLTRANSACTIONS_API,GET_USER_PendingRequests_API
 } = bookEndpoints;
 
 export function getAllBookRequest(token) {
@@ -46,7 +46,7 @@ export function requestBook(bookId,token) {
 export function allTransactions(token) {
   return async (dispatch) => {
       try{
-      const response = await apiConnector("POST", GET_USER_TRANSACTIONS_API, {},{ Authorization: `Bearer ${token}` })
+      const response = await apiConnector("POST", GET_USER_ALLTRANSACTIONS_API, {},{ Authorization: `Bearer ${token}` })
       console.log("GET_USER_TRANSACTIONS API RESPONSE............", response)
 
       if (!response.data.success) {
@@ -274,4 +274,41 @@ export function fetchIssuedBooksToUser(token) {
     }
   };
 }
+export function getUserPendingRequests(token) {
+  return async (dispatch) => {
+    try {
+      const response = await apiConnector(
+        "POST",
+        GET_USER_PendingRequests_API,
+        {},
+        { Authorization: `Bearer ${token}` }
+      );
+
+      console.log("GET_USER_PENDING_REQUESTS API RESPONSE:", response);
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+
+      toast.success("📚 Pending Requests Fetched Successfully!", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("GET_USER_PENDING_REQUESTS API ERROR:", error);
+      toast.error(
+        error.response?.data?.message || "Failed to fetch pending requests",
+        { theme: "dark" }
+      );
+    }
+  };
+}
+
 

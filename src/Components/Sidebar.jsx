@@ -24,6 +24,7 @@ const navItems = [
   { name: "All Books", path: "/allbooks", icon: <LibraryBooksIcon /> },
   { name: "Issued Books", path: "/issuedbooks", icon: <BookIcon /> },
   { name: "Settings", path: "/settings", icon: <SettingsIcon /> },
+  { name: "MyPending", path: "/mypending", icon: <RequestIcon /> },
 ];
 
 export default function Sidebar() {

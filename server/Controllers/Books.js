@@ -556,6 +556,27 @@ const getAllRequests = async (req, res) => {
         });
     }
 };
+const getUserPendingRequests = async (req, res) => {
+    try {
+        const userId = req.user.id; // Assuming you're using authentication middleware
+
+        const requests = await Transaction.find({ userId, status: 'pending' })
+            .populate('bookId', 'title author')  // Populate book details
+            .sort({ requestDate: -1 });          // Newest pending requests first
+
+        return res.status(200).json({
+            success: true,
+            requests,
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message,
+        });
+    }
+};
 
 const getUserTransactions = async (req, res) => {
     try {
@@ -578,5 +599,25 @@ const getUserTransactions = async (req, res) => {
         });
     }
 };
+const getAllUserTransactions = async (req, res) => {
+    try {
+        const transactions = await Transaction.find({})
+            .populate('bookId', 'title author')
+            .populate('userId', 'name email')     
+            .sort({ requestDate: -1 });   
+        return res.status(200).json({
+            success: true,
+            transactions,
+        });
 
-module.exports = {requestIssueBook,approveIssueRequest,getAllRequests,getUserTransactions, fetchAllBooks,fetchIssuedBooksToUser,returnBook,issueBook,addBook,removeBook,toggleBookAvailability,searchBookByAuthor,searchBookByGenre,searchBookByName}
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Server error',
+            error: error.message,
+        });
+    }
+};
+
+
+module.exports = {requestIssueBook,approveIssueRequest,getAllRequests,getUserTransactions, fetchAllBooks,fetchIssuedBooksToUser,returnBook,issueBook,addBook,removeBook,toggleBookAvailability,searchBookByAuthor,searchBookByGenre,searchBookByName,getAllUserTransactions,getUserPendingRequests}

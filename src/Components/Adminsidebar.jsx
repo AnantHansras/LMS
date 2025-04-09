@@ -22,8 +22,8 @@ import {
 const navItems = [
   { name: "All Books", path: "/AdminDashboard/admin", icon: <LibraryBooksIcon /> },
   { name: "Add Books", path: "/AdminDashboard/addbooks", icon: <AddCircleIcon /> },
-  { name: "Pending Requests", path: "/AdminDashboard/pending-req", icon: <RequestIcon /> },
-  { name: "Transactions", path: "/AdminDashboard/transactions", icon: <RequestIcon /> },
+  { name: "Requests", path: "/AdminDashboard/pending-req", icon: <RequestIcon /> },
+  { name: "AllTransactions", path: "/AdminDashboard/transactions", icon: <RequestIcon /> },
   { name: "Settings", path: "/AdminDashboard/settings", icon: <SettingsIcon /> },
 ];
 
