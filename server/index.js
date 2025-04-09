@@ -32,8 +32,9 @@ app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 
-cron.schedule('10 0 * * *', async () => {
-    console.log('Running scheduled task: Sending due date reminders...');
-    // await sendDueDateReminders();
+cron.schedule('12 15 * * *', async () => {
+    console.log('Running scheduled task');
+    await sendDueDateReminders();
     await checkAndNotifyOverdueUsers();
+    console.log('Done');
 });

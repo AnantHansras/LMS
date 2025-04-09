@@ -26,7 +26,7 @@ import PaidIcon from '@mui/icons-material/Paid';
 const navItems = [
   { name: "Home", path: "/home", icon: <HomeIcon /> },
   { name: "All Books", path: "/allbooks", icon: <LibraryBooksIcon /> },
-  { name: "Issued Books", path: "/issuedbooks", icon: <BookIcon /> },
+  { name: "Issued Books", path: "/issuedbooks", icon: <MenuBookIcon /> },
   { name: "Settings", path: "/settings", icon: <SettingsIcon /> },
   { name: "Fines", path: "/userfines", icon: <PaidIcon /> },
 ];

@@ -26,16 +26,12 @@ function App() {
         <Route path='/otp' element={<OTP/>}/>
         <Route path='/forgot-password' element={<ForgotPassword/>}/>
         <Route path='/update-password/:id' element={<UpdatePassword/>}/>
-
-        {/* <Route path='/allbooks' element={<AllBooks/>}/> */}
-
-        {/* <Route path='/issuedbooks' element={<AllBooks/>}/>
-        <Route path='/admin/allbooks' element={<AllBooks/>}/>
-        <Route path='/admin/issuedbooks' element={<AllBooks/>}/> */}
+        
         <Route path="/" element={<DashboardLayout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/allbooks" element={<AllBooks />} />
           <Route path="/issuedbooks" element={<IssuedBooks />} />
+          <Route path="/userfines" element={<UserFines />} />
         </Route>
         <Route path="/AdminDashboard" element={<AdminDashboard/>}>
           <Route path='admin' element={<Adminallbook />} />

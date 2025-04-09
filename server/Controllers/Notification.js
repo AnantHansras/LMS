@@ -2,7 +2,8 @@ const User = require("../Models/User");
 const Book = require("../Models/Books");
 const Transaction = require("../Models/Transaction");
 const mailSender = require("../utils/mailSender");
-
+const dueSoonTemplate = require('../Templates/dueTemplate')
+const fineTemplate = require('../Templates/fineTemplate')
 const calculateFine = (dueDate) => {
   const today = new Date();
   if (today > dueDate) {
@@ -14,14 +15,12 @@ const calculateFine = (dueDate) => {
 
 const checkAndNotifyOverdueUsers = async () => {
   const today = new Date();
-
   const overdueTransactions = await Transaction.find({
     returnDate: { $lt: today },
     status: "issued",
   })
     .populate("userId", "email")
     .populate("bookId", "title");
-
   for (let transaction of overdueTransactions) {
     const fine = calculateFine(transaction.returnDate);
     const bookTitle = transaction.bookId?.title;
@@ -31,8 +30,8 @@ const checkAndNotifyOverdueUsers = async () => {
     });
 
     const message = `Dear User, your borrowed book : ${bookTitle} is overdue. Your fine is ₹${fine}. Please return it as soon as possible.`;
-
-    await mailSender(userEmail, "Due Date Reached", message);
+    console.log(message)
+    await mailSender(userEmail, "Due Date Reached", fineTemplate(bookTitle,fine));
   }
 };
 
@@ -57,8 +56,8 @@ const sendDueDateReminders = async () => {
     const bookTitle = transaction.bookId?.title;
     const userEmail = transaction.userId?.email;
     const message = `Dear User, your borrowed book:${bookTitle} is due in 1 day. Please return it by ${transaction.returnDate.toDateString()} to avoid fines.`;
-
-    await sendEmailNotification(userEmail, "Due Date Reminder", message);
+    console.log(message)
+    await mailSender(userEmail, "Due Date Reminder", dueSoonTemplate(bookTitle,transaction.returnDate));
   }
 };
 
