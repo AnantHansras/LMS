@@ -1,11 +1,13 @@
 import {Route,Routes} from 'react-router-dom'
 import './App.css'
 import Login from './Pages/Login'
-import Signup from './Pages/SIgnup'
+import Signup from './Pages/Signup'
+import AdminDashboard from './Pages/AdminDashboard'
 import ForgotPassword from './Pages/ForgotPassword'
 import UpdatePassword from './Pages/UpdatePassword'
 import OTP from './Pages/OTP'
 import AllBooks from './Pages/AllBooks'
+import Adminallbook from './Pages/Adminallbook';
 import IssuedBooks from './Pages/IssuedBooks'
 import DashboardLayout from './Pages/DashboardLayout'
 import AddBooks from './Pages/AddBooks'
@@ -33,14 +35,16 @@ function App() {
         <Route path="/" element={<DashboardLayout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/allbooks" element={<AllBooks />} />
-          <Route path="/addbooks" element={<AddBooks />} />
           <Route path="/issuedbooks" element={<IssuedBooks />} />
-          <Route path="/admin/allbooks" element={<AllBooks />} />
-          <Route path="/admin/issuedbooks" element={<IssuedBooks />} />
-          <Route path="/transactions" element={<AllTransactions />} />
-          <Route path="/pending-req" element={<Pending />} />
-          <Route path="/userfines" element={<UserFines />} />
         </Route>
+        <Route path="/AdminDashboard" element={<AdminDashboard/>}>
+          <Route path='admin' element={<Adminallbook />} />
+          <Route path="Adminallbook" element={<Adminallbook />} />
+          <Route path="addbooks" element={<AddBooks />} />
+          <Route path="transactions" element={<AllTransactions />} />
+          <Route path="pending-req" element={<Pending />} />
+        </Route>
+
       </Routes>
     </div>
   )

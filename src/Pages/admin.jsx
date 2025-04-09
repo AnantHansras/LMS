@@ -3,7 +3,7 @@ import List from '../Components/List';
 import Footer from '../Components/Footer';
 import { getallbooks } from '../Services/booksAPI';
 import { useDispatch } from 'react-redux';
-function AllBooks() {
+function admin() {
   const dispatch = useDispatch();
   const [books, setBooks] = useState([]); // Initially empty
   const token = localStorage.getItem("token");
@@ -32,4 +32,4 @@ function AllBooks() {
 
 
 
-export default AllBooks;
+export default admin;
