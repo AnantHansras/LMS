@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import NotebookSVG from "../assets/undraw_book-lover_cmz5.svg";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 export default function Home() {
   const [recommendations, setRecommendations] = useState([]);
-  const bookQuery = "computer networks";
+  const bookQuery = useSelector((state) => state.lastSearch.lastSearch);
+
   const naviagte = useNavigate();
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -160,12 +163,7 @@ export default function Home() {
                 </a>
                 <img
                   src={
-                    book.image ||
-                    (book.genre?.toLowerCase().includes("dbms")
-                      ? "https://images.unsplash.com/photo-1590608897129-79da98d159d4" // DBMS-themed
-                      : book.genre?.toLowerCase().includes("network")
-                      ? "https://images.unsplash.com/photo-1555949963-aa79dcee981d" // Networking-themed
-                      : "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f") // fallback
+                    book.image
                   }
                   alt={book.title}
                   className="object-cover aspect-[2/3] w-full transition-transform duration-300 group-hover:scale-105"
@@ -178,7 +176,7 @@ export default function Home() {
                 </div>
                 <div className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-[hsla(0,0%,100%,0.1)] px-2 py-1 text-xs text-[#FAFAF9] backdrop-blur">
                   <svg
-                    className="h-3 w-3 text-[hsla(204,70%,53%,1)]"
+                    className="h-3 w-3 text-[hsla(21,90%,48%,1)]"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"

@@ -21,5 +21,6 @@ export const bookEndpoints = {
     REQUEST_BOOK_API: BASE_URL + "/book/request-book",
     APPROVE_BOOK_REQUEST_API: BASE_URL + "/book/approve-book-request",
     GET_ALL_BOOK_REQUESTS_API: BASE_URL + "/book/get-all-book-requests",
-    GET_USER_TRANSACTIONS_API: BASE_URL + "/book/get-user-transactions"
+    GET_USER_TRANSACTIONS_API: BASE_URL + "/book/get-user-transactions",
+    GET_BOOKS_WITH_FINE_API: BASE_URL + "/book/getBooksWithFine"
 }

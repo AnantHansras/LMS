@@ -1,64 +1,65 @@
-import { useState, useEffect, useMemo } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { Trash2, Search, X, BookOpen, Filter } from "lucide-react"
-import { removebook, requestBook } from "../Services/booksAPI"
-import { useDispatch } from "react-redux"
+import { useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Trash2, Search, X, BookOpen, Filter } from "lucide-react";
+import { removebook, requestBook } from "../Services/booksAPI";
+import { useDispatch } from "react-redux";
+import { setLastSearch } from "../slices/Search";
 
 const BookList = ({ books }) => {
-  const dispatch = useDispatch()
-  const [searchQuery, setSearchQuery] = useState("")
-  const [selectedBook, setSelectedBook] = useState(null)
-  const [activeGenre, setActiveGenre] = useState("All")
-  const [showFilters, setShowFilters] = useState(false)
-  
-  const token = localStorage.getItem("token")
-  const parsedToken = token ? JSON.parse(token) : null
+  const dispatch = useDispatch();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [activeGenre, setActiveGenre] = useState("All");
+  const [showFilters, setShowFilters] = useState(false);
+
+  const token = localStorage.getItem("token");
+  const parsedToken = token ? JSON.parse(token) : null;
 
   // Get all unique genres including "All"
-  const genres = useMemo(() => 
-    ["All", ...new Set(books.map((book) => book.genre))], 
+  const genres = useMemo(
+    () => ["All", ...new Set(books.map((book) => book.genre))],
     [books]
-  )
+  );
 
   // Filter books based on search query and active genre
   const filteredBooks = useMemo(() => {
-    let results = books
-    
+    let results = books;
+
     if (searchQuery) {
-      const query = searchQuery.toLowerCase()
+      const query = searchQuery.toLowerCase();
       results = results.filter(
         (book) =>
           book.title.toLowerCase().includes(query) ||
           book.author.toLowerCase().includes(query) ||
           book.genre.toLowerCase().includes(query)
-      )
+      );
     }
-    
+
     if (activeGenre !== "All") {
-      results = results.filter((book) => book.genre === activeGenre)
+      results = results.filter((book) => book.genre === activeGenre);
     }
-    
-    return results
-  }, [searchQuery, books, activeGenre])
+
+    return results;
+  }, [searchQuery, books, activeGenre]);
 
   const onDelete = (bookId, e) => {
-    e.stopPropagation()
-    dispatch(removebook(bookId, parsedToken))
-  }
+    e.stopPropagation();
+    dispatch(removebook(bookId, parsedToken));
+  };
 
   const openModal = (book) => {
-    setSelectedBook(book)
-  }
+    setSelectedBook(book);
+  };
 
   const closeModal = () => {
-    setSelectedBook(null)
-  }
+    setSelectedBook(null);
+  };
 
   const issueBook = (bookId) => {
-    console.log("issue happening....")
-    dispatch(requestBook(bookId, parsedToken))
-    closeModal()
-  }
+    console.log("issue happening....");
+    dispatch(requestBook(bookId, parsedToken));
+    closeModal();
+  };
 
   // Book card component to avoid repetition
   const BookCard = ({ book, index }) => (
@@ -70,7 +71,10 @@ const BookList = ({ books }) => {
     >
       <button
         className="absolute top-3 right-3 text-[#A8A29E] hover:text-red-500 transition"
-        onClick={(e) => { e.stopPropagation(); onDelete(book._id, e); }}
+        onClick={(e) => {
+          e.stopPropagation();
+          onDelete(book._id, e);
+        }}
       >
         <Trash2 size={18} />
       </button>
@@ -85,17 +89,18 @@ const BookList = ({ books }) => {
 
       <motion.div className="h-[350px] w-full bg-[hsla(240,10%,4%,1)] rounded-lg mt-auto flex justify-center items-center overflow-hidden shadow-md">
         <img
-          src={`/book_${index+1}.jpeg`}
+          src={`/book_${index + 1}.jpeg`}
           alt={book.title}
           className="w-full h-full object-cover rounded-lg"
-          onError={(e) => { 
-            e.target.src = "/fallback-book.jpg"; 
-            e.target.className = "w-full h-full object-contain rounded-lg bg-gray-800 p-4";
+          onError={(e) => {
+            e.target.src = "/fallback-book.jpg";
+            e.target.className =
+              "w-full h-full object-contain rounded-lg bg-gray-800 p-4";
           }}
         />
       </motion.div>
     </motion.div>
-  )
+  );
 
   return (
     <div className="min-h-screen bg-[#121212] text-[#E0E0E0] p-4 md:p-6 lg:p-8">
@@ -103,19 +108,28 @@ const BookList = ({ books }) => {
         <div className="flex flex-col space-y-6 mb-8">
           {/* Header and Search */}
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <h1 className="text-[#E0E0E0] text-3xl font-bold tracking-tight">Discover Your Next Read</h1>
+            <h1 className="text-[#E0E0E0] text-3xl font-bold tracking-tight">
+              Discover Your Next Read
+            </h1>
             <div className="relative w-full max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#888888]" size={18} />
+              <Search
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#888888]"
+                size={18}
+              />
               <input
                 type="text"
                 placeholder="Search by title, author or genre..."
                 className="pl-10 pr-4 py-3 w-full border border-[#1F1F1F] bg-[#1C1C1C] text-[#E0E0E0] rounded-full focus:outline-none focus:ring-2 focus:ring-[#EA580c] transition-all duration-300"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setSearchQuery(value);
+                  dispatch(setLastSearch(value));
+                }}
               />
               {searchQuery && (
-                <button 
-                  onClick={() => setSearchQuery("")} 
+                <button
+                  onClick={() => setSearchQuery("")}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-[#888888] hover:text-[#E0E0E0] transition-colors"
                   aria-label="Clear search"
                 >
@@ -128,8 +142,8 @@ const BookList = ({ books }) => {
           {/* Filters and Count */}
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <div className="flex items-center">
-              <button 
-                onClick={() => setShowFilters(!showFilters)} 
+              <button
+                onClick={() => setShowFilters(!showFilters)}
                 className="flex items-center gap-2 text-[#888888] hover:text-[#EA580c] transition-colors"
                 aria-label="Toggle filters"
               >
@@ -139,7 +153,10 @@ const BookList = ({ books }) => {
               {activeGenre !== "All" && (
                 <div className="ml-4 flex items-center gap-1 bg-[#1F1F1F] text-[#EA580c] px-3 py-1 rounded-full">
                   <span className="text-xs font-medium">{activeGenre}</span>
-                  <button onClick={() => setActiveGenre("All")} aria-label="Clear genre filter">
+                  <button
+                    onClick={() => setActiveGenre("All")}
+                    aria-label="Clear genre filter"
+                  >
                     <X size={14} />
                   </button>
                 </div>
@@ -153,21 +170,21 @@ const BookList = ({ books }) => {
           {/* Genre Filters */}
           <AnimatePresence>
             {showFilters && (
-              <motion.div 
-                initial={{ height: 0, opacity: 0 }} 
-                animate={{ height: "auto", opacity: 1 }} 
-                exit={{ height: 0, opacity: 0 }} 
-                transition={{ duration: 0.3 }} 
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
                 className="overflow-hidden"
               >
                 <div className="flex flex-wrap gap-2">
                   {genres.map((genre) => (
-                    <button 
-                      key={genre} 
-                      onClick={() => setActiveGenre(genre)} 
+                    <button
+                      key={genre}
+                      onClick={() => setActiveGenre(genre)}
                       className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                        activeGenre === genre 
-                          ? "bg-[#EA580c] text-white" 
+                        activeGenre === genre
+                          ? "bg-[#EA580c] text-white"
                           : "bg-[#1F1F1F] text-[#888888] hover:bg-[#2C2C2C]"
                       }`}
                     >
@@ -195,8 +212,8 @@ const BookList = ({ books }) => {
                 <BookOpen size={48} className="mb-4 text-[#EA580c]" />
                 <p className="text-lg font-semibold">No books found</p>
                 <p className="text-sm text-[#A8A29E]">
-                  {searchQuery || activeGenre !== "All" 
-                    ? "Try adjusting your search or filters" 
+                  {searchQuery || activeGenre !== "All"
+                    ? "Try adjusting your search or filters"
                     : "The library appears to be empty"}
                 </p>
               </motion.div>
@@ -223,21 +240,29 @@ const BookList = ({ books }) => {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-start mb-4">
-                <h2 className="text-2xl font-bold text-[#E0E0E0]">{selectedBook.title}</h2>
-                <button onClick={closeModal} className="text-[#888888] hover:text-[#E0E0E0]">
+                <h2 className="text-2xl font-bold text-[#E0E0E0]">
+                  {selectedBook.title}
+                </h2>
+                <button
+                  onClick={closeModal}
+                  className="text-[#888888] hover:text-[#E0E0E0]"
+                >
                   <X size={24} />
                 </button>
               </div>
               <p className="text-[#A8A29E] mb-2">by {selectedBook.author}</p>
-              <p className="text-[#EA580c] text-sm font-medium mb-4">{selectedBook.genre}</p>
+              <p className="text-[#EA580c] text-sm font-medium mb-4">
+                {selectedBook.genre}
+              </p>
               <div className="flex justify-center mb-6">
                 <img
                   src={`/book_${books.indexOf(selectedBook) + 1}.jpeg`}
                   alt={selectedBook.title}
                   className="h-48 object-cover rounded-lg shadow-md"
-                  onError={(e) => { 
+                  onError={(e) => {
                     e.target.src = "/fallback-book.jpg";
-                    e.target.className = "h-48 object-contain rounded-lg bg-gray-800 p-4";
+                    e.target.className =
+                      "h-48 object-contain rounded-lg bg-gray-800 p-4";
                   }}
                 />
               </div>
@@ -264,7 +289,7 @@ const BookList = ({ books }) => {
         )}
       </AnimatePresence>
     </div>
-  )
-}
+  );
+};
 
-export default BookList
+export default BookList;

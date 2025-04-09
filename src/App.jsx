@@ -12,6 +12,7 @@ import AddBooks from './Pages/AddBooks'
 import AllTransactions from './Pages/AllTransactions'
 import Pending from './Pages/Pending'
 import Home from './Pages/Home'
+import UserFines from './Pages/UserFines'
 function App() {
   
 
@@ -38,6 +39,7 @@ function App() {
           <Route path="/admin/issuedbooks" element={<IssuedBooks />} />
           <Route path="/transactions" element={<AllTransactions />} />
           <Route path="/pending-req" element={<Pending />} />
+          <Route path="/userfines" element={<UserFines />} />
         </Route>
       </Routes>
     </div>

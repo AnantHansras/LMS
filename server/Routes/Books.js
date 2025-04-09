@@ -2,7 +2,8 @@ const express = require("express")
 const router = express.Router()
 const {searchBookByGenre,searchBookByName,searchBookByAuthor,
     fetchAllBooks,fetchIssuedBooksToUser,returnBook,addBook,removeBook
-,requestIssueBook,approveIssueRequest,getAllRequests,getUserTransactions} = require('../Controllers/Books')
+,requestIssueBook,approveIssueRequest,getAllRequests,getUserTransactions,
+getOverdueBooksWithFineByUser} = require('../Controllers/Books')
 const {auth} = require('../Middlewares/auth')
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
@@ -20,6 +21,7 @@ router.post('/request-book', auth, requestIssueBook);
 router.post('/approve-book-request', auth, approveIssueRequest);
 router.post('/get-all-book-requests', auth, getAllRequests);
 router.post('/get-user-transactions', auth, getUserTransactions);
+router.post('/getBooksWithFine', auth, getOverdueBooksWithFineByUser);
 
 
 

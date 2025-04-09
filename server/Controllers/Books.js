@@ -579,4 +579,38 @@ const getUserTransactions = async (req, res) => {
     }
 };
 
-module.exports = {requestIssueBook,approveIssueRequest,getAllRequests,getUserTransactions, fetchAllBooks,fetchIssuedBooksToUser,returnBook,issueBook,addBook,removeBook,toggleBookAvailability,searchBookByAuthor,searchBookByGenre,searchBookByName}
+const getOverdueBooksWithFineByUser = async (req, res) => {
+    try {
+    const userId = req.user.id;
+      const today = new Date();
+  
+      const transactions = await Transaction.find({
+        userId: userId,
+        returnDate: { $lt: today },
+        status: { $in: ['issued', 'pending'] },
+        fineAmount: { $gt: 0 }
+      }).populate('bookId');
+  
+      const result = transactions.map(tx => ({
+        title: tx.bookId.title,
+        author: tx.bookId.author,
+        fineAmount: tx.fineAmount
+      }));
+  
+      res.status(200).json({
+        success: true,
+        count: result.length,
+        data: result
+      });
+  
+    } catch (error) {
+      console.error('Error fetching overdue books:', error);
+      res.status(500).json({
+        success: false,
+        message: 'Server Error: Unable to fetch overdue books for user.',
+        error: error.message
+      });
+    }
+};
+
+module.exports = {getOverdueBooksWithFineByUser,requestIssueBook,approveIssueRequest,getAllRequests,getUserTransactions, fetchAllBooks,fetchIssuedBooksToUser,returnBook,issueBook,addBook,removeBook,toggleBookAvailability,searchBookByAuthor,searchBookByGenre,searchBookByName}

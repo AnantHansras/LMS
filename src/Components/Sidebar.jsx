@@ -9,24 +9,29 @@ import {
   ListItemText,
   Tooltip,
 } from "@mui/material";
-import {
-  Home as HomeIcon,
-  LibraryBooks as LibraryBooksIcon,
-  Menu,
-  Book as BookIcon,
-  AddCircle as AddCircleIcon,
-  Settings as SettingsIcon,
-  ReceiptLong as RequestIcon,
-} from "@mui/icons-material";
 
+import MenuIcon from "@mui/icons-material/Menu";
+
+// Import these at the top of your file
+import HomeIcon from "@mui/icons-material/Home";
+import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import MenuBookIcon from "@mui/icons-material/MenuBook"; // Issued Books
+import AddBoxIcon from "@mui/icons-material/AddBox"; // Add Books
+import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty"; // Pending Requests
+import ReceiptLongIcon from "@mui/icons-material/ReceiptLong"; // Transactions
+import SettingsIcon from "@mui/icons-material/Settings";
+import PaidIcon from '@mui/icons-material/Paid';
+
+// Nav items array
 const navItems = [
   { name: "Home", path: "/home", icon: <HomeIcon /> },
   { name: "All Books", path: "/allbooks", icon: <LibraryBooksIcon /> },
-  { name: "Issued Books", path: "/issuedbooks", icon: <BookIcon /> },
-  { name: "Add Books", path: "/addbooks", icon: <AddCircleIcon /> },
-  { name: "Pending Requests", path: "/pending-req", icon: <RequestIcon /> },
-  { name: "Transactions", path: "/transactions", icon: <RequestIcon /> },
+  { name: "Issued Books", path: "/issuedbooks", icon: <MenuBookIcon /> },
+  { name: "Add Books", path: "/addbooks", icon: <AddBoxIcon /> },
+  { name: "Pending Requests", path: "/pending-req", icon: <HourglassEmptyIcon /> },
+  { name: "Transactions", path: "/transactions", icon: <ReceiptLongIcon /> },
   { name: "Settings", path: "/settings", icon: <SettingsIcon /> },
+  { name: "Fines", path: "/userfines", icon: <PaidIcon /> },
 ];
 
 export default function Sidebar() {
@@ -61,7 +66,7 @@ export default function Sidebar() {
       >
         {!collapsed && <span style={{ fontWeight: 'bold', fontSize: '18px', color: '#FAFAF9' }}>V0</span>}
         <IconButton onClick={() => setCollapsed(!collapsed)} sx={{ color: '#FAFAF9' }}>
-          <Menu />
+          <MenuIcon />
         </IconButton>
       </div>
 

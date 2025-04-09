@@ -54,9 +54,6 @@ def recommend_books():
     cv = CountVectorizer(stop_words='english')
     vector = cv.fit_transform(df['combined_features']).toarray()
 
-    # Log vector shape
-    print(f"Vector shape: {vector.shape}")
-
     # Compute similarity
     similarity = cosine_similarity(vector)
 
@@ -69,14 +66,8 @@ def recommend_books():
             if not match:
                 return jsonify({"message": "No matching Book, Author, or Genre found."}), 404
 
-    # Log the match found
-    print(f"Matching book found: {match}")
-
     best_match = match[0]
     index_list = df[df['title'] == best_match].index.tolist() or df[df['author'] == best_match].index.tolist()
-
-    # Log index list
-    print(f"Index list for '{best_match}': {index_list}")
 
     if not index_list:
         return jsonify({"message": "Matched book not found in dataset"}), 404
@@ -100,4 +91,4 @@ def recommend_books():
 
 
 if __name__ == '__main__':
-    app.run(debug=True,port=5002)
+    app.run(port=5002)

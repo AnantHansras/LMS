@@ -2,7 +2,7 @@ import { apiConnector } from './apiConnector'
 import { bookEndpoints } from './apis'
 import {toast} from 'react-hot-toast'
 const {GETBOOKS_API,ADDBOOK_API,REMOVEBOOK_API,GETISSUEDBOOKS_API,RETURNBOOK_API,CHANGEAVAILABLE_API,
-  REQUEST_BOOK_API,APPROVE_BOOK_REQUEST_API,GET_ALL_BOOK_REQUESTS_API,GET_USER_TRANSACTIONS_API
+  REQUEST_BOOK_API,APPROVE_BOOK_REQUEST_API,GET_ALL_BOOK_REQUESTS_API,GET_USER_TRANSACTIONS_API,GET_BOOKS_WITH_FINE_API
 } = bookEndpoints;
 
 export function getAllBookRequest(token) {
@@ -275,3 +275,22 @@ export function fetchIssuedBooksToUser(token) {
   };
 }
 
+export function fethcFinesToUser(token) {
+  return async (dispatch) => {
+    try {
+      const response = await apiConnector("POST", GET_BOOKS_WITH_FINE_API, {},{ Authorization: `Bearer ${token}` });
+
+      console.log("GET_BOOKS_WITH_FINE_API RESPONSE:", response);
+
+      if (!response.data.success) {
+        throw new Error(response.data.message);
+      }
+      return response.data;
+    } catch (error) {
+      console.log("GET_BOOKS_WITH_FINE_API ERROR:", error);
+      toast.error(error.response?.data?.message || "Failed to fetch issued books", {
+        theme: "dark",
+      });
+    }
+  };
+}

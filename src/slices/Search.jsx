@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const searchSlice = createSlice({
   name: 'lastSearch',
   initialState: {
-    lastSearch: localStorage.getItem("lastSearch") || '',
+    lastSearch: localStorage.getItem("lastSearch") || 'dbms',
   },
   reducers: {
     setLastSearch: (state, action) => {
