@@ -20,10 +20,11 @@ import {
 } from "@mui/icons-material";
 
 const navItems = [
-  { name: "Home", path: "/home", icon: <HomeIcon /> },
-  { name: "All Books", path: "/allbooks", icon: <LibraryBooksIcon /> },
-  { name: "Issued Books", path: "/issuedbooks", icon: <BookIcon /> },
-  { name: "Settings", path: "/settings", icon: <SettingsIcon /> },
+  { name: "All Books", path: "/AdminDashboard/admin", icon: <LibraryBooksIcon /> },
+  { name: "Add Books", path: "/AdminDashboard/addbooks", icon: <AddCircleIcon /> },
+  { name: "Pending Requests", path: "/AdminDashboard/pending-req", icon: <RequestIcon /> },
+  { name: "Transactions", path: "/AdminDashboard/transactions", icon: <RequestIcon /> },
+  { name: "Settings", path: "/AdminDashboard/settings", icon: <SettingsIcon /> },
 ];
 
 export default function Sidebar() {
@@ -39,7 +40,7 @@ export default function Sidebar() {
         '& .MuiDrawer-paper': {
           width: collapsed ? 64 : 270,
           boxSizing: 'border-box',
-          transition: 'width',
+          transition: 'width 0.5s',
           backgroundColor: '#0c0A09', // Dark background like login
           color: '#FAFAF9',           // Light text
           borderRight: '1px solid hsla(12,7%,15%,1)',
