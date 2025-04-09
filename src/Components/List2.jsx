@@ -54,11 +54,7 @@ const BookList = ({ books }) => {
     setSelectedBook(null)
   }
 
-  const issueBook = (bookId) => {
-    console.log("issue happening....")
-    dispatch(requestBook(bookId, parsedToken))
-    closeModal()
-  }
+  
 
   // Book card component to avoid repetition
   const BookCard = ({ book, index }) => (
@@ -204,65 +200,6 @@ const BookList = ({ books }) => {
           </div>
         </div>
       </div>
-
-      {/* Book Details Modal */}
-      <AnimatePresence>
-        {selectedBook && (
-          <motion.div
-            className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeModal}
-          >
-            <motion.div
-              className="bg-[#1C1C1C] rounded-xl p-6 max-w-md w-full max-h-[90vh] overflow-y-auto"
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.9, y: 20 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="flex justify-between items-start mb-4">
-                <h2 className="text-2xl font-bold text-[#E0E0E0]">{selectedBook.title}</h2>
-                <button onClick={closeModal} className="text-[#888888] hover:text-[#E0E0E0]">
-                  <X size={24} />
-                </button>
-              </div>
-              <p className="text-[#A8A29E] mb-2">by {selectedBook.author}</p>
-              <p className="text-[#EA580c] text-sm font-medium mb-4">{selectedBook.genre}</p>
-              <div className="flex justify-center mb-6">
-                <img
-                  src={`/book_${books.indexOf(selectedBook) + 1}.jpeg`}
-                  alt={selectedBook.title}
-                  className="h-48 object-cover rounded-lg shadow-md"
-                  onError={(e) => { 
-                    e.target.src = "/fallback-book.jpg";
-                    e.target.className = "h-48 object-contain rounded-lg bg-gray-800 p-4";
-                  }}
-                />
-              </div>
-              <p className="text-[#E0E0E0] mb-6">
-                Published Year: {selectedBook?.publishedYear ?? "Not available"}
-              </p>
-
-              <div className="flex justify-end gap-3">
-                <button
-                  onClick={closeModal}
-                  className="px-4 py-2 border border-[#1F1F1F] text-[#E0E0E0] rounded-lg hover:bg-[#2C2C2C] transition-colors"
-                >
-                  Close
-                </button>
-                <button
-                  onClick={() => issueBook(selectedBook._id)}
-                  className="px-4 py-2 bg-[#EA580c] text-white rounded-lg hover:bg-[#da601e] transition-colors"
-                >
-                  Request Book
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   )
 }

@@ -13,6 +13,7 @@ import DashboardLayout from './Pages/DashboardLayout'
 import AddBooks from './Pages/AddBooks'
 import AllTransactions from './Pages/AllTransactions'
 import Pending from './Pages/Pending'
+import MyPending from './Pages/Userpending'
 import Home from './Pages/Home'
 import UserFines from './Pages/UserFines'
 function App() {
@@ -32,6 +33,8 @@ function App() {
           <Route path="/allbooks" element={<AllBooks />} />
           <Route path="/issuedbooks" element={<IssuedBooks />} />
           <Route path="/userfines" element={<UserFines />} />
+          <Route path="/mypending" element={<MyPending />} />
+          
         </Route>
         <Route path="/AdminDashboard" element={<AdminDashboard/>}>
           <Route path='admin' element={<Adminallbook />} />

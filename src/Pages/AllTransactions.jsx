@@ -38,57 +38,55 @@ const AllTransactions = () => {
 
         <div className="overflow-x-auto rounded-lg shadow-md">
           <table className="min-w-full bg-[#1C1C1E] border border-[#2c2c2e] text-sm">
-            <thead className="bg-[#2C2C2E] text-[#A8A29E] uppercase text-xs">
+        <thead className="bg-[#2C2C2E] text-[#A8A29E] uppercase text-xs">
               <tr>
                 <th className="py-3 px-4 text-left">Title</th>
-                <th className="py-3 px-4 text-left  items-center gap-1">
-                   Issue Date
-                </th>
-                <th className="py-3 px-4 text-left  items-center gap-1">
-                   Due Date
-                </th>
-                <th className="py-3 px-4 text-left  items-center gap-1">
-                   Returned
-                </th>
+                <th className="py-3 px-4 text-left">User Email</th> {/* New column */}
+                <th className="py-3 px-4 text-left">Issue Date</th>
+                <th className="py-3 px-4 text-left">Due Date</th>
+                <th className="py-3 px-4 text-left">Returned</th>
                 <th className="py-3 px-4 text-left">Requested</th>
                 <th className="py-3 px-4 text-left">Status</th>
               </tr>
-            </thead>
-            <tbody>
-              {transactions.length > 0 ? (
-                transactions.map((transaction) => (
-                  <tr
-                    key={transaction._id}
-                    className="border-b border-[#2c2c2e] hover:bg-[#27272A] transition-colors"
-                  >
-                    <td className="py-3 px-4 font-medium text-[hsla(21,90%,48%,1)]">
-                      {transaction.bookId?.title || "N/A"}
-                    </td>
-                    <td className="py-3 px-4">{formatDate(transaction.issueDate)}</td>
-                    <td className="py-3 px-4">{formatDate(transaction.returnDate)}</td>
-                    <td className="py-3 px-4">{formatDate(transaction.returnedDate)}</td>
-                    <td className="py-3 px-4">{formatDate(transaction.requestDate)}</td>
-                    <td className="py-3 px-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          transaction.status === "issued"
-                            ? "bg-red-600/20 text-red-400"
-                            : "bg-green-600/20 text-green-400"
-                        }`}
-                      >
-                        {transaction.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan="6" className="text-center py-6 text-[#A8A29E]">
-                    No transactions found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
+        </thead>
+
+        <tbody>
+  {transactions.length > 0 ? (
+    transactions.map((transaction) => (
+      <tr
+        key={transaction._id}
+        className="border-b border-[#2c2c2e] hover:bg-[#27272A] transition-colors"
+      >
+        <td className="py-3 px-4 font-medium text-[hsla(21,90%,48%,1)]">
+          {transaction.bookId?.title || "N/A"}
+        </td>
+        <td className="py-3 px-4">{transaction.userId?.email || "N/A"}</td> {/* New email cell */}
+        <td className="py-3 px-4">{formatDate(transaction.issueDate)}</td>
+        <td className="py-3 px-4">{formatDate(transaction.returnDate)}</td>
+        <td className="py-3 px-4">{formatDate(transaction.returnedDate)}</td>
+        <td className="py-3 px-4">{formatDate(transaction.requestDate)}</td>
+        <td className="py-3 px-4">
+          <span
+            className={`px-3 py-1 rounded-full text-xs font-semibold ${
+              transaction.status === "issued"
+                ? "bg-red-600/20 text-red-400"
+                : "bg-green-600/20 text-green-400"
+            }`}
+          >
+            {transaction.status}
+          </span>
+        </td>
+      </tr>
+    ))
+  ) : (
+    <tr>
+      <td colSpan="7" className="text-center py-6 text-[#A8A29E]">
+        No transactions found.
+      </td>
+    </tr>
+  )}
+</tbody>
+
           </table>
         </div>
       </div>
