@@ -59,7 +59,7 @@ const BookList = ({ books }) => {
   // Book card component to avoid repetition
   const BookCard = ({ book, index }) => (
     <motion.div
-      className="relative bg-[#0c0A09] border border-[hsla(12,7%,15%,1)] backdrop-blur-2xl rounded-xl p-5 shadow-lg hover:shadow-2xl w-[250px] h-[420px] mx-auto flex flex-col cursor-pointer transition-transform transform hover:scale-105"
+      className="relative bg-[#0c0A09] border border-[hsla(12,7%,15%,1)] backdrop-blur-2xl rounded-xl p-5 shadow-lg hover:shadow-2xl w-[285px] h-[420px] mx-auto flex flex-col cursor-pointer transition-transform transform hover:scale-105"
       onClick={() => openModal(book)}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.98 }}
@@ -89,7 +89,7 @@ const BookList = ({ books }) => {
   );
 
   return (
-    <div className="min-h-screen bg-[#121212] text-[#E0E0E0] p-4 md:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#0C0A09] text-[#E0E0E0] p-4 md:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col space-y-6 mb-8">
           {/* Header and Search */}
@@ -236,7 +236,10 @@ const BookList = ({ books }) => {
                   <X size={24} />
                 </button>
               </div>
-              <p className="text-[#A8A29E] mb-2">by {selectedBook.author}</p>
+              <p className="text-[#A8A29E] mb-1">by {selectedBook.author}</p>
+              <p className="text-[#A8A29E] mb-1">
+                Published Year: {selectedBook?.publishedYear ?? "Not available"}
+              </p>
               <p className="text-[#EA580c] text-sm font-medium mb-4">
                 {selectedBook.genre}
               </p>
@@ -252,14 +255,12 @@ const BookList = ({ books }) => {
                   }}
                 />
               </div>
-              <p className="text-[#E0E0E0] mb-6">
-                Published Year: {selectedBook?.publishedYear ?? "Not available"}
-              </p>
+              
 
               <div className="flex justify-end gap-3">
                 <button
                   onClick={closeModal}
-                  className="px-4 py-2 border border-[#1F1F1F] text-[#E0E0E0] rounded-lg hover:bg-[#2C2C2C] transition-colors"
+                  className="px-4 py-2 border border-[#ffffff40] text-[#E0E0E0] rounded-lg hover:bg-[#2C2C2C] transition-colors"
                 >
                   Close
                 </button>

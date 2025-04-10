@@ -16,11 +16,35 @@ import Pending from './Pages/Pending'
 import MyPending from './Pages/Userpending'
 import Home from './Pages/Home'
 import UserFines from './Pages/UserFines'
+import Setting from './Pages/Setting'
+import { Toaster } from 'react-hot-toast';
 function App() {
   
 
   return (
     <div>
+      <Toaster
+      position= "top-center"
+  toastOptions={{
+    style: {
+      background: '#000000', // Pure black
+      color: '#ffffff',      // White text
+      border: '1px solid #333333', // Subtle dark gray border
+    },
+    success: {
+      iconTheme: {
+        primary: '#22c55e',    // Tailwind green-500
+        secondary: '#000000',
+      },
+    },
+    error: {
+      iconTheme: {
+        primary: '#ef4444',    // Tailwind red-500
+        secondary: '#000000',
+      },
+    },
+  }}
+/>
       <Routes>
         <Route path='/' element={<Login/>}/>
         <Route path='/signup' element={<Signup/>}/>
@@ -34,7 +58,7 @@ function App() {
           <Route path="/issuedbooks" element={<IssuedBooks />} />
           <Route path="/userfines" element={<UserFines />} />
           <Route path="/mypending" element={<MyPending />} />
-          
+          <Route path='/settings' element={<Setting/>} />
         </Route>
         <Route path="/AdminDashboard" element={<AdminDashboard/>}>
           <Route path='admin' element={<Adminallbook />} />
@@ -42,6 +66,7 @@ function App() {
           <Route path="addbooks" element={<AddBooks />} />
           <Route path="transactions" element={<AllTransactions />} />
           <Route path="pending-req" element={<Pending />} />
+          <Route path='settings' element={<Setting/>} />
         </Route>
 
       </Routes>

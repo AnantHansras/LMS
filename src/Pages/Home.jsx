@@ -6,11 +6,14 @@ import { useSelector } from "react-redux";
 
 export default function Home() {
   const [recommendations, setRecommendations] = useState([]);
+  const [loadingRecommendations, setLoadingRecommendations] = useState(true);
   const bookQuery = useSelector((state) => state.lastSearch.lastSearch);
 
   const naviagte = useNavigate();
+  
   useEffect(() => {
     const fetchRecommendations = async () => {
+      setLoadingRecommendations(true);
       try {
         const response = await axios.post(
           "http://localhost:5001/api/recommend",
@@ -20,6 +23,8 @@ export default function Home() {
         setRecommendations(response.data.recommendations);
       } catch (error) {
         console.error("Error fetching recommendations:", error);
+      } finally {
+        setLoadingRecommendations(false);
       }
     };
     fetchRecommendations();
@@ -95,7 +100,7 @@ export default function Home() {
                 strokeWidth="2"
                 viewBox="0 0 24 24"
               >
-                <path d="M4 19.5v-15A2.5 2.5 0 016.5 2H20v20H6.5a2.5 2.5 0 010-5H20" />
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
               </svg>
               <span className="font-medium text-xs">500+ Books</span>
             </div>
@@ -153,42 +158,57 @@ export default function Home() {
             Recommended Books
           </h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-            {recommendations.map((book, index) => (
-              <div
-                key={index}
-                className="group relative overflow-hidden rounded-xl border border-[hsla(12,7%,15%,1)] bg-[#1C1917] shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1"
-              >
-                <a href="#" className="absolute inset-0 z-10">
-                  <span className="sr-only">{book.title}</span>
-                </a>
-                <img
-                  src={
-                    book.image
-                  }
-                  alt={book.title}
-                  className="object-cover aspect-[2/3] w-full transition-transform duration-300 group-hover:scale-105"
-                />
-                <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
-                  <h3 className="font-medium text-sm line-clamp-1">
-                    {book.title}
-                  </h3>
-                  <p className="text-xs opacity-85">{book.author}</p>
+            {loadingRecommendations ? (
+              // Render skeleton loaders while recommendations are loading
+              [...Array(4)].map((_, index) => (
+                <div
+                  key={index}
+                  className="animate-pulse group relative overflow-hidden rounded-xl border border-[hsla(12,7%,15%,1)] bg-[#1C1917] shadow-sm transition-all duration-300"
+                >
+                  <div className="h-56 w-full bg-gray-300 rounded"></div>
+                  <div className="p-3">
+                    <div className="h-3 w-3/4 bg-gray-300 rounded mb-1"></div>
+                    <div className="h-2 w-1/2 bg-gray-300 rounded"></div>
+                  </div>
                 </div>
-                <div className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-[hsla(0,0%,100%,0.1)] px-2 py-1 text-xs text-[#FAFAF9] backdrop-blur">
-                  <svg
-                    className="h-3 w-3 text-[hsla(21,90%,48%,1)]"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                  <span>{book.isAvailable || "Available"}</span>
+              ))
+            ) : (
+              // Render recommendations when loading is complete
+              recommendations.map((book, index) => (
+                <div
+                  key={index}
+                  className="group relative overflow-hidden rounded-xl border border-[hsla(12,7%,15%,1)] bg-[#1C1917] shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1"
+                >
+                  <a href="#" className="absolute inset-0 z-10">
+                    <span className="sr-only">{book.title}</span>
+                  </a>
+                  <img
+                    src={book.image}
+                    alt={book.title}
+                    className="object-cover aspect-[2/3] w-full transition-transform duration-300 group-hover:scale-105"
+                  />
+                  <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/80 to-transparent p-3 text-white">
+                    <h3 className="font-medium text-sm line-clamp-1">
+                      {book.title}
+                    </h3>
+                    <p className="text-xs opacity-85">{book.author}</p>
+                  </div>
+                  <div className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-[hsla(0,0%,100%,0.1)] px-2 py-1 text-xs text-[#FAFAF9] backdrop-blur">
+                    <svg
+                      className="h-3 w-3 text-[hsla(21,90%,48%,1)]"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span>{book.isAvailable || "Available"}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </div>

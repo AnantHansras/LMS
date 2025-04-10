@@ -17,7 +17,7 @@ export function getAllBookRequest(token) {
       return response.data
     } catch (error) {
       console.log("GET_ALL_BOOK_REQUESTS API ERROR............", error)
-      toast.error(error.response.data.message,{theme: "dark"})
+      toast.error(error.response.data.message,{theme: "dark",position: "top-center",})
     }
   }
 }
@@ -31,14 +31,14 @@ export function requestBook(bookId,token) {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      toast.success("📚 Book Request Sent Successfully!", {
+      toast.success("Book Request Sent Successfully!", {
         position: "top-center",
         theme: "dark",
       });
       return response.data
     } catch (error) {
       console.log("REQUEST_BOOK API ERROR............", error)
-      toast.error(error.response.data.message,{theme: "dark"})
+      toast.error(error.response.data.message,{theme: "dark",position: "top-center"})
     }
   }
 }
@@ -55,7 +55,7 @@ export function allTransactions(token) {
       return response.data
     } catch (error) {
       console.log("GET_USER_TRANSACTIONS API ERROR............", error)
-      toast.error(error.response.data.message,{theme: "dark"})
+      toast.error(error.response.data.message,{theme: "dark",position: "top-center",})
     }
   }
 }
@@ -69,14 +69,14 @@ export function approveRequest(transactionID,token) {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      toast.success("📚 Book Request Approved Successfully!", {
+      toast.success("Book Request Approved Successfully!", {
         position: "top-center",
         theme: "dark",
       });
       return response.data
     } catch (error) {
       console.log("APPROVE_BOOK_REQUEST API ERROR............", error)
-      toast.error(error.response.data.message,{theme: "dark"})
+      toast.error(error.response.data.message,{theme: "dark",position: "top-center",})
     }
   }
 }
@@ -90,14 +90,10 @@ export function getallbooks(token) {
         if (!response.data.success) {
           throw new Error(response.data.message)
         }
-        toast.success("📚 Book Fetched Successfully!", {
-          position: "top-center",
-          theme: "dark",
-        });
         return response.data
       } catch (error) {
         console.log("GETBOOKS API ERROR............", error)
-        toast.error(error.response.data.message,{theme: "dark"})
+        toast.error(error.response.data.message,{theme: "dark",position: "top-center",})
       }
     }
 }
@@ -116,7 +112,7 @@ export function addbook(title, author, genre, publishedYear, keywords, attachmen
         throw new Error(response.data.message);
       }
 
-      toast.success("📚 Book Added Successfully!", {
+      toast.success("Book Added Successfully!", {
         position: "top-center",
         theme: "dark",
       });
@@ -124,7 +120,7 @@ export function addbook(title, author, genre, publishedYear, keywords, attachmen
       return response.data;
     } catch (error) {
       console.error("ADDBOOK API ERROR:", error);
-      toast.error(error.response?.data?.message || "An error occurred", { theme: "dark" });
+      toast.error(error.response?.data?.message || "An error occurred", { theme: "dark",position: "top-center", });
 
       return null; // Prevent undefined behavior
     }
@@ -154,7 +150,7 @@ export function removebook(bookId,token) {
     return response.data;
   } catch (error) {
     console.log("REMOVEBOOK API ERROR............", error)
-    toast.error(error.response.data.message,{theme: "dark"})
+    toast.error(error.response.data.message,{theme: "dark",position: "top-center",})
   }
   } 
 } 
@@ -171,50 +167,18 @@ export function returnbook(bookId,token) {
     if (!response.data.success) {
       throw new Error(response.data.message)
     }
-    toast.success("📚 Book Returned Successfully!", {
+    toast.success("Book Returned Successfully!", {
       position: "top-center",  
       theme: "dark",
-      autoClose: 3000, 
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
     });
     
     return response.data;
   } catch (error) {
     console.log("RETURNBOOK API ERROR............", error)
-    toast.error(error.response.data.message,{theme: "dark"})
+    toast.error(error.response.data.message,{theme: "dark",position: "top-center",})
   }
   } 
 }
-
-// export function issueBook(bookId,token) {
-//   return async (dispatch) => {
-//     try{
-//     const response = await apiConnector("POST", GETISSUEDBOOKS_API, {bookId},{ Authorization: `Bearer ${token}` })
-//     console.log("GETISSUEDBOOKS API RESPONSE............", response)
-    
-//     console.log(response.data.success)
-//     if (!response.data.success) {
-//       throw new Error(response.data.message)
-//     }
-//     toast.success("📚 Book issue Successfully!", {
-//       position: "top-center",
-//       theme: "dark",
-//       autoClose: 3000, 
-//       hideProgressBar: false, 
-//       closeOnClick: true,
-//       pauseOnHover: true,
-//       draggable: true,
-//     });
-//     return response.data
-//   } catch (error) {
-//     console.log("GETISSUEDBOOKS API ERROR............", error)
-//     toast.error(error.response.data.message,{theme: "dark"})
-//   }
-// }
-// }
 
 export function togglebookAvailability(bookId,token) {
   return async (dispatch) => {
@@ -226,20 +190,15 @@ export function togglebookAvailability(bookId,token) {
     if (!response.data.success) {
       throw new Error(response.data.message)
     }
-    toast.success("📚 Book toggle Successfully!", {
+    toast.success("Book availablity toggled Successfully!", {
       position: "top-center",
       theme: "dark",
-      autoClose: 3000, 
-      hideProgressBar: false, 
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
     });
     
     return response.data
   } catch (error) {
     console.log("CHANGEAVAILABLE API ERROR............", error)
-    toast.error(error.response.data.message,{theme: "dark"})
+    toast.error(error.response.data.message,{theme: "dark",position: "top-center",})
   }
 }
 }
@@ -255,20 +214,11 @@ export function fetchIssuedBooksToUser(token) {
         throw new Error(response.data.message);
       }
 
-      toast.success("📚 Issued Books Fetched Successfully!", {
-        position: "top-center",
-        theme: "dark",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-
       return response.data;
     } catch (error) {
       console.log("FETCH ISSUED BOOKS API ERROR:", error);
       toast.error(error.response?.data?.message || "Failed to fetch issued books", {
+        position: "top-center",
         theme: "dark",
       });
     }
@@ -290,22 +240,12 @@ export function getUserPendingRequests(token) {
         throw new Error(response.data.message);
       }
 
-      toast.success("📚 Pending Requests Fetched Successfully!", {
-        position: "top-center",
-        theme: "dark",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-
       return response.data;
     } catch (error) {
       console.error("GET_USER_PENDING_REQUESTS API ERROR:", error);
       toast.error(
         error.response?.data?.message || "Failed to fetch pending requests",
-        { theme: "dark" }
+        { theme: "dark",position: "top-center", }
       );
     }
   };
@@ -327,6 +267,7 @@ export function fethcFinesToUser(token) {
       console.log("GET_BOOKS_WITH_FINE_API ERROR:", error);
       toast.error(error.response?.data?.message || "Failed to fetch issued books", {
         theme: "dark",
+        position: "top-center",
       });
     }
   };

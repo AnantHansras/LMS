@@ -20,7 +20,7 @@ export function tokenPassword(email,setEmailSent) {
         toast.success("Email sent Successfully",{theme: "dark"})
       } catch (error) {
         console.log("PASSWORDTOKEN API ERROR............", error)
-        toast.error("Error occured while sending email",{theme: "dark"})
+        toast.error(error.response.data.message,{theme: "dark",position: "top-center",})
       }
     }
 }
@@ -41,10 +41,10 @@ export function resetPassword(password,confirmPassword,token,navigate) {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      toast.success("Passowrd reset done",{theme: "dark"})
+      toast.success("Passowrd reset done",{theme: "dark",position: "top-center",})
     } catch (error) {
       console.log("RESETPASSWORD API ERROR............", error)
-      toast.error("Error while reseting password",{theme: "dark"})
+      toast.error(error.response.data.message,{theme: "dark",position: "top-center",})
     }
   }
 }

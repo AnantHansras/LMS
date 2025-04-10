@@ -31,15 +31,8 @@ const fetchIssuedBooksToUser = async (req, res) => {
             });
         }
 
-        const issuedTransactions = await Transaction.find({ userId, status: 'issued' }).populate('bookId', 'title author') // Fetch title and author from Book model
-        .populate('userId', 'name');;
-
-        // if (issuedTransactions.length === 0) {
-        //     return res.status(404).json({
-        //         success: false,
-        //         message: "No books issued to this user."
-        //     });
-        // }
+        const issuedTransactions = await Transaction.find({ userId, status: 'issued' }).populate('bookId', 'title author genre publishedYear') // Fetch title and author from Book model
+        .populate('userId', 'name');
 
         // Extract full book details from transactions
         const issuedBooks = issuedTransactions.map(transaction => transaction.bookId.toObject());
@@ -66,12 +59,16 @@ const returnBook = async (req, res) => {
         // Find the most recent issued transaction for the given bookId and userId
         const transaction = await Transaction.findOne({ bookId, userId, status: 'issued' })
             .sort({ createdAt: -1 }); // Get the latest issued transaction
-
+        if(transaction.fineAmount > 0){
+            return res.status(404).json({
+                success: false,
+                message: 'Please Pay Fine Before returning the book',
+            });
+        }
         if (!transaction) {
             return res.status(404).json({
                 success: false,
                 message: 'No issued transaction found for this book and user',
-                error: err.message
             });
         }
 
@@ -87,7 +84,7 @@ const returnBook = async (req, res) => {
         });
     } catch (error) {
         return res.status(404).json({
-            success: true,
+            success: false,
             message: 'Server error',
             error: error.message
         });

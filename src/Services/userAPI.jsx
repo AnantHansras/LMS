@@ -25,10 +25,10 @@ export function sendOtp(email, navigate,signupData) {
 
       navigate("/otp", { state: { signupData: signupData } });
 
-      toast.success("OTP Sent Successfully")
+      toast.success("OTP Sent Successfully",{position: "top-center",theme:'dark'})
     } catch (error) {
       console.log("SENDOTP API ERROR............", error)
-      toast.error("Could Not Send OTP")
+      toast.error(error.response.data.message,{theme: "dark",position: "top-center",})
     }
   }
 }
@@ -52,7 +52,7 @@ export function signUp(name,email,password,otp,navigate) {
       navigate("/")
     } catch (error) {
       console.log("SIGNUP API ERROR............", error)
-       toast.error("Signup Failed",{theme: "dark"})
+      toast.error(error.response.data.message,{theme: "dark",position: "top-center",})
       navigate("/signup")
     }
   }
@@ -72,7 +72,7 @@ export function login(email, password, navigate) {
         throw new Error(response.data.message)
       }
 
-       toast.success("Login Successful",{theme: "dark"})
+       toast.success("Login Successful",{theme: "dark",position: "top-center",})
     
       
       localStorage.setItem("token", JSON.stringify(response.data.token))
@@ -86,7 +86,7 @@ export function login(email, password, navigate) {
       }
     } catch (error) {
       console.log("LOGIN API ERROR............", error)
-       toast.error("Login Failed",{theme: "dark"})
+      toast.error(error.response.data.message,{theme: "dark",position: "top-center",})
     }
   }
 }
@@ -95,7 +95,8 @@ export function logout(navigate) {
     return (dispatch) => {
       localStorage.removeItem("token")
       localStorage.removeItem("user")
-      toast.success("Logged Out",{theme: "dark"})
-      navigate("/login")
+      localStorage.removeItem("lastSearch")
+      toast.success("Logged Out",{theme: "dark",position: "top-center",})
+      navigate("/")
     }
 }
