@@ -639,7 +639,9 @@
 // export default Issued;
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, X, BookOpen, Filter, Sun, Moon } from "lucide-react";
+
+import { Search, X, BookOpen, Filter,Sun, Moon, RotateCw } from "lucide-react";
+
 import { returnbook } from "../Services/booksAPI";
 import { useDispatch, useSelector } from "react-redux";
 import { setLastSearch } from "../slices/Search";
@@ -652,6 +654,7 @@ const Issued = ({ books }) => {
   const [selectedBook, setSelectedBook] = useState(null);
   const [activeGenre, setActiveGenre] = useState("All");
   const [showFilters, setShowFilters] = useState(false);
+  const [isReturning, setIsReturning] = useState(false);
 
   const token = localStorage.getItem("token");
   const parsedToken = token ? JSON.parse(token) : null;
@@ -684,10 +687,20 @@ const Issued = ({ books }) => {
   const openModal = (book) => setSelectedBook(book);
   const closeModal = () => setSelectedBook(null);
 
-  const onDelete = (bookId) => {
-    dispatch(returnbook(bookId, parsedToken));
+
+
+  const onDelete = async (bookId) => {
+    setIsReturning(true);
+    try {
+      await dispatch(returnbook(bookId, parsedToken));
+      window.location.reload();
+    } finally {
+      setIsReturning(false);
+      closeModal();
+    }
   };
 
+  // Book card component to avoid repetition
   const BookCard = ({ book, index }) => (
     <motion.div
       className={`relative border rounded-xl p-5 shadow-lg hover:shadow-2xl w-[285px] h-[420px] mx-auto flex flex-col cursor-pointer transition-transform transform hover:scale-105 ${
@@ -729,7 +742,7 @@ const Issued = ({ books }) => {
         }`}
       >
         <img
-          src={`/book_${index + 1}.jpeg`}
+          src={book.imageUrl || `/book_${index + 1}.jpeg`}
           alt={book.title}
           className="w-full h-full object-cover rounded-lg"
           onError={(e) => {
@@ -1023,9 +1036,21 @@ const Issued = ({ books }) => {
                 </button>
                 <button
                   onClick={() => onDelete(selectedBook._id)}
-                  className="px-4 py-2 bg-[#EA580c] text-white rounded-lg hover:bg-[#da601e] transition-colors"
+                  className={`px-4 py-2 rounded-lg transition-colors ${
+                    isReturning
+                      ? "bg-[#da601e] text-white cursor-not-allowed"
+                      : "bg-[#EA580c] text-white hover:bg-[#da601e]"
+                  }`}
+                  disabled={isReturning}
                 >
-                  Return Book
+                  {isReturning ? (
+                    <div className="flex items-center justify-center">
+                      <RotateCw className="mr-2 h-5 w-5 animate-spin" />
+                      Returning...
+                    </div>
+                  ) : (
+                    "Return Book"
+                  )}
                 </button>
               </div>
             </motion.div>

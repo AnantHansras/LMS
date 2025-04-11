@@ -1,11 +1,6 @@
-const onDelete = (bookId, e) => {
-  e.stopPropagation()
-  dispatch(removebook(bookId, parsedToken))
-}
-
 import { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Trash2, Search, X, BookOpen, Filter } from "lucide-react";
+import { Trash2, Search, X, BookOpen, Filter, RotateCw } from "lucide-react";
 import { removebook, requestBook } from "../Services/booksAPI";
 import { useDispatch } from "react-redux";
 import { setLastSearch } from "../slices/Search";
@@ -16,6 +11,7 @@ const BookList = ({ books }) => {
   const [selectedBook, setSelectedBook] = useState(null);
   const [activeGenre, setActiveGenre] = useState("All");
   const [showFilters, setShowFilters] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false); // New state for deleting
 
   const token = localStorage.getItem("token");
   const parsedToken = token ? JSON.parse(token) : null;
@@ -55,10 +51,16 @@ const BookList = ({ books }) => {
     setSelectedBook(null);
   };
 
-  const onDelete = (bookId, e) => {
-    e.stopPropagation()
-    dispatch(removebook(bookId, parsedToken))
-  }
+  const onDelete = async (bookId, e) => {
+    setIsDeleting(true); // Set deleting state to true
+    try {
+      await dispatch(removebook(bookId, parsedToken));
+      window.location.reload(); // Refresh the page after successful deletion
+    } finally {
+      setIsDeleting(false); // Set deleting state back to false
+      closeModal(); // Close the modal after deletion
+    }
+  };
 
   // Book card component to avoid repetition
   const BookCard = ({ book, index }) => (
@@ -79,7 +81,7 @@ const BookList = ({ books }) => {
 
       <motion.div className="h-[350px] w-full bg-[hsla(240,10%,4%,1)] rounded-lg mt-auto flex justify-center items-center overflow-hidden shadow-md">
         <img
-          src={`/book_${index + 1}.jpeg`}
+          src={book.imageUrl || `/book_${index + 1}.jpeg`}
           alt={book.title}
           className="w-full h-full object-cover rounded-lg"
           onError={(e) => {
@@ -269,10 +271,22 @@ const BookList = ({ books }) => {
                   Close
                 </button>
                 <button
-                  onClick={() => onDelete(selectedBook._id)}
-                  className="px-4 py-2 bg-[#EA580c] text-white rounded-lg hover:bg-[#da601e] transition-colors"
+                  onClick={(e) => onDelete(selectedBook._id,e)}
+                  className={`px-4 py-2 rounded-lg transition-colors ${
+                    isDeleting
+                      ? "bg-[#da601e] text-white cursor-not-allowed"
+                      : "bg-[#EA580c] text-white hover:bg-[#da601e]"
+                  }`}
+                  disabled={isDeleting}
                 >
-                  Delete Book
+                  {isDeleting ? (
+                    <div className="flex items-center justify-center">
+                      <RotateCw className="mr-2 h-5 w-5 animate-spin" />
+                      Deleting...
+                    </div>
+                  ) : (
+                    "Delete Book"
+                  )}
                 </button>
               </div>
             </motion.div>
