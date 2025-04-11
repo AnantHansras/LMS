@@ -1011,7 +1011,7 @@ const Issued = ({ books }) => {
               </p>
               <div className="flex justify-center mb-6">
                 <img
-                  src={`/book_${books.indexOf(selectedBook) + 1}.jpeg`}
+                  src={selectedBook.imageUrl || `/book_${books.indexOf(selectedBook) + 1}.jpeg`}
                   alt={selectedBook.title}
                   className="h-48 object-cover rounded-lg shadow-md"
                   onError={(e) => {
