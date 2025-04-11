@@ -60,7 +60,7 @@ const BookList = ({ books }) => {
   const BookCard = ({ book, index }) => (
     <motion.div
       className="relative bg-[#0c0A09] border border-[hsla(12,7%,15%,1)] backdrop-blur-2xl rounded-xl p-5 shadow-lg hover:shadow-2xl w-[285px] h-[420px] mx-auto flex flex-col cursor-pointer transition-transform transform hover:scale-105"
-      onClick={() => openModal(book)}
+      onClick={() => {openModal(book);dispatch(setLastSearch(book.title));}}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.98 }}
     >
@@ -108,9 +108,8 @@ const BookList = ({ books }) => {
                 className="pl-10 pr-4 py-3 w-full border border-[#1F1F1F] bg-[#1C1C1C] text-[#E0E0E0] rounded-full focus:outline-none focus:ring-2 focus:ring-[#EA580c] transition-all duration-300"
                 value={searchQuery}
                 onChange={(e) => {
-                  const value = e.target.value;
+                  const value = e.target.value; 
                   setSearchQuery(value);
-                  dispatch(setLastSearch(value));
                 }}
               />
               {searchQuery && (

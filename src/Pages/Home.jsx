@@ -19,6 +19,7 @@ export default function Home() {
           "http://localhost:5001/api/recommend",
           { bookQuery }
         );
+        console.log("bookQuery:", bookQuery);
         console.log("Recommendations:", response.data);
         setRecommendations(response.data.recommendations);
       } catch (error) {
@@ -183,7 +184,7 @@ export default function Home() {
                     <span className="sr-only">{book.title}</span>
                   </a>
                   <img
-                    src={book.image}
+                    src={book.imageUrl}
                     alt={book.title}
                     className="object-cover aspect-[2/3] w-full transition-transform duration-300 group-hover:scale-105"
                   />
