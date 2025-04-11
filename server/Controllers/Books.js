@@ -253,7 +253,7 @@ const removeBook = async (req, res) => {
         }
 
         // Remove all transactions related to this book
-        await Transaction.deleteMany({ bookId: bookId, userId: userId });
+        await Transaction.deleteMany({ bookId: bookId});
 
         // Remove the book
         await Book.findByIdAndDelete(bookId);

@@ -31,7 +31,7 @@ export function requestBook(bookId,token) {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      toast.success("Book Request Sent Successfully!", {
+      toast.success("Request Sent Successfully!", {
         position: "top-center",
         theme: "dark",
       });
@@ -69,7 +69,7 @@ export function approveRequest(transactionID,token) {
       if (!response.data.success) {
         throw new Error(response.data.message)
       }
-      toast.success("Book Request Approved Successfully!", {
+      toast.success("Request Approved Successfully!", {
         position: "top-center",
         theme: "dark",
       });
@@ -138,14 +138,9 @@ export function removebook(bookId,token) {
     if (!response.data.success) {
       throw new Error(response.data.message)
     }
-    toast.success("🚀 Alert... Book Removed Successfully!", {
+    toast.success("Book Removed Successfully!", {
       position: "top-center",  
       theme: "dark",
-      autoClose: 3000,        
-      hideProgressBar: false, 
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
     });
     return response.data;
   } catch (error) {

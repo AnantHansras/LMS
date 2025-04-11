@@ -75,7 +75,7 @@ const BookList = ({ books }) => {
 
       <motion.div className="h-[350px] w-full bg-[hsla(240,10%,4%,1)] rounded-lg mt-auto flex justify-center items-center overflow-hidden shadow-md">
         <img
-          src={`/book_${index + 1}.jpeg`}
+          src={book.imageUrl || `/book_${index + 1}.jpeg`}
           alt={book.title}
           className="w-full h-full object-cover rounded-lg"
           onError={(e) => {
