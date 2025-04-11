@@ -1,63 +1,106 @@
+import { useSelector } from "react-redux";
+
 const Footer = () => {
+  const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);
+
   return (
-    <footer className="border border-[hsla(12,7%,15%,1)]  bg-[hsla(240,10%,4%,1)] text-[#FAFAF9] py-10 px-6 md:px-16">
+    <footer
+      className={`border py-10 px-6 md:px-16 transition-colors duration-300 ${
+        !isDarkMode
+          ? "border-[hsla(12,7%,15%,1)] bg-[hsla(240,10%,4%,1)] text-[#FAFAF9]"
+          : "border-gray-200 bg-gray-50 text-gray-800"
+      }`}
+    >
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-sm">
-        {/* About Us */}
+        {/* ABOUT US */}
         <div>
-          <h3 className="text-white font-semibold mb-4">ABOUT US</h3>
+          <h3 className="font-semibold mb-4">ABOUT US</h3>
           <ul className="space-y-2">
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Our Story</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Our People</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Our Contributors</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Locations</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Management</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Social Impact</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Accessibility Statement</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Careers</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Imprints</a></li>
+            {[
+              "Our Story",
+              "Our People",
+              "Our Contributors",
+              "Locations",
+              "Management",
+              "Social Impact",
+              "Accessibility Statement",
+              "Careers",
+              "Imprints",
+            ].map((item) => (
+              <li key={item}>
+                <a
+                  href="#"
+                  className="hover:text-[hsla(21,90%,48%,1)] transition-colors"
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Quick Links */}
+        {/* QUICK LINKS */}
         <div>
-          <h3 className="text-white font-semibold mb-4">QUICK LINKS</h3>
+          <h3 className="font-semibold mb-4">QUICK LINKS</h3>
           <ul className="space-y-2">
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Partnerships</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Media Queries</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Influencers</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Company Reads</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">PenguinRandomHouse.biz</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Email Preferences</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Terms of Use</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">CA Privacy Policy</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Do Not Sell My Personal Info</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Affiliate Program Disclosure</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Avoid Publishing Scams</a></li>
+            {[
+              "Partnerships",
+              "Media Queries",
+              "Influencers",
+              "Company Reads",
+              "PenguinRandomHouse.biz",
+              "Email Preferences",
+              "Terms of Use",
+              "Privacy Policy",
+              "CA Privacy Policy",
+              "Do Not Sell My Personal Info",
+              "Affiliate Program Disclosure",
+              "Avoid Publishing Scams",
+            ].map((item) => (
+              <li key={item}>
+                <a
+                  href="#"
+                  className="hover:text-[hsla(21,90%,48%,1)] transition-colors"
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Help */}
+        {/* HELP */}
         <div>
-          <h3 className="text-white font-semibold mb-4">HELP</h3>
+          <h3 className="font-semibold mb-4">HELP</h3>
           <ul className="space-y-2">
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Publishing Process</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">FAQ</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Shopping & Shipping FAQ</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">For Educators</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Subrights</a></li>
-            <li><a href="#" className="hover:text-[hsla(21,90%,48%,1)]">Permissions</a></li>
+            {[
+              "Publishing Process",
+              "FAQ",
+              "Shopping & Shipping FAQ",
+              "For Educators",
+              "Subrights",
+              "Permissions",
+            ].map((item) => (
+              <li key={item}>
+                <a
+                  href="#"
+                  className="hover:text-[hsla(21,90%,48%,1)] transition-colors"
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Connect */}
+        {/* CONNECT */}
         <div>
-          <h3 className="text-white font-semibold mb-4">CONNECT</h3>
-          <p className="mb-4 text-[#A8A29E]">
+          <h3 className="font-semibold mb-4">CONNECT</h3>
+          <p className={`mb-4 ${!isDarkMode ? "text-[#A8A29E]" : "text-gray-600"}`}>
             Sign up for news about books, authors, and more from Malaviya National Institute of Technology Jaipur.
           </p>
-          <a 
-            href="#" 
+          <a
+            href="#"
             className="bg-[hsla(21,90%,48%,1)] hover:bg-[hsla(21,90%,48%,0.9)] text-white px-4 py-2 rounded-lg flex items-center gap-2 w-fit"
           >
             📩 Stay In Touch
@@ -65,15 +108,26 @@ const Footer = () => {
 
           {/* Social Icons */}
           <div className="flex gap-4 mt-4">
-            <a href="#" className="text-xl cursor-pointer hover:text-[hsla(21,90%,48%,1)]">🌍</a>
-            <a href="#" className="text-xl cursor-pointer hover:text-[hsla(21,90%,48%,1)]">📷</a>
-            <a href="#" className="text-xl cursor-pointer hover:text-[hsla(21,90%,48%,1)]">📺</a>
-            <a href="#" className="text-xl cursor-pointer hover:text-[hsla(21,90%,48%,1)]">📌</a>
-            <a href="#" className="text-xl cursor-pointer hover:text-[hsla(21,90%,48%,1)]">💼</a>
+            {["🌍", "📷", "📺", "📌", "💼"].map((icon, idx) => (
+              <a
+                key={idx}
+                href="#"
+                className="text-xl cursor-pointer hover:text-[hsla(21,90%,48%,1)]"
+              >
+                {icon}
+              </a>
+            ))}
           </div>
 
-          <a href="#" className="text-[#A8A29E] mt-4 block">ANANT_JORAWAR&SOURAV.COM</a>
-          <p className="text-[#A8A29E]">© 2025 Anant&Jorawar</p>
+          <a
+            href="#"
+            className={`mt-4 block ${!isDarkMode ? "text-[#A8A29E]" : "text-gray-600"}`}
+          >
+            ANANT_JORAWAR&SOURAV.COM
+          </a>
+          <p className={!isDarkMode ? "text-[#A8A29E]" : "text-gray-600"}>
+            © 2025 Anant&Jorawar
+          </p>
         </div>
       </div>
     </footer>
