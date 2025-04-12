@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 const Footer = () => {
-  const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);
+  const isDarkMode = false
 
   return (
     <footer

@@ -38,7 +38,7 @@ const Pending = () => {
   return (
     <div className="bg-[#0c0A09] min-h-screen text-[#FAFAF9] p-6 max-w-7xl mx-auto">
       <header className="mb-8 text-center">
-        <h1 className="text-3xl font-bold tracking-wide">Pending Issue Requests</h1>
+        <h1 className="text-3xl font-bold tracking-wide text-[#EA580c]">Pending Issue Requests</h1>
         <p className="text-[#A8A29E] mt-1">Manage and approve pending book requests</p>
       </header>
 
@@ -83,7 +83,7 @@ const RequestCard = ({ request, onApprove }) => {
   })
 
   return (
-    <div className="bg-[#1C1917] rounded-xl border border-[#3F3F46] p-5 shadow-md hover:shadow-lg transition">
+    <div className="bg-[#0c0A09] rounded-xl border border-[#3F3F46] p-5 shadow-md hover:shadow-lg transition">
       {/* Book Title */}
       <h2 className="text-xl font-semibold text-[#FAFAF9] mb-1">{request.bookId.title}</h2>
       <div className="flex items-start text-sm text-[#D4D4D8] mb-2">

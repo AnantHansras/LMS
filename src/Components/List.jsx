@@ -4,11 +4,11 @@ import { Trash2, Search, X, BookOpen, Filter } from "lucide-react";
 import { requestBook } from "../Services/booksAPI";
 import { useSelector, useDispatch } from "react-redux";
 import { setLastSearch } from "../slices/Search";
-import  {toggleTheme}  from "../slices/ThemeSlice";
+
 
 const BookList = ({ books }) => {
   const dispatch = useDispatch();
-  const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);
+  const isDarkMode = false
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedBook, setSelectedBook] = useState(null);
   const [activeGenre, setActiveGenre] = useState("All");
