@@ -25,7 +25,7 @@ function AllBooks() {
   return (
     <>
       <List2 books={books} />
-      <Footer />
+      
     </>
   );
 }

@@ -6,39 +6,51 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 const themeStyles = {
   sunset: {
-  background: 'bg-[hsl(20,14.3%,4.1%)]',       // Background color updated using Tailwind's arbitrary values
-  cardBg: 'bg-[hsl(20,14.3%,4.1%)]',          // Card background color updated
-  input: 'bg-[hsl(12,6.5%,15.1%)] border-[hsl(12,6.5%,15.1%)] text-[hsl(60,9.1%,97.8%)] placeholder:text-[hsl(60,9.1%,97.8%)]', // Input field styling
-  focusRing: 'focus:ring-[hsl(20.5,90.2%,48.2%)]',  // Focus ring color
-  link: 'text-[hsl(12,6.5%,15.1%)]',          // Link color
-  button: 'bg-[hsl(0,72.2%,50.6%)] hover:bg-[hsl(0,72.2%,50.6%)] text-[hsl(60,9.1%,97.8%)] hover:shadow-[0_0_10px_2px_hsl(0,72.2%,50.6%)]', // Button color
-}
-
+    "background": "hsl(20,14.3%,4.1%)",
+    "cardBg": "hsl(20, 14.3%, 4.1%)",
+    "border": "hsl(12, 6.5%, 15.1%)",
+    "textPrimary": "hsl(60, 9.1%, 97.8%)",
+    "textMuted": "hsl(24, 5.4%, 63.9%)",
+    "accent": "hsl(20.5, 90.2%, 48.2%)",
+    "accentHover": "hsl(20.5, 90.2%, 43%)",
+    "inputFocusRing": "hsl(20.5, 90.2%, 48.2%)",
+    "buttonText": "hsl(60, 9.1%, 97.8%)"
+  }
 ,
   forest: {
-    background: 'bg-gradient-to-br from-green-900 to-green-700',
-    cardBg: 'bg-green-950/50 border-green-900 text-green-100',
-    input: 'bg-transparent border-green-800 text-green-100 placeholder:text-green-300',
-    focusRing: 'focus:ring-green-500',
-    link: 'text-green-300',
-    button: 'bg-green-600 hover:bg-green-700 text-white hover:shadow-green-500/50',
+    "background": "hsl(20,14.3%,4.1%)",
+    "cardBg": "hsl(24,9.8%,10%)",
+    "border": "hsl(240,3.7%,15.9%)",
+    "textPrimary": "hsl(0,0%,95%)",
+    "textMuted": "hsl(240,5%,64.9%)",
+    "accent": "hsl(142.1,70.6%,45.3%)",
+    "accentHover": "hsl(142.1,70.6%,40%)",
+    "inputFocusRing": "hsl(142.4,71.8%,29.2%)",
+    "buttonText": "hsl(144.9,80.4%,10%)"
   },
-  midnight: {
-    background: ' bg-[hsl(20,14.3%,4.1%)] ',
-    cardBg: ' bg-[hsl(20,14.3%,4.1%)] border-[hsl(12,6.5%,15.1%)] text-[hsl(60,9.1%,97.8%)] ',
-    input: ' bg-transparent border-[hsl(12,6.5%,15.1%)] text-[hsl(24,5.4%,63.9%)] placeholder:text-[hsl(24,5.4%,63.9%)] ',
-    focusRing: ' focus:ring-[hsl(20.5,90.2%,48.2%)] ',
-    link: ' text-[hsl(20.5,90.2%,48.2%)] ',
-    button: ' bg-[hsl(20.5,90.2%,48.2%)] hover:bg-[hsl(20.5,90.2%,43%)] text-[hsl(60,9.1%,97.8%)] hover:shadow-orange-500/50 ',
-  },
+  midnight:{
+    "background": "hsl(224,71.4%,4.1%)",
+    "cardBg": "hsl(224,71.4%,4.1%)",
+    "border": "hsl(215,27.9%,16.9%)",
+    "textPrimary": "hsl(210,20%,98%)",
+    "textMuted": "hsl(217.9,10.6%,64.9%)",
+    "accent": "hsl(263.4,70%,50.4%)",
+    "accentHover": "hsl(263.4,70%,45%)",
+    "inputFocusRing": "hsl(263.4,70%,50.4%)",
+    "buttonText": "hsl(210,20%,98%)"
+  }
+  ,
   rose: {
-    background: 'bg-gradient-to-br from-pink-300 to-pink-400',
-    cardBg: 'bg-white/50 border-pink-200 text-pink-900',
-    input: 'bg-pink-100 border-pink-300 text-pink-900 placeholder:text-pink-600',
-    focusRing: 'focus:ring-pink-400',
-    link: 'text-pink-600',
-    button: 'bg-pink-500 hover:bg-pink-600 text-white hover:shadow-pink-400/50',
-  },
+    "background": "hsl(20,14.3%,4.1%)",
+    "cardBg": "hsl(24,9.8%,10%)",
+    "border": "hsl(240,3.7%,15.9%)",
+    "textPrimary": "hsl(0,0%,95%)",
+    "textMuted": "hsl(240,5%,64.9%)",
+    "accent": "hsl(346.8,77.2%,49.8%)",
+    "accentHover": "hsl(346.8,77.2%,45%)",
+    "inputFocusRing": "hsl(346.8,77.2%,49.8%)",
+    "buttonText": "hsl(355.7,100%,97.3%)"
+  }
 };
 
 const Login = () => {
@@ -59,64 +71,92 @@ const Login = () => {
     setIsLoading(false);
   };
 
-  return (
-    <div className={`min-h-screen flex justify-center items-center px-4 ${theme.background}`}>
-      <div className={`max-w-sm w-full p-8 rounded-2xl shadow-xl border backdrop-blur-xl ${theme.cardBg}`}>
+    return (
+      <div className="min-h-screen flex justify-center items-center px-4" style={{ backgroundColor: theme.background }}>
+      <div
+        className="max-w-sm w-full p-8 rounded-2xl shadow-xl backdrop-blur-xl border"
+        style={{
+          backgroundColor: theme.cardBg,
+          borderColor: theme.border,
+          color: theme.textPrimary
+        }}
+      >
         <h2 className="text-3xl font-bold text-center tracking-wide">Welcome Back</h2>
-        <p className="text-center mt-1 text-sm text-muted">Login to continue</p>
-
+        <p className="text-center mt-1" style={{ color: theme.textMuted }}>
+          Login to continue
+        </p>
+  
         <form className="space-y-4 mt-4" onSubmit={handleLogin}>
-          {/* Email */}
+          {/* Email Field */}
           <div>
             <label className="block text-xs font-medium">Email</label>
             <div className="relative">
-              <Mail className={`absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${theme.input}`} />
+              <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" style={{ color: theme.textMuted }} />
               <input
                 type="email"
                 placeholder="name@example.com"
+                className="w-full pl-9 p-2 rounded-lg bg-transparent text-sm outline-none border focus:ring-2"
+                style={{
+                  borderColor: theme.border,
+                  color: theme.textMuted,
+                  caretColor: theme.accent,
+                  '--tw-ring-color': theme.inputFocusRing
+                }}
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className={`w-full pl-9 p-2 rounded-lg outline-none text-sm border ${theme.input} ${theme.focusRing}`}
               />
             </div>
           </div>
-
-          {/* Password */}
+  
+          {/* Password Field */}
           <div>
             <label className="text-xs font-medium flex">
               Password
               <div className="ml-auto text-xs">
-                <a href="/forgot-password" className={`${theme.link} hover:underline`}>
+                <a href="/forgot-password" style={{ color: theme.accent }} className="hover:underline">
                   Forgot Password?
                 </a>
               </div>
             </label>
             <div className="relative">
-              <Lock className={`absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${theme.input}`} />
+              <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" style={{ color: theme.textMuted }} />
               <input
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
+                className="w-full pl-9 pr-9 p-2 rounded-lg bg-transparent text-sm outline-none border focus:ring-2"
+                style={{
+                  borderColor: theme.border,
+                  color: theme.textMuted,
+                  caretColor: theme.accent,
+                  '--tw-ring-color': theme.inputFocusRing
+                }}
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className={`w-full pl-9 pr-9 p-2 rounded-lg outline-none text-sm border ${theme.input} ${theme.focusRing}`}
               />
               <button
                 type="button"
+                className="absolute right-3 top-1/2 -translate-y-1/2"
+                style={{ color: theme.textMuted }}
                 onClick={() => setShowPassword(!showPassword)}
-                className={`absolute right-3 top-1/2 -translate-y-1/2 ${theme.input}`}
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
           </div>
-
-          {/* Submit */}
+  
+          {/* Login Button */}
           <button
             type="submit"
+            className="active:scale-90 w-full p-2 rounded-lg font-semibold hover:shadow-sm transition duration-300 text-sm flex items-center justify-center"
+            style={{
+              backgroundColor: theme.accent,
+              color: theme.buttonText
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.backgroundColor = theme.accentHover)}
+            onMouseOut={(e) => (e.currentTarget.style.backgroundColor = theme.accent)}
             disabled={isLoading}
-            className={`active:scale-90 w-full p-2 rounded-lg font-semibold transition duration-300 text-sm flex items-center justify-center ${theme.button}`}
           >
             {isLoading ? (
               <span className="flex flex-row justify-center items-center">
@@ -124,20 +164,21 @@ const Login = () => {
                 <span>Loading...</span>
               </span>
             ) : (
-              'Login'
+              "Login"
             )}
           </button>
         </form>
-
-        {/* Footer */}
-        <div className={`text-center text-sm mt-4 ${theme.input}`}>
-          Don&apos;t have an account?{' '}
-          <a href="/signup" className={`${theme.link} hover:underline`}>
+  
+        {/* Don't have an account? */}
+        <div className="text-center text-sm mt-4" style={{ color: theme.textMuted }}>
+          Don't have an account?{" "}
+          <a href="/signup" style={{ color: theme.accent }} className="hover:underline">
             Sign up
           </a>
         </div>
       </div>
     </div>
+      
   );
 };
 
