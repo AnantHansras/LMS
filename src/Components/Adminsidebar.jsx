@@ -119,10 +119,10 @@ export default function Sidebar() {
   const [selectedTheme, setSelectedTheme] = useState(currentTheme);
   const [open, setOpen] = useState(false);
 
-  const handleLogout = () => {
-    dispatch(logout(navigate));
-    setOpenLogoutDialog(false);
-  };
+  // const handleLogout = () => {
+  //   dispatch(logout(navigate));
+  //   setOpenLogoutDialog(false);
+  // };
 
   const handleThemeSelect = (themeName) => {
     setSelectedTheme(themeName);
@@ -357,7 +357,7 @@ export default function Sidebar() {
               setOpenLogoutDialog(false);
             }}
             autoFocus
-            style={{ color: "#ef4444" }}
+            style={{ color: `${theme.accent}` }}
           >
             Logout
           </Button>

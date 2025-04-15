@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { setTheme } from "../slices/ThemeSlice";
 import {
   Typography,
   Grid,
@@ -38,43 +39,93 @@ const navItems = [
   { name: "Issued Books", path: "/issuedbooks", icon: <MenuBookIcon sx={{ color: '#ffffff' }} /> },
   { name: "Fines", path: "/userfines", icon: <CurrencyRupeeIcon sx={{ color: '#ffffff' }} /> },
 ];
+const themeStyles = {
+  sunset: {
+    background: "hsl(20,14.3%,4.1%)",
+    cardBg: "hsl(20, 14.3%, 4.1%)",
+    border: "hsl(12, 6.5%, 15.1%)",
+    textPrimary: "hsl(60, 9.1%, 97.8%)",
+    textMuted: "hsl(24, 5.4%, 63.9%)",
+    accent: "hsl(20.5, 90.2%, 48.2%)",
+    accentHover: "hsl(20.5, 90.2%, 43%)",
+    inputFocusRing: "hsl(20.5, 90.2%, 48.2%)",
+    buttonText: "hsl(60, 9.1%, 97.8%)",
+  },
+  forest: {
+  background: "hsl(150, 25%, 5%)",           // deeper forest green-black
+  cardBg: "hsl(150, 20%, 10%)",              // soft forest green-dark
+  border: "hsl(150, 10%, 20%)",              // subtle greenish-gray
+  textPrimary: "hsl(0, 0%, 95%)",            // bright white
+  textMuted: "hsl(150, 10%, 60%)",           // muted sage tone
+  accent: "hsl(140, 70%, 45%)",              // vibrant leaf green
+  accentHover: "hsl(140, 70%, 38%)",         // darker leaf green on hover
+  inputFocusRing: "hsl(140, 80%, 25%)",      // strong jungle green
+  buttonText: "hsl(140, 100%, 10%)",         // very dark green
+},
 
+  midnight: {
+    background: "hsl(224,71.4%,4.1%)",
+    cardBg: "hsl(224,71.4%,4.1%)",
+    border: "hsl(215,27.9%,16.9%)",
+    textPrimary: "hsl(210,20%,98%)",
+    textMuted: "hsl(217.9,10.6%,64.9%)",
+    accent: "hsl(263.4,70%,50.4%)",
+    accentHover: "hsl(263.4,70%,45%)",
+    inputFocusRing: "hsl(263.4,70%,50.4%)",
+    buttonText: "hsl(210,20%,98%)",
+  },
+  rose: {
+  background: "hsl(340, 20%, 6%)",             // deep rose-black with subtle warmth
+  cardBg: "hsl(345, 15%, 12%)",                // dark rose-tinted card
+  border: "hsl(345, 10%, 22%)",                // warm rose-gray for softer edges
+  textPrimary: "hsl(0, 0%, 96%)",              // soft white for high readability
+  textMuted: "hsl(345, 10%, 65%)",             // muted dusty rose
+  accent: "hsl(346, 75%, 50%)",                // rich vibrant rose
+  accentHover: "hsl(346, 75%, 42%)",           // darker rose on hover
+  inputFocusRing: "hsl(346, 85%, 40%)",        // slightly deeper pink-red for focus
+  buttonText: "hsl(350, 100%, 98%)",           // pale rose-white for contrast
+},
+};
+const themeOptions = [
+  {
+    name: "Midnight",
+    color: "#6366F1",
+    preview: "linear-gradient(to bottom right, #6366F1, #4F46E5)",
+  },
+  {
+    name: "Forest",
+    color: "#10B981",
+    preview: "linear-gradient(to bottom right, #10B981, #059669)",
+  },
+  {
+    name: "Sunset",
+    color: "#F59E0B",
+    preview: "linear-gradient(to bottom right, #F59E0B, #D97706)",
+  },
+  {
+    name: "Rose",
+    color: "#EC4899",
+    preview: "linear-gradient(to bottom right, #EC4899, #DB2777)",
+  },
+]
 export default function Sidebar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [collapsed, setCollapsed] = useState(true);
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false);
-  const [selectedTheme, setSelectedTheme] = useState("Sunset")
+  const currentTheme = useSelector((state) => state.theme.theme);
+  const theme = themeStyles[currentTheme.toLowerCase()] || themeStyles["midnight"];
+  const [selectedTheme, setSelectedTheme] = useState(currentTheme)
   const [open, setOpen] = useState(false)
 
-  const themeOptions = [
-    {
-      name: "Midnight",
-      color: "#6366F1",
-      preview: "linear-gradient(to bottom right, #6366F1, #4F46E5)",
-    },
-    {
-      name: "Forest",
-      color: "#10B981",
-      preview: "linear-gradient(to bottom right, #10B981, #059669)",
-    },
-    {
-      name: "Sunset",
-      color: "#F59E0B",
-      preview: "linear-gradient(to bottom right, #F59E0B, #D97706)",
-    },
-    {
-      name: "Rose",
-      color: "#EC4899",
-      preview: "linear-gradient(to bottom right, #EC4899, #DB2777)",
-    },
-  ]
+  
 
   const handleThemeSelect = (themeName) => {
-    setSelectedTheme(themeName)
-    // Apply theme logic here if needed
-    setTimeout(() => setOpen(false), 300)
-  }
+    setSelectedTheme(themeName);
+    dispatch(setTheme(themeName));
+    setTimeout(() => setOpen(false), 300);
+  };
 
   return (
     <Drawer
@@ -86,7 +137,7 @@ export default function Sidebar() {
           width: collapsed ? 64 : 270,
           boxSizing: 'border-box',
           transition: 'width',
-          backgroundColor: '#0c0A09',
+          backgroundColor: theme.background,
           color: '#FAFAF9',
           borderRight: '1px solid hsla(12,7%,15%,1)',
           display: 'flex',
@@ -130,11 +181,16 @@ export default function Sidebar() {
                   },
                 }}
               >
-                <ListItemIcon sx={{ color: '#A8A29E', minWidth: 40 }}>
+                <ListItemIcon sx={{
+                    color: location.pathname === item.path ? `${theme.accent}` : "#FAFAF9",
+                    minWidth: 40,
+                  }}>
                   {item.icon}
                 </ListItemIcon>
                 {!collapsed && (
-                  <ListItemText primary={item.name} sx={{ color: '#FAFAF9' }} />
+                  <ListItemText primary={item.name} sx={{
+                    color: location.pathname === item.path ? `${theme.accent}` : "#FAFAF9",
+                  }} />
                 )}
               </ListItem>
             </Tooltip>
@@ -171,7 +227,7 @@ export default function Sidebar() {
             className="rounded-md"
             sx={{
               '&:hover': {
-                backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                backgroundColor: `${theme.cardBg}`,
               },
             }}
           >
@@ -290,7 +346,7 @@ export default function Sidebar() {
           <Button onClick={() => {
             dispatch(logout(navigate));
             setOpenLogoutDialog(false);
-          }} autoFocus style={{ color: '#ef4444' }}>
+          }} autoFocus style={{ color: `${theme.accent}` }}>
             Logout
           </Button>
         </DialogActions>
@@ -298,214 +354,3 @@ export default function Sidebar() {
     </Drawer>
   );
 }
-
-// import React from "react";
-// import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
-// import {
-//   Drawer,
-//   IconButton,
-//   List,
-//   ListItem,
-//   ListItemIcon,
-//   ListItemText,
-//   Tooltip,
-//   Dialog,
-//   DialogActions,
-//   DialogContent,
-//   DialogContentText,
-//   DialogTitle,
-//   Button,
-// } from "@mui/material";
-// import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-// import {
-//   Home as HomeIcon,
-//   AutoStories as AutoStoriesIcon,
-//   Menu as MenuIcon,
-//   MenuBook as MenuBookIcon,
-//   HourglassEmpty as HourglassEmptyIcon,
-//   CurrencyRupee as CurrencyRupeeIcon,
-//   Brightness4 as Brightness4Icon,
-//   Brightness7 as Brightness7Icon,
-// } from "@mui/icons-material";
-// import { logout } from "../Services/userAPI";
-// import { toggleTheme } from "../slices/ThemeSlice";
-
-// const navItems = [
-//   { name: "Home", path: "/home", icon: <HomeIcon /> },
-//   { name: "All Books", path: "/allbooks", icon: <AutoStoriesIcon /> },
-//   { name: "MyPending", path: "/mypending", icon: <HourglassEmptyIcon /> },
-//   { name: "Issued Books", path: "/issuedbooks", icon: <MenuBookIcon /> },
-//   { name: "Fines", path: "/userfines", icon: <CurrencyRupeeIcon /> },
-//   // { name: "Settings", path: "/settings", icon: <SettingsIcon /> },
-// ];
-
-// export default function Sidebar() {
-//   const dispatch = useDispatch();
-//   const isDarkMode = useSelector((state) => state.darkMode.isDarkMode);
-//   const [collapsed, setCollapsed] = useState(true);
-//   const [open, setOpen] = useState(false);
-//   const navigate = useNavigate();
-
-//   const themeStyles = {
-//     dark: {
-//       bg: '#0c0A09',
-//       text: '#FAFAF9',
-//       divider: 'hsla(12,7%,15%,1)',
-//       hover: 'hsla(12,7%,15%,1)',
-//       logoutHover: 'rgba(239, 68, 68, 0.8)',
-//       icon: '#ffffff',
-//       iconText: '#A8A29E',
-//       dialogBg: '#1C1917',
-//     },
-//     light: {
-//       bg: '#ffffff',
-//       text: '#111827',
-//       divider: '#e5e7eb',
-//       hover: '#f3f4f6',
-//       logoutHover: '#fee2e2',
-//       icon: '#111827',
-//       iconText: '#6b7280',
-//       dialogBg: '#f9fafb',
-//     },
-//   };
-
-//   const theme = isDarkMode ? themeStyles.light : themeStyles.dark;
-
-//   const handleLogout = () => {
-//     dispatch(logout(navigate));
-//     setOpen(false);
-//   };
-
-//   const handleOpen = () => setOpen(true);
-//   const handleClose = () => setOpen(false);
-
-//   return (
-//     <Drawer
-//       variant="permanent"
-//       sx={{
-//         width: collapsed ? 64 : 270,
-//         flexShrink: 0,
-//         '& .MuiDrawer-paper': {
-//           width: collapsed ? 64 : 270,
-//           boxSizing: 'border-box',
-//           transition: 'width',
-//           backgroundColor: theme.bg,
-//           color: theme.text,
-//           borderRight: `1px solid ${theme.divider}`,
-//           display: 'flex',
-//           flexDirection: 'column',
-//           justifyContent: 'space-between',
-//         },
-//       }}
-//     >
-//       {/* Top Section */}
-//       <div>
-//         <div
-//           style={{
-//             height: 64,
-//             display: 'flex',
-//             alignItems: 'center',
-//             justifyContent: collapsed ? 'center' : 'space-between',
-//             padding: '0 18px',
-//             borderBottom: `1px solid ${theme.divider}`,
-//           }}
-//         >
-//           {!collapsed && (
-//             <span style={{ fontWeight: 'bold', fontSize: '18px', color: theme.text }}>
-//               LibraryHub
-//             </span>
-//           )}
-//           <div style={{ display: 'flex', gap: 6 }}>
-//             {!collapsed && (
-//               <IconButton onClick={() => dispatch(toggleTheme())} sx={{ color: theme.icon }}>
-//                 {isDarkMode ? <Brightness7Icon /> : <Brightness4Icon />}
-//               </IconButton>
-//             )}
-//             <IconButton onClick={() => setCollapsed(!collapsed)} sx={{ color: theme.icon }}>
-//               <MenuIcon />
-//             </IconButton>
-//           </div>
-//         </div>
-
-//         <List>
-//           {navItems.map((item) => (
-//             <Tooltip key={item.name} title={collapsed ? item.name : ""} placement="right">
-//               <ListItem
-//                 button
-//                 onClick={() => navigate(item.path)}
-//                 className="rounded-md"
-//                 sx={{
-//                   '&:hover': {
-//                     backgroundColor: theme.hover,
-//                   },
-//                 }}
-//               >
-//                 <ListItemIcon sx={{ color: theme.iconText, minWidth: 40 }}>
-//                   {React.cloneElement(item.icon, { sx: { color: theme.icon } })}
-//                 </ListItemIcon>
-//                 {!collapsed && (
-//                   <ListItemText primary={item.name} sx={{ color: theme.text }} />
-//                 )}
-//               </ListItem>
-//             </Tooltip>
-//           ))}
-//         </List>
-//       </div>
-
-//       {/* Bottom Section */}
-//       <div style={{ borderTop: `1px solid ${theme.divider}` }} className="py-2">
-//         <Tooltip title={collapsed ? "Logout" : ""} placement="right">
-//           <ListItem
-//             button
-//             onClick={handleOpen}
-//             className="rounded-md"
-//             sx={{
-//               '&:hover': {
-//                 backgroundColor: theme.logoutHover,
-//               },
-//             }}
-//           >
-//             <ListItemIcon sx={{ color: theme.iconText, minWidth: 40 }}>
-//               <ExitToAppIcon sx={{ color: theme.icon }} />
-//             </ListItemIcon>
-//             {!collapsed && (
-//               <ListItemText primary="Logout" sx={{ color: theme.text }} />
-//             )}
-//           </ListItem>
-//         </Tooltip>
-//       </div>
-
-//       {/* Logout Confirmation Dialog */}
-//       <Dialog
-//         open={open}
-//         onClose={handleClose}
-//         aria-labelledby="alert-dialog-title"
-//         aria-describedby="alert-dialog-description"
-//         PaperProps={{
-//           style: {
-//             backgroundColor: theme.dialogBg,
-//             color: theme.text,
-//             border: `1px solid ${theme.divider}`,
-//           },
-//         }}
-//       >
-//         <DialogTitle id="alert-dialog-title" style={{ color: theme.text }}>
-//           {"Confirm Logout"}
-//         </DialogTitle>
-//         <DialogContent>
-//           <DialogContentText id="alert-dialog-description" style={{ color: theme.iconText }}>
-//             Are you sure you want to logout?
-//           </DialogContentText>
-//         </DialogContent>
-//         <DialogActions>
-//           <Button onClick={handleClose} style={{ color: theme.iconText }}>Cancel</Button>
-//           <Button onClick={handleLogout} autoFocus style={{ color: '#ef4444' }}>
-//             Logout
-//           </Button>
-//         </DialogActions>
-//       </Dialog>
-//     </Drawer>
-//   );
-// }
